@@ -1,5 +1,7 @@
 package codeenthusiast.TrainingCenterApp.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity(name = "images")
@@ -14,6 +16,7 @@ public class Image {
     private String fileUrl;
 
     @ManyToOne
+    @JsonIgnore
     private Muscle muscle;
 
     public Image() {

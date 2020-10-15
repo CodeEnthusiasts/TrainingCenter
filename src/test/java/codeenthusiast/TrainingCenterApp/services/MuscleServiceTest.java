@@ -43,7 +43,6 @@ class MuscleServiceTest {
 
     Image sideImage;
 
-
     @Mock
     MuscleRepository muscleRepository;
 

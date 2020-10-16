@@ -15,7 +15,7 @@ public class Muscle {
 
     private String description;
 
-    @OneToMany(mappedBy = "muscle")
+    @OneToMany
     private List<Image> images = new ArrayList<>();
 
     private boolean isInjured;

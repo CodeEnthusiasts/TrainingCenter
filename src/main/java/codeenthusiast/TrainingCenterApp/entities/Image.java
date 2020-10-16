@@ -1,8 +1,9 @@
 package codeenthusiast.TrainingCenterApp.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 
 @Entity(name = "images")
 public class Image {
@@ -15,17 +16,12 @@ public class Image {
 
     private String fileUrl;
 
-    @ManyToOne
-    @JsonIgnore
-    private Muscle muscle;
-
     public Image() {
     }
 
-    public Image(String filePath, String fileUrl, Muscle muscle) {
+    public Image(String filePath, String fileUrl) {
         this.filePath = filePath;
         this.fileUrl = fileUrl;
-        this.muscle = muscle;
     }
 
     public Long getId() {
@@ -52,11 +48,4 @@ public class Image {
         this.fileUrl = fileUrl;
     }
 
-    public Muscle getMuscle() {
-        return muscle;
-    }
-
-    public void setMuscle(Muscle muscle) {
-        this.muscle = muscle;
-    }
 }

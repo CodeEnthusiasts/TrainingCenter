@@ -60,8 +60,8 @@ class MuscleServiceTest {
         triceps = new MuscleDTO("Triceps", "Triceps description", new ArrayList<>());
         glute = new MuscleDTO("Glute", "Glute description", new ArrayList<>());
 
-        frontImage = new Image("secret-folder", "front-image", hamstring);
-        sideImage = new Image("secret-folder", "side-image", hamstring);
+        frontImage = new Image("secret-folder", "front-image");
+        sideImage = new Image("secret-folder", "side-image");
 
         muscleService = new MuscleService(muscleRepository, imageService);
     }

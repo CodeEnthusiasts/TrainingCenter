@@ -32,7 +32,7 @@ public class StrengthRecord {
     public StrengthRecord() {
     }
 
-    public StrengthRecord(StrengthRecordDTO strengthRecordDTO){
+    public StrengthRecord(StrengthRecordDTO strengthRecordDTO) {
         this.exerciseName = strengthRecordDTO.getExerciseName();
         this.weightUnit = strengthRecordDTO.getWeightUnit();
         this.weight = strengthRecordDTO.getWeight();
@@ -40,6 +40,7 @@ public class StrengthRecord {
         this.repetition = strengthRecordDTO.getRepetition();
         this.setDate = strengthRecordDTO.getSetDate();
     }
+
     public StrengthRecord(String exerciseName, WeightUnit weightUnit, int weight,
                           RepetitionUnit repetitionUnit, int repetition, LocalDate setDate) {
         this.exerciseName = exerciseName;

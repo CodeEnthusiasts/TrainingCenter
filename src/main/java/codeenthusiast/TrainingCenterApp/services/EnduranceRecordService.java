@@ -42,7 +42,7 @@ public class EnduranceRecordService {
         return mapToListOfEnduranceDTOs(enduranceRecordsForSingleExercise);
     }
 
-    public EnduranceRecordDTO createNewRecord(EnduranceRecordDTO enduranceRecord){
+    public EnduranceRecordDTO createNewRecord(EnduranceRecordDTO enduranceRecord) {
         validateEnduranceRecord(enduranceRecord);
         EnduranceRecord newRecord = new EnduranceRecord(enduranceRecord);
         enduranceRecordRepository.save(newRecord);
@@ -51,7 +51,7 @@ public class EnduranceRecordService {
 
     void validateEnduranceRecord(EnduranceRecordDTO enduranceRecord) {
         List<EnduranceRecord> otherRecords = getRecordsWithSameNameAndTime(enduranceRecord);
-        if(otherRecords.size() != 0) {
+        if (otherRecords.size() != 0) {
             int highestPreviousRecord = findHighestPreviousRecordValue(otherRecords);
             checkNewRecordSuperiority(enduranceRecord, highestPreviousRecord);
         }
@@ -69,13 +69,13 @@ public class EnduranceRecordService {
     }
 
     void checkNewRecordSuperiority(EnduranceRecordDTO enduranceRecord, int highestPreviousRecord) {
-        if(highestPreviousRecord < enduranceRecord.getTime()){
+        if (highestPreviousRecord < enduranceRecord.getTime()) {
             throw new IllegalArgumentException("New record cannot be less than previous highest record. " +
                     "Delete previous record or set the new one, greater than current");
         }
     }
 
-    public void deleteRecord(String exerciseName, int distance, int time){
+    public void deleteRecord(String exerciseName, int distance, int time) {
         enduranceRecordRepository
                 .deleteByExerciseNameAndDistanceAndTime(exerciseName, distance, time);
     }

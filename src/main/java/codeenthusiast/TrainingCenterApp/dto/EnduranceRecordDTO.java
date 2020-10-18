@@ -1,62 +1,44 @@
-package codeenthusiast.TrainingCenterApp.entities.records;
+package codeenthusiast.TrainingCenterApp.dto;
 
-import codeenthusiast.TrainingCenterApp.dto.EnduranceRecordDTO;
 import codeenthusiast.TrainingCenterApp.entities.units.DistanceUnit;
+import org.hibernate.validator.constraints.Range;
 
-import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.concurrent.TimeUnit;
 
-@Entity
-public class EnduranceRecord {
+public class EnduranceRecordDTO {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    // todo create whole class
-
+    @NotNull
     private String exerciseName;
 
-    @Enumerated(EnumType.STRING)
+    @NotNull
     private DistanceUnit distanceUnit;
 
+    @NotNull
+    @Range(min = 0, max = 10000)
     private int distance;
 
-    @Enumerated(EnumType.STRING)
+    @NotNull
     private TimeUnit timeUnit;
 
+    @NotNull
+    @Range(min = 0, max = 1000)
     private int time;
 
     private LocalDate setDate;
 
-    public EnduranceRecord() {
+    public EnduranceRecordDTO() {
     }
 
-    public EnduranceRecord(EnduranceRecordDTO enduranceRecordDTO){
-        this.exerciseName = enduranceRecordDTO.getExerciseName();
-        this.distanceUnit = enduranceRecordDTO.getDistanceUnit();
-        this.distance = enduranceRecordDTO.getDistance();
-        this.timeUnit = enduranceRecordDTO.getTimeUnit();
-        this.time = enduranceRecordDTO.getTime();
-        this.setDate = enduranceRecordDTO.getSetDate();
-    }
-
-    public EnduranceRecord(String exerciseName, DistanceUnit distanceUnit, int distance,
-                           TimeUnit timeUnit, int time, LocalDate setDate) {
+    public EnduranceRecordDTO(String exerciseName, DistanceUnit distanceUnit, int distance,
+                              TimeUnit timeUnit, int time, LocalDate setDate) {
         this.exerciseName = exerciseName;
         this.distanceUnit = distanceUnit;
         this.distance = distance;
         this.timeUnit = timeUnit;
         this.time = time;
         this.setDate = setDate;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getExerciseName() {

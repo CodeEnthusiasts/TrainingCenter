@@ -13,5 +13,5 @@ public interface StrengthRecordRepository extends JpaRepository<StrengthRecord, 
 
     void deleteByExerciseNameAndWeightAndRepetition(String exerciseName, int weight, int repetition);
 
-   List<StrengthRecord> findByExerciseNameAndRepetition(String exerciseName, int repetition);
+    List<StrengthRecord> findByExerciseNameAndRepetition(String exerciseName, int repetition);
 }

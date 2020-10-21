@@ -49,4 +49,10 @@ JWT Token security <br>
  Swagger <br>
  
 ### Fronted
-
+ React(Hooks) <br>
+ Redux <br>
+ Styled Components <br>
+ Jest <br>
+ React-testing-library <br>
+ Reac-router
+ Axios <br>

@@ -42,7 +42,7 @@ public class StrengthRecordService {
         return mapToListOfStrengthDTOs(strengthRecordsForSingleExercise);
     }
 
-    public StrengthRecordDTO createNewRecord(StrengthRecordDTO strengthRecord){
+    public StrengthRecordDTO createNewRecord(StrengthRecordDTO strengthRecord) {
         validateStrengthRecord(strengthRecord);
         StrengthRecord newRecord = new StrengthRecord(strengthRecord);
         strengthRecordRepository.save(newRecord);
@@ -51,7 +51,7 @@ public class StrengthRecordService {
 
     void validateStrengthRecord(StrengthRecordDTO strengthRecord) {
         List<StrengthRecord> otherRecords = getRecordsWithSameNameAndRepetition(strengthRecord);
-        if(otherRecords.size() != 0) {
+        if (otherRecords.size() != 0) {
             int highestPreviousRecord = findHighestPreviousRecordValue(otherRecords);
             checkNewRecordSuperiority(strengthRecord, highestPreviousRecord);
         }
@@ -63,19 +63,19 @@ public class StrengthRecordService {
     }
 
     int findHighestPreviousRecordValue(List<StrengthRecord> otherRecords) {
-         return otherRecords.stream()
-                            .map(StrengthRecord::getWeight)
-                            .max(Comparator.comparingInt(Integer::intValue)).get();
+        return otherRecords.stream()
+                .map(StrengthRecord::getWeight)
+                .max(Comparator.comparingInt(Integer::intValue)).get();
     }
 
     void checkNewRecordSuperiority(StrengthRecordDTO strengthRecord, int highestPreviousRecord) {
-        if(highestPreviousRecord > strengthRecord.getWeight()){
+        if (highestPreviousRecord > strengthRecord.getWeight()) {
             throw new IllegalArgumentException("New record cannot be less than previous highest record. " +
                     "Delete previous record or set the new one, greater than current");
         }
     }
 
-    public void deleteRecord(String exerciseName, int weight, int repetition){
+    public void deleteRecord(String exerciseName, int weight, int repetition) {
         strengthRecordRepository
                 .deleteByExerciseNameAndWeightAndRepetition(exerciseName, weight, repetition);
     }

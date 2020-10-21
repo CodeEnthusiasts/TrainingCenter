@@ -16,29 +16,34 @@ public class PersonalRecords {
     private List<StrengthRecord> strengthRecords = new ArrayList<>();
 
     @OneToMany
-    private List<EnduranceRecord> enduranceRecords = new ArrayList<>();;
+    private List<EnduranceRecord> enduranceRecords = new ArrayList<>();
+
 
     @OneToMany
-    private List<CustomRecord> customRecords = new ArrayList<>();;
+    private List<CustomRecord> customRecords = new ArrayList<>();
 
-    private void addStrengthRecord(StrengthRecord strengthRecord){
+
+    private void addStrengthRecord(StrengthRecord strengthRecord) {
         strengthRecords.add(strengthRecord);
     }
-    private void removeStrengthRecord(StrengthRecord strengthRecord){
+
+    private void removeStrengthRecord(StrengthRecord strengthRecord) {
         strengthRecords.remove(strengthRecord);
     }
 
-    private void addEnduranceRecord(EnduranceRecord enduranceRecord){
+    private void addEnduranceRecord(EnduranceRecord enduranceRecord) {
         enduranceRecords.add(enduranceRecord);
     }
-    private void removeStrengthRecord(EnduranceRecord enduranceRecord){
+
+    private void removeStrengthRecord(EnduranceRecord enduranceRecord) {
         enduranceRecords.remove(enduranceRecord);
     }
 
-    private void addCustomRecord(CustomRecord customRecord){
+    private void addCustomRecord(CustomRecord customRecord) {
         customRecords.add(customRecord);
     }
-    private void removeCustomRecord(CustomRecord customRecord){
+
+    private void removeCustomRecord(CustomRecord customRecord) {
         strengthRecords.remove(customRecord);
     }
 

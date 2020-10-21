@@ -32,7 +32,7 @@ public class EnduranceRecord {
     public EnduranceRecord() {
     }
 
-    public EnduranceRecord(EnduranceRecordDTO enduranceRecordDTO){
+    public EnduranceRecord(EnduranceRecordDTO enduranceRecordDTO) {
         this.exerciseName = enduranceRecordDTO.getExerciseName();
         this.distanceUnit = enduranceRecordDTO.getDistanceUnit();
         this.distance = enduranceRecordDTO.getDistance();

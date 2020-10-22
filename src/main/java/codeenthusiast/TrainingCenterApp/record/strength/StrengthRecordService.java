@@ -54,18 +54,18 @@ public class StrengthRecordService {
         }
     }
 
-    List<StrengthRecord> getRecordsWithSameNameAndRepetition(StrengthRecordDTO strengthRecord) {
+    public List<StrengthRecord> getRecordsWithSameNameAndRepetition(StrengthRecordDTO strengthRecord) {
         return strengthRecordRepository
                 .findByExerciseNameAndRepetition(strengthRecord.getExerciseName(), strengthRecord.getRepetition());
     }
 
-    int findHighestPreviousRecordValue(List<StrengthRecord> otherRecords) {
+    public int findHighestPreviousRecordValue(List<StrengthRecord> otherRecords) {
         return otherRecords.stream()
                 .map(StrengthRecord::getWeight)
                 .max(Comparator.comparingInt(Integer::intValue)).get();
     }
 
-    void checkNewRecordSuperiority(StrengthRecordDTO strengthRecord, int highestPreviousRecord) {
+    public void checkNewRecordSuperiority(StrengthRecordDTO strengthRecord, int highestPreviousRecord) {
         if (highestPreviousRecord > strengthRecord.getWeight()) {
             throw new IllegalArgumentException("New record cannot be less than previous highest record. " +
                     "Delete previous record or set the new one, greater than current");

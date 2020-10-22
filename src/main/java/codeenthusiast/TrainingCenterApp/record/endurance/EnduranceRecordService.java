@@ -54,18 +54,18 @@ public class EnduranceRecordService {
         }
     }
 
-    List<EnduranceRecord> getRecordsWithSameNameAndTime(EnduranceRecordDTO enduranceRecord) {
+    public List<EnduranceRecord> getRecordsWithSameNameAndTime(EnduranceRecordDTO enduranceRecord) {
         return enduranceRecordRepository
                 .findByExerciseNameAndTime(enduranceRecord.getExerciseName(), enduranceRecord.getTime());
     }
 
-    int findHighestPreviousRecordValue(List<EnduranceRecord> otherRecords) {
+    public int findHighestPreviousRecordValue(List<EnduranceRecord> otherRecords) {
         return otherRecords.stream()
                 .map(EnduranceRecord::getTime)
                 .max(Comparator.comparingInt(Integer::intValue)).get();
     }
 
-    void checkNewRecordSuperiority(EnduranceRecordDTO enduranceRecord, int highestPreviousRecord) {
+    public void checkNewRecordSuperiority(EnduranceRecordDTO enduranceRecord, int highestPreviousRecord) {
         if (highestPreviousRecord < enduranceRecord.getTime()) {
             throw new IllegalArgumentException("New record cannot be less than previous highest record. " +
                     "Delete previous record or set the new one, greater than current");

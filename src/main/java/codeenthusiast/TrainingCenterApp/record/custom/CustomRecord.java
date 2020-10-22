@@ -1,6 +1,9 @@
 package codeenthusiast.TrainingCenterApp.record.custom;
 
 import codeenthusiast.TrainingCenterApp.record.custom.CustomRecordDTO;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +12,9 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 
 @Entity
+@Getter
+@Setter
+@NoArgsConstructor
 public class CustomRecord {
 
     @Id
@@ -20,9 +26,6 @@ public class CustomRecord {
     private double value;
 
     private LocalDate setDate;
-
-    public CustomRecord() {
-    }
 
     public CustomRecord(CustomRecordDTO customRecord) {
         this.description = customRecord.getDescription();
@@ -36,36 +39,4 @@ public class CustomRecord {
         this.setDate = setData;
     }
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
-    }
-
-    public LocalDate getSetDate() {
-        return setDate;
-    }
-
-    public void setSetDate(LocalDate setDate) {
-        this.setDate = setDate;
-    }
 }

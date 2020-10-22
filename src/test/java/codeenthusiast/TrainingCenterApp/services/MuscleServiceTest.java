@@ -57,10 +57,10 @@ class MuscleServiceTest {
     void setUp() {
 
         modelMapper = new ModelMapper();
-        hamstring = new Muscle("Hamstring", "Hamstring description", new ArrayList<>());
-        chest = new Muscle("Chest", "Chest description", new ArrayList<>());
-        triceps = new MuscleDTO("Triceps", "Triceps description", new ArrayList<>());
-        glute = new MuscleDTO("Glute", "Glute description", new ArrayList<>());
+        hamstring = new Muscle("Hamstring", "Hamstring description");
+        chest = new Muscle("Chest", "Chest description");
+        triceps = new MuscleDTO("Triceps", "Triceps description");
+        glute = new MuscleDTO("Glute", "Glute description");
 
         frontImage = new Image("secret-folder", "front-image");
         sideImage = new Image("secret-folder", "side-image");
@@ -78,8 +78,7 @@ class MuscleServiceTest {
         assertAll(
                 () -> assertThat(mappedMuscle, not(hasProperty("id"))),
                 () -> assertThat(mappedMuscle, not(hasProperty("isInjured"))),
-                () -> assertThat(mappedMuscle.getName(), is(chest.getName()))
-        );
+                () -> assertThat(mappedMuscle.getName(), is(chest.getName())));
     }
 
     @Test
@@ -91,7 +90,6 @@ class MuscleServiceTest {
         //then
         assertAll(
                 () -> assertThat(mappedMuscle, hasProperty("id", nullValue())),
-                () -> assertFalse(mappedMuscle.isInjured()),
                 () -> assertThat(mappedMuscle.getName(), is(triceps.getName()))
         );
     }
@@ -271,7 +269,7 @@ class MuscleServiceTest {
     @DisplayName("Check if meal with correct and id is updated by correct data meal")
     void shouldUpdateMealWhenDataIsCorrect() {
         //given
-        MuscleDTO calves = new MuscleDTO("Calves", "Calves description", new ArrayList<>());
+        MuscleDTO calves = new MuscleDTO("Calves", "Calves description");
         given(muscleRepository.existsById(5L)).willReturn(true);
         given(muscleRepository.existsByName("Calves")).willReturn(false);
 
@@ -289,7 +287,7 @@ class MuscleServiceTest {
     @DisplayName("Check if exception is thrown when muscle of given id does not exist")
     void shouldThrownAnExceptionWhenUpdateMealOfInexistentId() {
         //given + when
-        MuscleDTO calves = new MuscleDTO("Calves", "Calves description", new ArrayList<>());
+        MuscleDTO calves = new MuscleDTO("Calves", "Calves description");
         given(muscleRepository.existsById(5L)).willReturn(false);
 
         //then
@@ -301,7 +299,7 @@ class MuscleServiceTest {
     @DisplayName("Check if exception is thrown when update muscle of existent name")
     void shouldThrowAnExceptionWhenTryToUpdateMuscleToExistentName() {
         //given + when
-        MuscleDTO calves = new MuscleDTO("Calves", "Calves description", new ArrayList<>());
+        MuscleDTO calves = new MuscleDTO("Calves", "Calves description");
         given(muscleRepository.existsById(5L)).willReturn(true);
         given(muscleRepository.existsByName("Calves")).willReturn(true);
 

@@ -1,6 +1,6 @@
 package codeenthusiast.TrainingCenterApp.record.endurance;
 
-import codeenthusiast.TrainingCenterApp.units.DistanceUnit;
+import codeenthusiast.TrainingCenterApp.constants.DistanceUnit;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.units;
+package codeenthusiast.TrainingCenterApp.constants;
 
 public enum WeightUnit {
     KILOGRAMS,

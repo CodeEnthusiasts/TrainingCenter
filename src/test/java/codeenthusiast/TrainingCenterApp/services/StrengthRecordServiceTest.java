@@ -2,8 +2,8 @@ package codeenthusiast.TrainingCenterApp.services;
 
 import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecordDTO;
 import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecord;
-import codeenthusiast.TrainingCenterApp.units.RepetitionUnit;
-import codeenthusiast.TrainingCenterApp.units.WeightUnit;
+import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
+import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecordService;
 import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecordRepository;
 import org.junit.jupiter.api.BeforeEach;

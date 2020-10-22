@@ -1,7 +1,7 @@
 package codeenthusiast.TrainingCenterApp.record.strength;
 
-import codeenthusiast.TrainingCenterApp.units.RepetitionUnit;
-import codeenthusiast.TrainingCenterApp.units.WeightUnit;
+import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
+import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

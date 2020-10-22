@@ -1,12 +1,10 @@
-package codeenthusiast.TrainingCenterApp.services;
+package codeenthusiast.TrainingCenterApp.muscle;
 
-import codeenthusiast.TrainingCenterApp.dto.MuscleDTO;
-import codeenthusiast.TrainingCenterApp.entities.Image;
-import codeenthusiast.TrainingCenterApp.entities.Muscle;
+import codeenthusiast.TrainingCenterApp.image.Image;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyFoundException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.repositories.MuscleRepository;
 
+import codeenthusiast.TrainingCenterApp.image.ImageService;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

@@ -1,6 +1,5 @@
-package codeenthusiast.TrainingCenterApp.repositories;
+package codeenthusiast.TrainingCenterApp.image;
 
-import codeenthusiast.TrainingCenterApp.entities.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

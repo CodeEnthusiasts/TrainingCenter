@@ -1,7 +1,7 @@
-package codeenthusiast.TrainingCenterApp.controllers;
+package codeenthusiast.TrainingCenterApp.muscle;
 
-import codeenthusiast.TrainingCenterApp.dto.MuscleDTO;
-import codeenthusiast.TrainingCenterApp.services.MuscleService;
+import codeenthusiast.TrainingCenterApp.muscle.MuscleDTO;
+import codeenthusiast.TrainingCenterApp.muscle.MuscleService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

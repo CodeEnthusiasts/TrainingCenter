@@ -1,10 +1,7 @@
-package codeenthusiast.TrainingCenterApp.services;
+package codeenthusiast.TrainingCenterApp.record.custom;
 
-import codeenthusiast.TrainingCenterApp.dto.CustomRecordDTO;
-import codeenthusiast.TrainingCenterApp.entities.records.CustomRecord;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyFoundException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.repositories.CustomRecordRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

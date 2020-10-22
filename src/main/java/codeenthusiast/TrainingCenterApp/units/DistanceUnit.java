@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.entities.units;
+package codeenthusiast.TrainingCenterApp.units;
 
 public enum DistanceUnit {
     METER,

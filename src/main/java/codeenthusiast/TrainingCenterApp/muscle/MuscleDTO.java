@@ -1,6 +1,6 @@
-package codeenthusiast.TrainingCenterApp.dto;
+package codeenthusiast.TrainingCenterApp.muscle;
 
-import codeenthusiast.TrainingCenterApp.entities.Image;
+import codeenthusiast.TrainingCenterApp.image.Image;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;

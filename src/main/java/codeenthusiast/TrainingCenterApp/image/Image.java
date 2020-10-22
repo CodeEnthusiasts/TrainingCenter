@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.entities;
+package codeenthusiast.TrainingCenterApp.image;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

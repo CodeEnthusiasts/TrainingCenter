@@ -1,4 +1,6 @@
-package codeenthusiast.TrainingCenterApp.entities;
+package codeenthusiast.TrainingCenterApp.muscle;
+
+import codeenthusiast.TrainingCenterApp.image.Image;
 
 import javax.persistence.*;
 import java.util.ArrayList;

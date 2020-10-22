@@ -1,7 +1,6 @@
-package codeenthusiast.TrainingCenterApp.entities.records;
+package codeenthusiast.TrainingCenterApp.record.endurance;
 
-import codeenthusiast.TrainingCenterApp.dto.EnduranceRecordDTO;
-import codeenthusiast.TrainingCenterApp.entities.units.DistanceUnit;
+import codeenthusiast.TrainingCenterApp.units.DistanceUnit;
 
 import javax.persistence.*;
 import java.time.LocalDate;

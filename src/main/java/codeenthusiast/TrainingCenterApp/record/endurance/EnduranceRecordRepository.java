@@ -1,6 +1,5 @@
-package codeenthusiast.TrainingCenterApp.repositories;
+package codeenthusiast.TrainingCenterApp.record.endurance;
 
-import codeenthusiast.TrainingCenterApp.entities.records.EnduranceRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

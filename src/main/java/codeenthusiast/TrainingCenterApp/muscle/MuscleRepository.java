@@ -1,6 +1,5 @@
-package codeenthusiast.TrainingCenterApp.repositories;
+package codeenthusiast.TrainingCenterApp.muscle;
 
-import codeenthusiast.TrainingCenterApp.entities.Muscle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

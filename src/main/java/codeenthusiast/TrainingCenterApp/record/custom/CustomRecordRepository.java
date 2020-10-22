@@ -1,6 +1,5 @@
-package codeenthusiast.TrainingCenterApp.repositories;
+package codeenthusiast.TrainingCenterApp.record.custom;
 
-import codeenthusiast.TrainingCenterApp.entities.records.CustomRecord;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

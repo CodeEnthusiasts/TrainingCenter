@@ -1,6 +1,6 @@
-package codeenthusiast.TrainingCenterApp.dto;
+package codeenthusiast.TrainingCenterApp.record.endurance;
 
-import codeenthusiast.TrainingCenterApp.entities.units.DistanceUnit;
+import codeenthusiast.TrainingCenterApp.units.DistanceUnit;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;

@@ -1,8 +1,5 @@
-package codeenthusiast.TrainingCenterApp.services;
+package codeenthusiast.TrainingCenterApp.record.strength;
 
-import codeenthusiast.TrainingCenterApp.dto.StrengthRecordDTO;
-import codeenthusiast.TrainingCenterApp.entities.records.StrengthRecord;
-import codeenthusiast.TrainingCenterApp.repositories.StrengthRecordRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

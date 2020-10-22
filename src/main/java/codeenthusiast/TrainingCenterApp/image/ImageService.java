@@ -1,7 +1,5 @@
-package codeenthusiast.TrainingCenterApp.services;
+package codeenthusiast.TrainingCenterApp.image;
 
-import codeenthusiast.TrainingCenterApp.entities.Image;
-import codeenthusiast.TrainingCenterApp.repositories.ImageRepository;
 import org.springframework.stereotype.Service;
 
 @Service

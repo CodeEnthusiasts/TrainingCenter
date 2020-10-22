@@ -1,8 +1,5 @@
-package codeenthusiast.TrainingCenterApp.services;
+package codeenthusiast.TrainingCenterApp.record.endurance;
 
-import codeenthusiast.TrainingCenterApp.dto.EnduranceRecordDTO;
-import codeenthusiast.TrainingCenterApp.entities.records.EnduranceRecord;
-import codeenthusiast.TrainingCenterApp.repositories.EnduranceRecordRepository;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 

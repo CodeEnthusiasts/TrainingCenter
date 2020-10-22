@@ -1,8 +1,7 @@
-package codeenthusiast.TrainingCenterApp.entities.records;
+package codeenthusiast.TrainingCenterApp.record.strength;
 
-import codeenthusiast.TrainingCenterApp.dto.StrengthRecordDTO;
-import codeenthusiast.TrainingCenterApp.entities.units.RepetitionUnit;
-import codeenthusiast.TrainingCenterApp.entities.units.WeightUnit;
+import codeenthusiast.TrainingCenterApp.units.RepetitionUnit;
+import codeenthusiast.TrainingCenterApp.units.WeightUnit;
 
 import javax.persistence.*;
 import java.time.LocalDate;

@@ -1,7 +1,7 @@
-package codeenthusiast.TrainingCenterApp.dto;
+package codeenthusiast.TrainingCenterApp.record.strength;
 
-import codeenthusiast.TrainingCenterApp.entities.units.RepetitionUnit;
-import codeenthusiast.TrainingCenterApp.entities.units.WeightUnit;
+import codeenthusiast.TrainingCenterApp.units.RepetitionUnit;
+import codeenthusiast.TrainingCenterApp.units.WeightUnit;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotNull;

@@ -1,4 +1,8 @@
-package codeenthusiast.TrainingCenterApp.entities.records;
+package codeenthusiast.TrainingCenterApp.record;
+
+import codeenthusiast.TrainingCenterApp.record.custom.CustomRecord;
+import codeenthusiast.TrainingCenterApp.record.endurance.EnduranceRecord;
+import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecord;
 
 import javax.persistence.*;
 import java.util.ArrayList;

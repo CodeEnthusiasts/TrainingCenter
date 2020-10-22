@@ -1,6 +1,6 @@
-package codeenthusiast.TrainingCenterApp.entities.records;
+package codeenthusiast.TrainingCenterApp.record.custom;
 
-import codeenthusiast.TrainingCenterApp.dto.CustomRecordDTO;
+import codeenthusiast.TrainingCenterApp.record.custom.CustomRecordDTO;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.dto;
+package codeenthusiast.TrainingCenterApp.record.custom;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;

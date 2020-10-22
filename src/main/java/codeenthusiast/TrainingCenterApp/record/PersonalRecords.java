@@ -22,7 +22,6 @@ public class PersonalRecords {
     @OneToMany
     private List<EnduranceRecord> enduranceRecords = new ArrayList<>();
 
-
     @OneToMany
     private List<CustomRecord> customRecords = new ArrayList<>();
 

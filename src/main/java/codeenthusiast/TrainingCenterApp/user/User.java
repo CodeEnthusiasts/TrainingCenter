@@ -1,11 +1,19 @@
 package codeenthusiast.TrainingCenterApp.user;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import codeenthusiast.TrainingCenterApp.movement.CustomMovement;
+import codeenthusiast.TrainingCenterApp.training.TrainingPlan;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Entity
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Entity(name = "users")
+@Getter
+@Setter
+@NoArgsConstructor
 public class User {
 
     @Id
@@ -18,11 +26,35 @@ public class User {
 
     private String email;
 
+    @Embedded
     private UserDetails userDetails;
 
-    private UserGoals userGoals;
+//    private UserGoals userGoals;
 
-    private List<TrainingPlan> trainingPlans;
+    @OneToMany(mappedBy = "user")
+    private List<TrainingPlan> trainingPlans = new ArrayList<>();
 
-    private List<CustomExercise> customExercises;
+    @OneToMany(mappedBy = "user")
+    private List<CustomMovement> customMovements = new ArrayList<>();
+
+    public User(String username, String password, String email, UserDetails userDetails) {
+        this.password = password;
+        this.username = username;
+        this.email = email;
+        this.userDetails = userDetails;
+    }
+
+    public void addTrainingPlan(TrainingPlan trainingPlan){
+        trainingPlans.add(trainingPlan);
+    }
+
+    public void addCustomMovement(CustomMovement customMovement){
+        customMovements.add(customMovement);
+    }
+
+    public void deleteCustomMovement(CustomMovement customMovement){
+        customMovements.remove(customMovement);
+    }
+
+
 }

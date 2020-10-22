@@ -65,8 +65,7 @@ public class MuscleService {
             throw new EntityAlreadyFoundException(name);
         }
 
-        Muscle muscle = mapToMuscle(muscleDTO);
-        Muscle createdMuscle = new Muscle(muscle);
+        Muscle createdMuscle = new Muscle(muscleDTO);
         muscleRepository.save(createdMuscle);
         return muscleDTO;
     }

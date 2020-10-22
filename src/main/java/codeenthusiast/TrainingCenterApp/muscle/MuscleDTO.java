@@ -1,53 +1,27 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
 import codeenthusiast.TrainingCenterApp.image.Image;
+import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@RequiredArgsConstructor
 public class MuscleDTO {
 
-    @NotNull
+    @NonNull
     @Length(min = 3, max = 48)
     private String name;
 
-    @NotNull
+    @NonNull
     @Length(min = 3, max = 500)
     private String description;
 
-    private List<Image> images;
+    private List<Image> images = new ArrayList<>();
 
-    public MuscleDTO() {
-    }
-
-    public MuscleDTO(String name, String description, List<Image> images) {
-        this.name = name;
-        this.description = description;
-        this.images = images;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public List<Image> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Image> images) {
-        this.images = images;
-    }
 }

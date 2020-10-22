@@ -1,12 +1,19 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
 import codeenthusiast.TrainingCenterApp.image.Image;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity(name = "muscles")
+@Getter
+@Setter
+@NoArgsConstructor
 public class Muscle {
 
     @Id
@@ -20,63 +27,15 @@ public class Muscle {
     @OneToMany
     private List<Image> images = new ArrayList<>();
 
-    private boolean isInjured;
-
-    public Muscle() {
-    }
-
-    public Muscle(String name, String description, List<Image> images) {
+    public Muscle(String name, String description) {
         this.name = name;
         this.description = description;
-        this.images = images;
     }
 
-    public Muscle(Muscle muscle){
-        name = muscle.name;
-        description = muscle.description;
-        images = muscle.images;
-        isInjured = false;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-
-    public boolean isInjured() {
-        return isInjured;
-    }
-
-    public void setInjured(boolean injured) {
-        isInjured = injured;
-    }
-
-    public List<Image> getImages() {
-        return images;
-    }
-
-    public void setImages(List<Image> images) {
-        this.images = images;
+    public Muscle(MuscleDTO muscleDTO) {
+        name = muscleDTO.getName();
+        description = muscleDTO.getDescription();
+        images = muscleDTO.getImages();
     }
 
     public void addImage(Image image) {

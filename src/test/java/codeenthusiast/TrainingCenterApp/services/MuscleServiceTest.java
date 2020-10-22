@@ -1,11 +1,13 @@
 package codeenthusiast.TrainingCenterApp.services;
 
-import codeenthusiast.TrainingCenterApp.dto.MuscleDTO;
-import codeenthusiast.TrainingCenterApp.entities.Image;
-import codeenthusiast.TrainingCenterApp.entities.Muscle;
+import codeenthusiast.TrainingCenterApp.image.ImageService;
+import codeenthusiast.TrainingCenterApp.muscle.MuscleDTO;
+import codeenthusiast.TrainingCenterApp.image.Image;
+import codeenthusiast.TrainingCenterApp.muscle.Muscle;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyFoundException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.repositories.MuscleRepository;
+import codeenthusiast.TrainingCenterApp.muscle.MuscleService;
+import codeenthusiast.TrainingCenterApp.muscle.MuscleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

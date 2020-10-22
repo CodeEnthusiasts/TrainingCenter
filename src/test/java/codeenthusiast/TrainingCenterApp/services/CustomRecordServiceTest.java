@@ -1,10 +1,11 @@
 package codeenthusiast.TrainingCenterApp.services;
 
-import codeenthusiast.TrainingCenterApp.dto.CustomRecordDTO;
-import codeenthusiast.TrainingCenterApp.entities.records.CustomRecord;
+import codeenthusiast.TrainingCenterApp.record.custom.CustomRecordDTO;
+import codeenthusiast.TrainingCenterApp.record.custom.CustomRecord;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyFoundException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.repositories.CustomRecordRepository;
+import codeenthusiast.TrainingCenterApp.record.custom.CustomRecordService;
+import codeenthusiast.TrainingCenterApp.record.custom.CustomRecordRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

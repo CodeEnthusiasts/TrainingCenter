@@ -1,5 +1,7 @@
 package codeenthusiast.TrainingCenterApp.training;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity(name = "priorities")
@@ -10,5 +12,6 @@ public class Priority {
     private Long id;
 
     @ManyToOne
+    @JsonIgnore
     private TrainingPlan trainingPlan;
 }

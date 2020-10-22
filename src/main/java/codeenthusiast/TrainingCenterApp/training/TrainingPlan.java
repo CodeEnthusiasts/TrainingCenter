@@ -29,6 +29,7 @@ public class TrainingPlan {
 
     private String description;
 
+    @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
 
     @OneToMany(mappedBy = "trainingPlan")

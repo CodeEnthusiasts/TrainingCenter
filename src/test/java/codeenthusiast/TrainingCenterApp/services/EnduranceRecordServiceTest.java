@@ -2,7 +2,7 @@ package codeenthusiast.TrainingCenterApp.services;
 
 import codeenthusiast.TrainingCenterApp.record.endurance.EnduranceRecordDTO;
 import codeenthusiast.TrainingCenterApp.record.endurance.EnduranceRecord;
-import codeenthusiast.TrainingCenterApp.units.DistanceUnit;
+import codeenthusiast.TrainingCenterApp.constants.DistanceUnit;
 import codeenthusiast.TrainingCenterApp.record.endurance.EnduranceRecordService;
 import codeenthusiast.TrainingCenterApp.record.endurance.EnduranceRecordRepository;
 import org.junit.jupiter.api.BeforeEach;

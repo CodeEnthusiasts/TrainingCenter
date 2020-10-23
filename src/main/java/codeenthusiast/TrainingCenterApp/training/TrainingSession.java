@@ -1,11 +1,10 @@
 package codeenthusiast.TrainingCenterApp.training;
 
+import codeenthusiast.TrainingCenterApp.constants.Difficulty;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.apache.tomcat.jni.Local;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
@@ -25,8 +24,11 @@ public class TrainingSession {
 
     private String name;
 
+    @ManyToOne
+    private TrainingPlan trainingPlan;
+
 //    @OneToMany
-//    private List<?extends Exercise> exercises;
+//    private List<? extends Exercise> exercises;
 
     @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
@@ -40,9 +42,18 @@ public class TrainingSession {
     private LocalTime trainingDuration;
     // endTime - startTime in service;
 
-    private String notes ;
+    @Enumerated(EnumType.STRING)
+    private Difficulty difficulty;
 
-    @ManyToOne
-    @JsonIgnore
-    private TrainingPlan trainingPlan;
+    private String notes;
+
+    public TrainingSession(String name, TrainingPlan trainingPlan,
+                           DayOfWeek dayOfWeek, LocalDate date, Difficulty difficulty) {
+        this.name = name;
+//        this.exercises = exercises;
+        this.trainingPlan = trainingPlan;
+        this.dayOfWeek = dayOfWeek;
+        this.date = date;
+        this.difficulty = difficulty;
+    }
 }

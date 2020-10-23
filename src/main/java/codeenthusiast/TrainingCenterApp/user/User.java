@@ -29,8 +29,6 @@ public class User {
     @Embedded
     private UserDetails userDetails;
 
-//    private UserGoals userGoals;
-
     @OneToMany(mappedBy = "user")
     private List<TrainingPlan> trainingPlans = new ArrayList<>();
 

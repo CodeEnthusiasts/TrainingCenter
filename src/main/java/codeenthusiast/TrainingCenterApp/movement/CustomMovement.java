@@ -21,4 +21,9 @@ public class CustomMovement implements Exercisable{
 
     @ManyToOne
     private User user;
+
+    public CustomMovement(String name, User user) {
+        this.name = name;
+        this.user = user;
+    }
 }

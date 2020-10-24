@@ -29,12 +29,14 @@ public class TrainingPlan {
 
     private String description;
 
+    @ManyToOne
+    private User user;
+
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
 
     @OneToMany(mappedBy = "trainingPlan")
     private List<Priority> priorities;
 
-    @ManyToOne
-    private User user;
+
 }

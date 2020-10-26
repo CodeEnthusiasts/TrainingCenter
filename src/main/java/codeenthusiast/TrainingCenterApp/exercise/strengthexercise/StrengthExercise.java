@@ -5,6 +5,7 @@ import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
 import codeenthusiast.TrainingCenterApp.movement.Exercisable;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -12,6 +13,7 @@ import javax.persistence.*;
 @Entity(name = "strength_exercises")
 @Getter
 @Setter
+
 public class StrengthExercise extends Exercise {
 
     @Id

@@ -4,6 +4,7 @@ import codeenthusiast.TrainingCenterApp.constants.DistanceUnit;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
 import codeenthusiast.TrainingCenterApp.movement.Exercisable;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;

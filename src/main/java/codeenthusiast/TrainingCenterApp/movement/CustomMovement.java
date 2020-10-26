@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.movement;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,11 +12,8 @@ import javax.persistence.*;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CustomMovement implements Exercisable{
+public class CustomMovement extends AbstractEntity implements Exercisable{
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     private String name;
 

@@ -42,8 +42,7 @@ JWT Token security <br>
  Java 11 <br>
  Spring Boot 2 <br>
  Hibernate <br>
- JUnit 5 <br>
- Mockito 2 <br>
+ JUnit 5, Mockito 2, AssertJ  <br>
  MySQL <br>
  Cloudinary API <br>
  REST <br>

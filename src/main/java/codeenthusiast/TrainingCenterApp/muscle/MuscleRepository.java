@@ -1,12 +1,12 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractReposiotory;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface MuscleRepository extends JpaRepository<Muscle, Long> {
+public interface MuscleRepository extends AbstractReposiotory<Muscle> {
 
 
     Optional<Muscle> findByName(String name);
@@ -14,4 +14,6 @@ public interface MuscleRepository extends JpaRepository<Muscle, Long> {
     void deleteByName(String name);
 
     boolean existsByName(String name);
+
+    boolean existsById(Long id);
 }

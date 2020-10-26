@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.exercise.enduranceexercise;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.DistanceUnit;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
 import codeenthusiast.TrainingCenterApp.movement.Exercisable;
@@ -24,7 +25,7 @@ public class EnduranceExercise extends Exercise {
     @Enumerated(EnumType.STRING)
     private DistanceUnit distanceUnit;
 
-    private int distance[];
+    private int[] distance;
 
     @Enumerated(EnumType.STRING)
     private TimeUnit timeUnit;

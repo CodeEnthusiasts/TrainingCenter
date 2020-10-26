@@ -2,11 +2,14 @@ package codeenthusiast.TrainingCenterApp.muscle;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.image.Image;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.NonNull;
+import lombok.Setter;
 import org.hibernate.validator.constraints.Length;
 
-import javax.persistence.*;
-import java.util.ArrayList;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity(name = "muscles")
@@ -24,7 +27,7 @@ public class Muscle extends AbstractEntity {
     private String description;
 
     @OneToMany
-    private List<Image> images = new ArrayList<>();
+    private List<Image> images;
 
     public Muscle(String name, String description) {
         this.name = name;

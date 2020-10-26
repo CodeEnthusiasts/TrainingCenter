@@ -1,65 +1,43 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
-import codeenthusiast.TrainingCenterApp.muscle.MuscleDTO;
-import codeenthusiast.TrainingCenterApp.muscle.MuscleService;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import javax.validation.Valid;
-import java.util.List;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractController;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/muscles")
-public class MuscleController {
+public class MuscleController extends AbstractController<Muscle, MuscleDTO> {
 
-    private final MuscleService muscleService;
+    private final MuscleServiceImpl muscleServiceImpl;
 
-    public MuscleController(MuscleService muscleService) {
-        this.muscleService = muscleService;
+    public MuscleController(MuscleServiceImpl muscleServiceImpl) {
+        this.muscleServiceImpl = muscleServiceImpl;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<List<MuscleDTO>> getAllMuscles() {
-        return ResponseEntity.ok(muscleService.getAllMuscles());
+    @Override
+    public AbstractService<Muscle, MuscleDTO> getService() {
+        return muscleServiceImpl;
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<MuscleDTO> getMuscle(@PathVariable Long id) {
-        return ResponseEntity.ok(muscleService.getMuscle(id));
-    }
 
-    @PostMapping("/add")
-    public ResponseEntity<MuscleDTO> createMuscle(@Valid @RequestBody MuscleDTO muscleDTO) {
-        return ResponseEntity.ok(muscleService.createMuscle(muscleDTO));
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<MuscleDTO> updateMuscle(@PathVariable Long id, @Valid @RequestBody MuscleDTO muscleDTO) {
-        return ResponseEntity.ok(muscleService.updateMuscle(id, muscleDTO));
-    }
-
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteMuscle(@PathVariable Long id) {
-        muscleService.deleteMuscle(id);
-        return ResponseEntity.ok("Muscle was successfully removed from repository");
-    }
-
+/*
     @PostMapping("{id}//images")
     public ResponseEntity<MuscleDTO> addImageToMuscle(@PathVariable Long id, @RequestParam String filePath) {
-        return ResponseEntity.ok(muscleService.addImageToMuscle(id, filePath));
+        return ResponseEntity.ok(muscleServiceImpl.addImageToMuscle(id, filePath));
     }
 
     @DeleteMapping("{id}/images")
     public ResponseEntity<String> deleteImageFromMuscle(@PathVariable Long id, @RequestParam String fileUrl) {
-        muscleService.deleteImageFromMuscle(id, fileUrl);
+        muscleServiceImpl.deleteImageFromMuscle(id, fileUrl);
         return ResponseEntity.ok("Image was successfully deleted from muscle");
     }
 
     @DeleteMapping("{id}/images/delete-all")
     public ResponseEntity<String> deleteAllImagesFromMuscle(@PathVariable Long id) {
-        muscleService.deleteAllImagesFromMuscle(id);
+        muscleServiceImpl.deleteAllImagesFromMuscle(id);
         return ResponseEntity.ok("All images was successfully deleted from muscle");
-    }
+    }*/
 
 
 }

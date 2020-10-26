@@ -1,25 +1,12 @@
 package codeenthusiast.TrainingCenterApp.image;
 
-import org.springframework.stereotype.Service;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
 
-@Service
-public class ImageService {
-
-    private ImageRepository imageRepository;
-
-    public ImageService(ImageRepository imageRepository) {
-        this.imageRepository = imageRepository;
-    }
+public interface ImageService extends AbstractService<Image, ImageDTO> {
 
     //todo add Cloudinary api here and adding img methods.
+    Image createNewImage(String filePath);
 
-    public Image createNewImage(String filePath) {
-        return new Image();
-    }
-
-    public Image findByFileUrl(String fileUrl) {
-        return new Image();
-    }
-
+    Image findByFileUrl(String fileUrl);
 
 }

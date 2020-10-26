@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.trainingsession;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.Difficulty;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import lombok.Getter;
@@ -15,11 +16,9 @@ import java.time.LocalTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TrainingSession {
+public class TrainingSession extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     private String name;
 

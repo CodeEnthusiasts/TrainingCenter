@@ -1,4 +1,13 @@
 package codeenthusiast.TrainingCenterApp.image;
 
-public class ImageDTO {
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class ImageDTO extends AbstractDTO {
+
+    private String filePath;
+    private String fileUrl;
 }

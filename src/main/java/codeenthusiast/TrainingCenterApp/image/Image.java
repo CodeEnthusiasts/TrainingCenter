@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.image;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,11 +14,9 @@ import javax.persistence.Id;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Image {
+public class Image extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     private String filePath;
 

@@ -12,6 +12,7 @@ import javax.persistence.MappedSuperclass;
 @AllArgsConstructor
 public abstract class Exercise {
 
+
     private Exercisable exercise;
 
     int sets;

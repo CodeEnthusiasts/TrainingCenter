@@ -1,7 +1,7 @@
 package codeenthusiast.TrainingCenterApp.user;
 
 import codeenthusiast.TrainingCenterApp.movement.CustomMovement;
-import codeenthusiast.TrainingCenterApp.training.TrainingPlan;
+import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,7 +1,6 @@
-package codeenthusiast.TrainingCenterApp.training;
+package codeenthusiast.TrainingCenterApp.priority;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
+import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -1,7 +1,7 @@
-package codeenthusiast.TrainingCenterApp.training;
+package codeenthusiast.TrainingCenterApp.trainingsession;
 
 import codeenthusiast.TrainingCenterApp.constants.Difficulty;
-import codeenthusiast.TrainingCenterApp.exercise.Exercise;
+import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +10,6 @@ import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.List;
 
 @Entity(name = "training_sessions")
 @Getter

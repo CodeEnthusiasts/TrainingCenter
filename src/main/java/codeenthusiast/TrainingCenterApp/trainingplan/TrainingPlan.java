@@ -1,6 +1,8 @@
-package codeenthusiast.TrainingCenterApp.training;
+package codeenthusiast.TrainingCenterApp.trainingplan;
 
 import codeenthusiast.TrainingCenterApp.constants.Difficulty;
+import codeenthusiast.TrainingCenterApp.priority.Priority;
+import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import codeenthusiast.TrainingCenterApp.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

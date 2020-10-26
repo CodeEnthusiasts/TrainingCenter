@@ -1,12 +1,11 @@
-package codeenthusiast.TrainingCenterApp.training;
+package codeenthusiast.TrainingCenterApp.trainingplan;
 
 import codeenthusiast.TrainingCenterApp.constants.Difficulty;
-import codeenthusiast.TrainingCenterApp.user.User;
+import codeenthusiast.TrainingCenterApp.priority.PrioritySuperficialDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -21,6 +20,6 @@ public class TrainingPlanSuperficialDTO {
 
     private Difficulty difficulty;
 
-    private List<Priority> priorities;
+    private List<PrioritySuperficialDTO> priorities;
 
 }

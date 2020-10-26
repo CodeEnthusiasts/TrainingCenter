@@ -1,6 +1,7 @@
 package codeenthusiast.TrainingCenterApp.trainingsession;
 
 import codeenthusiast.TrainingCenterApp.constants.Difficulty;
+import codeenthusiast.TrainingCenterApp.exercise.Exercise;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity(name = "training_sessions")
 @Getter
@@ -26,8 +28,8 @@ public class TrainingSession {
     @ManyToOne
     private TrainingPlan trainingPlan;
 
-//    @OneToMany
-//    private List<? extends Exercise> exercises;
+    @OneToMany(mappedBy = "trainingPlan")
+    private List<? extends Exercise> exercises;
 
     @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;

@@ -1,30 +1,25 @@
 package codeenthusiast.TrainingCenterApp.record.custom;
 
-import codeenthusiast.TrainingCenterApp.record.custom.CustomRecordDTO;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
-public class CustomRecord {
+public class CustomRecord extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
+    @NotNull
     private String description;
-
+    @NotNull
     private double value;
-
+    @NotNull
     private LocalDate setDate;
 
     public CustomRecord(CustomRecordDTO customRecord) {

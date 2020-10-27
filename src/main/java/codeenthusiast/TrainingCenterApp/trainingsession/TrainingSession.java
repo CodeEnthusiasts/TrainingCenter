@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.trainingsession;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.Difficulty;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
@@ -17,11 +18,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TrainingSession {
+public class TrainingSession extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+
 
     private String name;
 

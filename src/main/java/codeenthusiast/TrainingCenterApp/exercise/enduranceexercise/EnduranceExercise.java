@@ -1,10 +1,12 @@
 package codeenthusiast.TrainingCenterApp.exercise.enduranceexercise;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.DistanceUnit;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
 import codeenthusiast.TrainingCenterApp.movement.Motion;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -19,10 +21,10 @@ public class EnduranceExercise extends Exercise {
     @Enumerated(EnumType.STRING)
     private DistanceUnit distanceUnit;
 
+    private int[] distance;
+  
     @ManyToOne
     private TrainingSession trainingSession;
-
-    private int distance[];
 
     @Enumerated(EnumType.STRING)
     private TimeUnit timeUnit;

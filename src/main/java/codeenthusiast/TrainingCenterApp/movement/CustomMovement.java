@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.movement;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.user.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,9 +13,7 @@ import javax.persistence.ManyToOne;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CustomMovement extends Motion {
+public class CustomMovement extends AbstractEntity implements Exercisable{
 
-    @ManyToOne
-    private User user;
-
+    private String name;
 }

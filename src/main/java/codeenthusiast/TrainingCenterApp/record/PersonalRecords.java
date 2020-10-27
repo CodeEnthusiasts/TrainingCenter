@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.record;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.record.custom.CustomRecord;
 import codeenthusiast.TrainingCenterApp.record.endurance.EnduranceRecord;
 import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecord;
@@ -10,11 +11,8 @@ import java.util.List;
 
 @Entity
 @Embeddable
-public class PersonalRecords {
+public class PersonalRecords extends AbstractEntity {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @OneToMany
     private List<StrengthRecord> strengthRecords = new ArrayList<>();

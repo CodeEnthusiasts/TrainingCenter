@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.movement;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
 import codeenthusiast.TrainingCenterApp.image.ImageDTO;
 import codeenthusiast.TrainingCenterApp.muscle.MuscleDTO;
 import lombok.AllArgsConstructor;
@@ -14,9 +15,9 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MovementDTO {
+public class MovementDTO extends AbstractDTO {
 
-    @NotNull
+
     private String name;
 
     private List<MuscleDTO> musclesInvolved;

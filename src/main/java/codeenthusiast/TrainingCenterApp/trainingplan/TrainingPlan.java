@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.trainingplan;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.Difficulty;
 import codeenthusiast.TrainingCenterApp.priority.Priority;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
@@ -16,11 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class TrainingPlan {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class TrainingPlan extends AbstractEntity {
 
     @OneToMany(mappedBy = "trainingPlan")
     private List<TrainingSession> trainingSessions;

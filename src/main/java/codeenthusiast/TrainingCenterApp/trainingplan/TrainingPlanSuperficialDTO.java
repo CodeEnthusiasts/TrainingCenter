@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.trainingplan;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
 import codeenthusiast.TrainingCenterApp.constants.Difficulty;
 import codeenthusiast.TrainingCenterApp.priority.PrioritySuperficialDTO;
 import lombok.AllArgsConstructor;
@@ -12,7 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @AllArgsConstructor
-public class TrainingPlanSuperficialDTO {
+public class TrainingPlanSuperficialDTO extends AbstractDTO {
 
     private LocalDate startDate;
 

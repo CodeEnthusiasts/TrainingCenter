@@ -7,6 +7,7 @@ import codeenthusiast.TrainingCenterApp.movement.Motion;
 import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;

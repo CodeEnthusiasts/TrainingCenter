@@ -77,7 +77,6 @@ class CustomRecordServiceTest {
 
         //then
         assertAll(
-                () -> assertThat(result, not(hasProperty("id"))),
                 () -> assertThat(result.getDescription(), equalTo(recordI.getDescription())),
                 () -> assertThat(result.getSetDate(), equalTo(recordI.getSetDate())));
     }
@@ -91,8 +90,7 @@ class CustomRecordServiceTest {
         //then
         assertAll(
                 () -> assertThat(result.size(), equalTo(customRecords.size())),
-                () -> assertThat(result.get(0).getDescription(), equalTo(customRecords.get(0).getDescription())),
-                () -> assertThat(result.get(1), not(hasProperty("id"))));
+                () -> assertThat(result.get(0).getDescription(), equalTo(customRecords.get(0).getDescription())));
     }
 
 
@@ -108,7 +106,6 @@ class CustomRecordServiceTest {
         //then
         assertAll(
                 () -> assertThat(result.size(), equalTo(customRecords.size())),
-                () -> assertThat(result.get(0), not(hasProperty("id"))),
                 () -> assertThat(result.get(1).getDescription(), equalTo("Walking on the hands")));
     }
 

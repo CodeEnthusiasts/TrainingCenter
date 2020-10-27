@@ -3,7 +3,7 @@ package codeenthusiast.TrainingCenterApp.exercise.strengthexercise;
 import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
 import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
-import codeenthusiast.TrainingCenterApp.movement.Motion;
+import codeenthusiast.TrainingCenterApp.movement.Exercisable;
 import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import lombok.Getter;
@@ -33,10 +33,10 @@ public class StrengthExercise extends Exercise{
     @Embedded
     private StrengthExerciseDetails strengthExerciseDetails;
 
-    public StrengthExercise(Long id, Motion motion, int sets,
+    public StrengthExercise(Long id, Exercisable exercisable, int sets,
                             RepetitionUnit repetitionUnit, TrainingSession trainingSession,
                             int[] reps, WeightUnit weightUnit, int[] weights, StrengthExerciseDetails strengthExerciseDetails) {
-        super(id, motion, sets);
+        super(id, exercisable, sets);
         this.repetitionUnit = repetitionUnit;
         this.trainingSession = trainingSession;
         this.reps = reps;

@@ -82,7 +82,6 @@ class StrengthRecordServiceTest {
 
         //then
         assertAll(
-                () -> assertThat(result, not(hasProperty("id"))),
                 () -> assertThat(result.getExerciseName(), equalTo(squatRM.getExerciseName())),
                 () -> assertThat(result.getSetDate(), equalTo(squatRM.getSetDate())));
     }
@@ -96,8 +95,7 @@ class StrengthRecordServiceTest {
         //then
         assertAll(
                 () -> assertThat(result.size(), equalTo(strengthRecords.size())),
-                () -> assertThat(result.get(0).getExerciseName(), equalTo(strengthRecords.get(0).getExerciseName())),
-                () -> assertThat(result.get(1), not(hasProperty("id"))));
+                () -> assertThat(result.get(0).getExerciseName(), equalTo(strengthRecords.get(0).getExerciseName())));
     }
 
 
@@ -114,7 +112,6 @@ class StrengthRecordServiceTest {
         //then
         assertAll(
                 () -> assertThat(result.size(), equalTo(strengthRecords.size())),
-                () -> assertThat(result.get(0), not(hasProperty("id"))),
                 () -> assertThat(result.get(1).getExerciseName(), equalTo("Bench press")));
     }
 
@@ -133,7 +130,6 @@ class StrengthRecordServiceTest {
         //then
         assertAll(
                 () -> assertThat(result.size(), equalTo(squatRecords.size())),
-                () -> assertThat(result.get(0), not(hasProperty("id"))),
                 () -> assertThat(result.get(1).getExerciseName(), equalTo("Squat")));
     }
 

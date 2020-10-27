@@ -3,7 +3,8 @@ package codeenthusiast.TrainingCenterApp.exercise.strengthexercise;
 import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
 import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
-import codeenthusiast.TrainingCenterApp.movement.Exercisable;
+import codeenthusiast.TrainingCenterApp.movement.Motion;
+import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,11 +14,7 @@ import javax.persistence.*;
 @Entity(name = "strength_exercises")
 @Getter
 @Setter
-public class StrengthExercise extends Exercise {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class StrengthExercise extends Exercise{
 
     @Enumerated(EnumType.STRING)
     private RepetitionUnit repetitionUnit;
@@ -35,11 +32,12 @@ public class StrengthExercise extends Exercise {
     @Embedded
     private StrengthExerciseDetails strengthExerciseDetails;
 
-    public StrengthExercise(TrainingSession trainingSession, Exercisable exercise, int sets,
-                            RepetitionUnit repetitionUnit, int[] reps, WeightUnit weightUnit,
-                            int[] weights, StrengthExerciseDetails strengthExerciseDetails) {
-        super(trainingSession, exercise, sets);
+    public StrengthExercise(Long id, Motion motion, int sets,
+                            RepetitionUnit repetitionUnit, TrainingSession trainingSession,
+                            int[] reps, WeightUnit weightUnit, int[] weights, StrengthExerciseDetails strengthExerciseDetails) {
+        super(id, motion, sets);
         this.repetitionUnit = repetitionUnit;
+        this.trainingSession = trainingSession;
         this.reps = reps;
         this.weightUnit = weightUnit;
         this.weights = weights;

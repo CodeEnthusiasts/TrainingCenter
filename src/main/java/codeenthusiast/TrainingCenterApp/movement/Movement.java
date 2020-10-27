@@ -7,7 +7,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
@@ -15,13 +16,7 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Movement implements Exercisable {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String name;
+public class Movement extends Motion {
 
     @OneToMany
     private List<Muscle> musclesInvolved;
@@ -29,19 +24,19 @@ public class Movement implements Exercisable {
     @OneToMany
     private List<Image> images;
 
-    private void addInvolvedMuscle(Muscle muscle){
+    private void addInvolvedMuscle(Muscle muscle) {
         musclesInvolved.add(muscle);
     }
 
-    private void deleteInvolvedMuscle(Muscle muscle){
+    private void deleteInvolvedMuscle(Muscle muscle) {
         musclesInvolved.add(muscle);
     }
 
-    private void addImage(Image image){
+    private void addImage(Image image) {
         images.add(image);
     }
 
-    private void deleteImage(Image image){
+    private void deleteImage(Image image) {
         images.add(image);
     }
 

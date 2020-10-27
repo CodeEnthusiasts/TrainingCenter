@@ -1,24 +1,25 @@
 package codeenthusiast.TrainingCenterApp.exercise;
 
-import codeenthusiast.TrainingCenterApp.movement.Exercisable;
-import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
+import codeenthusiast.TrainingCenterApp.movement.Motion;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.ManyToOne;
-import javax.persistence.MappedSuperclass;
+import javax.persistence.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
-@MappedSuperclass
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public abstract class Exercise {
 
-    @ManyToOne
-    private TrainingSession trainingSession;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
-    private Exercisable exercisable;
+    @OneToOne
+    private Motion motion;
 
     int sets;
 }

@@ -86,7 +86,6 @@ class EnduranceRecordServiceTest {
 
         //then
         assertAll(
-                () -> assertThat(result, not(hasProperty("id"))),
                 () -> assertThat(result.getExerciseName(), equalTo(sprint100m.getExerciseName())),
                 () -> assertThat(result.getSetDate(), equalTo(sprint100m.getSetDate())));
     }
@@ -100,8 +99,7 @@ class EnduranceRecordServiceTest {
         //then
         assertAll(
                 () -> assertThat(result.size(), equalTo(enduranceRecords.size())),
-                () -> assertThat(result.get(0).getExerciseName(), equalTo(enduranceRecords.get(0).getExerciseName())),
-                () -> assertThat(result.get(1), not(hasProperty("id"))));
+                () -> assertThat(result.get(0).getExerciseName(), equalTo(enduranceRecords.get(0).getExerciseName())));
     }
 
 
@@ -118,7 +116,6 @@ class EnduranceRecordServiceTest {
         //then
         assertAll(
                 () -> assertThat(result.size(), equalTo(enduranceRecords.size())),
-                () -> assertThat(result.get(0), not(hasProperty("id"))),
                 () -> assertThat(result.get(1).getExerciseName(), equalTo("Marathon")));
     }
 
@@ -134,7 +131,6 @@ class EnduranceRecordServiceTest {
         //then
         assertAll(
                 () -> assertThat(result.size(), equalTo(sprint100mRecords.size())),
-                () -> assertThat(result.get(0), not(hasProperty("id"))),
                 () -> assertThat(result.get(1).getExerciseName(), equalTo("Sprint - 100m")));
     }
 

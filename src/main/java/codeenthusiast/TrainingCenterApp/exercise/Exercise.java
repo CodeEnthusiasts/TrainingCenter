@@ -1,6 +1,6 @@
 package codeenthusiast.TrainingCenterApp.exercise;
 
-import codeenthusiast.TrainingCenterApp.movement.Motion;
+import codeenthusiast.TrainingCenterApp.movement.Exercisable;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +19,7 @@ public abstract class Exercise {
     private Long id;
 
     @OneToOne
-    private Motion motion;
+    private Exercisable exercisable;
 
     int sets;
 }

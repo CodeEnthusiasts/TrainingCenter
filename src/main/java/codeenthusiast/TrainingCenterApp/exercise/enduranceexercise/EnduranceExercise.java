@@ -3,7 +3,7 @@ package codeenthusiast.TrainingCenterApp.exercise.enduranceexercise;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.DistanceUnit;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
-import codeenthusiast.TrainingCenterApp.movement.Motion;
+import codeenthusiast.TrainingCenterApp.movement.Exercisable;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -34,10 +34,10 @@ public class EnduranceExercise extends Exercise {
     @Embedded
     private EnduranceExerciseDetails enduranceExerciseDetails;
 
-    public EnduranceExercise(Long id, Motion motion, int sets, DistanceUnit distanceUnit,
+    public EnduranceExercise(Long id, Exercisable exercisable, int sets, DistanceUnit distanceUnit,
                              TrainingSession trainingSession, int[] distance, TimeUnit timeUnit,
                              Duration[] time, EnduranceExerciseDetails enduranceExerciseDetails) {
-        super(id, motion, sets);
+        super(id, exercisable, sets);
         this.distanceUnit = distanceUnit;
         this.trainingSession = trainingSession;
         this.distance = distance;

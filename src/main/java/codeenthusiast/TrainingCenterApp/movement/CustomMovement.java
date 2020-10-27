@@ -6,14 +6,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 @Getter
 @Setter
-@NoArgsConstructor
-public class CustomMovement extends AbstractEntity implements Exercisable{
+public class CustomMovement extends Exercisable{
 
-    private String name;
+    @ManyToOne
+    private User user;
+
+    public CustomMovement(String name) {
+        super(name);
+    }
 }

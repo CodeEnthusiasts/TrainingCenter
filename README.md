@@ -57,3 +57,12 @@ JWT Token security <br>
  React-testing-library <br>
  Reac-router
  Axios <br>
+ 
+ ## Contributors
+ Damian Naglak <br>
+ Paweł Karpiel <br>
+ Paweł Abramowicz <br>
+ Przemysław Saja <br>
+ Igor Chmielewski <br>
+ Agnieszka Dzierzkowska <br>
+ Karol Kaczorowski <br>

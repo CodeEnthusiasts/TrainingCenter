@@ -59,10 +59,10 @@ JWT Token security <br>
  Axios <br>
  
  ## Contributors
- Damian Naglak <br>
- Paweł Karpiel <br>
- Paweł Abramowicz <br>
- Przemysław Saja <br>
- Igor Chmielewski <br>
- Agnieszka Dzierzkowska <br>
- Karol Kaczorowski <br>
+ Damian Naglak - concept, backend, project management, group formation<br>
+ Paweł Karpiel - backend<br>
+ Paweł Abramowicz - mentor, guidenance <br>
+ Przemysław Saja - frontend, concept<br>
+ Igor Chmielewski - backend <br>
+ Agnieszka Dzierzkowska - ui/ux <br>
+ Karol Kaczorowski - frontend <br>

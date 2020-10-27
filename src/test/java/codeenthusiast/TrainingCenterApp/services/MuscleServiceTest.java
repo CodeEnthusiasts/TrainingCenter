@@ -1,11 +1,13 @@
 package codeenthusiast.TrainingCenterApp.services;
 
-import codeenthusiast.TrainingCenterApp.dto.MuscleDTO;
-import codeenthusiast.TrainingCenterApp.entities.Image;
-import codeenthusiast.TrainingCenterApp.entities.Muscle;
+import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
+import codeenthusiast.TrainingCenterApp.muscle.MuscleDTO;
+import codeenthusiast.TrainingCenterApp.image.Image;
+import codeenthusiast.TrainingCenterApp.muscle.Muscle;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyFoundException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.repositories.MuscleRepository;
+import codeenthusiast.TrainingCenterApp.muscle.MuscleServiceImpl;
+import codeenthusiast.TrainingCenterApp.muscle.MuscleRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,7 +18,6 @@ import org.mockito.quality.Strictness;
 import org.modelmapper.ModelMapper;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,49 +48,47 @@ class MuscleServiceTest {
     MuscleRepository muscleRepository;
 
     @Mock
-    ImageService imageService;
+    ImageServiceImpl imageService;
 
-    MuscleService muscleService;
+    MuscleServiceImpl muscleServiceImpl;
 
     @BeforeEach
     void setUp() {
 
         modelMapper = new ModelMapper();
-        hamstring = new Muscle("Hamstring", "Hamstring description", new ArrayList<>());
-        chest = new Muscle("Chest", "Chest description", new ArrayList<>());
-        triceps = new MuscleDTO("Triceps", "Triceps description", new ArrayList<>());
-        glute = new MuscleDTO("Glute", "Glute description", new ArrayList<>());
+        hamstring = new Muscle("Hamstring", "Hamstring description");
+        chest = new Muscle("Chest", "Chest description");
+        triceps = new MuscleDTO("Triceps", "Triceps description");
+        glute = new MuscleDTO("Glute", "Glute description");
 
         frontImage = new Image("secret-folder", "front-image");
         sideImage = new Image("secret-folder", "side-image");
 
-        muscleService = new MuscleService(muscleRepository, imageService);
+        muscleServiceImpl = new MuscleServiceImpl(muscleRepository, imageService);
     }
 
     @Test
     @DisplayName("Check if entity don't have id and isInjured params")
     void shouldMapFromMuscleToMuscleDTO() {
         //given + when
-        MuscleDTO mappedMuscle = muscleService.mapToMuscleDTO(chest);
+        MuscleDTO mappedMuscle = muscleServiceImpl.mapToMuscleDTO(chest);
 
         //then
         assertAll(
                 () -> assertThat(mappedMuscle, not(hasProperty("id"))),
                 () -> assertThat(mappedMuscle, not(hasProperty("isInjured"))),
-                () -> assertThat(mappedMuscle.getName(), is(chest.getName()))
-        );
+                () -> assertThat(mappedMuscle.getName(), is(chest.getName())));
     }
 
     @Test
     @DisplayName("Check if entity have new properties : id and isInjured")
     void shouldMapFromMuscleDTOtoMap() {
         //given + when
-        Muscle mappedMuscle = muscleService.mapToMuscle(triceps);
+        Muscle mappedMuscle = muscleServiceImpl.mapToMuscle(triceps);
 
         //then
         assertAll(
                 () -> assertThat(mappedMuscle, hasProperty("id", nullValue())),
-                () -> assertFalse(mappedMuscle.isInjured()),
                 () -> assertThat(mappedMuscle.getName(), is(triceps.getName()))
         );
     }
@@ -101,7 +100,7 @@ class MuscleServiceTest {
         given(muscleRepository.existsByName("Chest")).willReturn(true);
 
         //when
-        boolean result = muscleService.existsByName("Chest");
+        boolean result = muscleServiceImpl.existsByName("Chest");
 
         //then
         assertThat(result, is(true));
@@ -114,7 +113,7 @@ class MuscleServiceTest {
         given(muscleRepository.existsByName("Biceps")).willReturn(false);
 
         //when
-        boolean result = muscleService.existsByName("Biceps");
+        boolean result = muscleServiceImpl.existsByName("Biceps");
 
         //then
         assertThat(result, is(false));
@@ -127,7 +126,7 @@ class MuscleServiceTest {
         given(muscleRepository.existsById(1L)).willReturn(true);
 
         //when
-        boolean result = muscleService.existsById(1L);
+        boolean result = muscleServiceImpl.existsById(1L);
 
         //then
         assertThat(result, is(true));
@@ -140,7 +139,7 @@ class MuscleServiceTest {
         given(muscleRepository.existsById(400L)).willReturn(false);
 
         //when
-        boolean result = muscleService.existsById(400L);
+        boolean result = muscleServiceImpl.existsById(400L);
 
         //then
         assertThat(result, is(false));
@@ -154,7 +153,7 @@ class MuscleServiceTest {
         given(muscleRepository.findAll()).willReturn(muscles);
 
         //when
-        List<MuscleDTO> result = muscleService.getAllMuscles();
+        List<MuscleDTO> result = muscleServiceImpl.getAllMuscles();
 
         //then
         assertAll(
@@ -171,7 +170,7 @@ class MuscleServiceTest {
         given(muscleRepository.findById(1L)).willReturn(java.util.Optional.ofNullable(hamstring));
 
         //when
-        MuscleDTO muscle = muscleService.getMuscle(1L);
+        MuscleDTO muscle = muscleServiceImpl.getMuscle(1L);
 
         //then
         assertAll(
@@ -190,7 +189,7 @@ class MuscleServiceTest {
 
         //then
         assertThrows(EntityNotFoundException.class, () ->
-                muscleService.getMuscle(500L));
+                muscleServiceImpl.getMuscle(500L));
     }
 
     @Test
@@ -201,7 +200,7 @@ class MuscleServiceTest {
                 .willReturn(java.util.Optional.ofNullable(hamstring));
 
         //when
-        Muscle muscle = muscleService.getMuscleEntity(2L);
+        Muscle muscle = muscleServiceImpl.getMuscleEntity(2L);
 
         //then
         assertAll(
@@ -219,7 +218,7 @@ class MuscleServiceTest {
 
         //then
         assertThrows(EntityNotFoundException.class, () ->
-                muscleService.getMuscleEntity(500L));
+                muscleServiceImpl.getMuscleEntity(500L));
     }
 
     @Test
@@ -230,7 +229,7 @@ class MuscleServiceTest {
         Muscle mappedGlute = modelMapper.map(glute, Muscle.class);
 
         //when
-        MuscleDTO result = muscleService.createMuscle(glute);
+        MuscleDTO result = muscleServiceImpl.createMuscle(glute);
 
         //them
         assertAll(
@@ -249,7 +248,7 @@ class MuscleServiceTest {
 
         //then
         assertThrows(EntityAlreadyFoundException.class, () ->
-                muscleService.createMuscle(glute));
+                muscleServiceImpl.createMuscle(glute));
     }
 
     @Test
@@ -259,7 +258,7 @@ class MuscleServiceTest {
         given(muscleRepository.existsById(3L)).willReturn(true);
 
         //when
-        muscleService.deleteMuscle(3L);
+        muscleServiceImpl.deleteMuscle(3L);
 
         //then
         verify(muscleRepository, times(1)).deleteById(3L);
@@ -269,12 +268,12 @@ class MuscleServiceTest {
     @DisplayName("Check if meal with correct and id is updated by correct data meal")
     void shouldUpdateMealWhenDataIsCorrect() {
         //given
-        MuscleDTO calves = new MuscleDTO("Calves", "Calves description", new ArrayList<>());
+        MuscleDTO calves = new MuscleDTO("Calves", "Calves description");
         given(muscleRepository.existsById(5L)).willReturn(true);
         given(muscleRepository.existsByName("Calves")).willReturn(false);
 
         //when
-        MuscleDTO result = muscleService.updateMuscle(5L, calves);
+        MuscleDTO result = muscleServiceImpl.updateMuscle(5L, calves);
 
         //then
         assertAll(
@@ -287,25 +286,25 @@ class MuscleServiceTest {
     @DisplayName("Check if exception is thrown when muscle of given id does not exist")
     void shouldThrownAnExceptionWhenUpdateMealOfInexistentId() {
         //given + when
-        MuscleDTO calves = new MuscleDTO("Calves", "Calves description", new ArrayList<>());
+        MuscleDTO calves = new MuscleDTO("Calves", "Calves description");
         given(muscleRepository.existsById(5L)).willReturn(false);
 
         //then
         assertThrows(EntityNotFoundException.class, () ->
-                muscleService.updateMuscle(5L, calves));
+                muscleServiceImpl.updateMuscle(5L, calves));
     }
 
     @Test
     @DisplayName("Check if exception is thrown when update muscle of existent name")
     void shouldThrowAnExceptionWhenTryToUpdateMuscleToExistentName() {
         //given + when
-        MuscleDTO calves = new MuscleDTO("Calves", "Calves description", new ArrayList<>());
+        MuscleDTO calves = new MuscleDTO("Calves", "Calves description");
         given(muscleRepository.existsById(5L)).willReturn(true);
         given(muscleRepository.existsByName("Calves")).willReturn(true);
 
         //then
         assertThrows(EntityAlreadyFoundException.class, () ->
-                muscleService.updateMuscle(5L, calves));
+                muscleServiceImpl.updateMuscle(5L, calves));
     }
 
 
@@ -317,7 +316,7 @@ class MuscleServiceTest {
         given(imageService.createNewImage("secret/path")).willReturn(frontImage);
 
         //when
-        MuscleDTO muscle = muscleService.addImageToMuscle(1L, "secret/path");
+        MuscleDTO muscle = muscleServiceImpl.addImageToMuscle(1L, "secret/path");
 
         //then
         assertAll(
@@ -333,7 +332,7 @@ class MuscleServiceTest {
         given(imageService.findByFileUrl("secret/path")).willReturn(frontImage);
 
         //when
-        muscleService.deleteImageFromMuscle(1L, "secret/path");
+        muscleServiceImpl.deleteImageFromMuscle(1L, "secret/path");
 
         //then
         assertAll(
@@ -349,7 +348,7 @@ class MuscleServiceTest {
         given(muscleRepository.findById(1L)).willReturn(java.util.Optional.ofNullable(hamstring));
 
         //when
-        muscleService.deleteAllImagesFromMuscle(1L);
+        muscleServiceImpl.deleteAllImagesFromMuscle(1L);
 
         //then
         assertThat(chest.getImages().size(), equalTo(0));

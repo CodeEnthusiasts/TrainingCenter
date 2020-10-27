@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.exercise.strengthexercise;
+package codeenthusiast.TrainingCenterApp.exercise.strengthexercise.pace;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

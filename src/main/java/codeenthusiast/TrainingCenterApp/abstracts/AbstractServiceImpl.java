@@ -1,18 +1,17 @@
 package codeenthusiast.TrainingCenterApp.abstracts;
 
-import codeenthusiast.TrainingCenterApp.mappers.AbstractMapper;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public abstract class AbstractServiceImpl<E extends AbstractEntity, D extends AbstractDTO> implements AbstractService<E, D> {
 
-    private final AbstractReposiotory<E> reposiotory;
+    private final AbstractRepository<E> repository;
 
     private final AbstractMapper<E, D> mapper;
 
-    public AbstractServiceImpl(AbstractReposiotory<E> reposiotory, AbstractMapper<E, D> mapper) {
-        this.reposiotory = reposiotory;
+    public AbstractServiceImpl(AbstractRepository<E> repository, AbstractMapper<E, D> mapper) {
+        this.repository = repository;
         this.mapper = mapper;
     }
 
@@ -21,29 +20,29 @@ public abstract class AbstractServiceImpl<E extends AbstractEntity, D extends Ab
     public D update(Long id, D dto) {
         dto.setId(id);
         E entity = mapper.mapToEntity(dto);
-        return mapper.mapToDTO(reposiotory.save(entity));
+        return mapper.mapToDTO(repository.save(entity));
     }
 
     @Override
     @Transactional(readOnly = true)
     public D findById(Long id) {
-        E entity = reposiotory.getOne(id);
+        E entity = repository.getOne(id);
         return mapper.mapToDTO(entity);
     }
 
     @Override
     public D save(D dto) {
         E entity = mapper.mapToEntity(dto);
-        return mapper.mapToDTO(reposiotory.save(entity));
+        return mapper.mapToDTO(repository.save(entity));
     }
 
     @Override
     public void delete(Long id) {
-        reposiotory.deleteById(id);
+        repository.deleteById(id);
     }
 
     @Override
     public List<D> getAll() {
-        return mapper.mapToDTOs(reposiotory.findAll());
+        return mapper.mapToDTOs(repository.findAll());
     }
 }

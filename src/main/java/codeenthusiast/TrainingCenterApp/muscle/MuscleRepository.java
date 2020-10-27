@@ -1,12 +1,12 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractReposiotory;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
 @Repository
-public interface MuscleRepository extends AbstractReposiotory<Muscle> {
+public interface MuscleRepository extends AbstractRepository<Muscle> {
 
 
     Optional<Muscle> findByName(String name);

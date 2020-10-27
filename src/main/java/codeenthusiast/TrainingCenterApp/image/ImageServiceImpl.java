@@ -1,8 +1,8 @@
 package codeenthusiast.TrainingCenterApp.image;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractReposiotory;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
-import codeenthusiast.TrainingCenterApp.mappers.AbstractMapper;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.mappers.ImageMapper;
 import org.springframework.stereotype.Service;
 
@@ -12,7 +12,7 @@ public class ImageServiceImpl extends AbstractServiceImpl<Image, ImageDTO> imple
     private final ImageRepository repository;
     private final ImageMapper mapper;
 
-    public ImageServiceImpl(AbstractReposiotory<Image> reposiotory, AbstractMapper<Image, ImageDTO> mapper, ImageRepository repository, ImageMapper mapper1) {
+    public ImageServiceImpl(AbstractRepository<Image> reposiotory, AbstractMapper<Image, ImageDTO> mapper, ImageRepository repository, ImageMapper mapper1) {
         super(reposiotory, mapper);
         this.repository = repository;
         this.mapper = mapper1;

@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.mappers;
+package codeenthusiast.TrainingCenterApp.abstracts;
 
 import java.util.List;
 import java.util.stream.Collectors;

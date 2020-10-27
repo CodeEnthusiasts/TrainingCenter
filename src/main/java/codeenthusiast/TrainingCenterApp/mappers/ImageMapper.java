@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.mappers;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.image.Image;
 import codeenthusiast.TrainingCenterApp.image.ImageDTO;
 import org.mapstruct.Mapper;

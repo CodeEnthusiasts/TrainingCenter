@@ -1,9 +1,9 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractReposiotory;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
 import codeenthusiast.TrainingCenterApp.image.Image;
-import codeenthusiast.TrainingCenterApp.mappers.AbstractMapper;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.mappers.MuscleMapper;
 import org.springframework.stereotype.Service;
 
@@ -14,9 +14,9 @@ public class MuscleServiceImpl extends AbstractServiceImpl<Muscle, MuscleDTO> im
     private final MuscleMapper mapper;
 
 
-    public MuscleServiceImpl(AbstractReposiotory<Muscle> reposiotory, AbstractMapper<Muscle, MuscleDTO> mapper, MuscleRepository repository, MuscleMapper mapper1) {
-        super(reposiotory, mapper);
-        this.repository = repository;
+    public MuscleServiceImpl(AbstractRepository<Muscle> repository, AbstractMapper<Muscle, MuscleDTO> mapper, MuscleRepository repository1, MuscleMapper mapper1) {
+        super(repository, mapper);
+        this.repository = repository1;
         this.mapper = mapper1;
     }
 

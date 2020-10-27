@@ -1,10 +1,8 @@
 package codeenthusiast.TrainingCenterApp.exercise.enduranceexercise;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractReposiotory;
-import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExercise;
-import org.springframework.data.jpa.repository.JpaRepository;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EnduranceExerciseRepository extends AbstractReposiotory {
+public interface EnduranceExerciseRepository extends AbstractRepository {
 }

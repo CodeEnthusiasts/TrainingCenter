@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.entities.units;
+package codeenthusiast.TrainingCenterApp.constants;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.params.ParameterizedTest;

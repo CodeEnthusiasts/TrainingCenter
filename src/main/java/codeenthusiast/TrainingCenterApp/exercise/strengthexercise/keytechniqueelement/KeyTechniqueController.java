@@ -5,11 +5,11 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class KeyTechniqueController extends AbstractController<KeyTechniqueElement, KeyTechniqueElementDTO> {
+public class KeyTechniqueElementController extends AbstractController<KeyTechniqueElement, KeyTechniqueElementDTO> {
 
     private final KeyTechniqueElementServiceImpl keyTechniqueElementService;
 
-    public KeyTechniqueController(KeyTechniqueElementServiceImpl keyTechniqueElementService) {
+    public KeyTechniqueElementController(KeyTechniqueElementServiceImpl keyTechniqueElementService) {
         this.keyTechniqueElementService = keyTechniqueElementService;
     }
 

@@ -2,7 +2,7 @@ package codeenthusiast.TrainingCenterApp.services;
 
 import codeenthusiast.TrainingCenterApp.record.custom.CustomRecordDTO;
 import codeenthusiast.TrainingCenterApp.record.custom.CustomRecord;
-import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyFoundException;
+import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.record.custom.CustomRecordService;
 import codeenthusiast.TrainingCenterApp.record.custom.CustomRecordRepository;
@@ -162,7 +162,7 @@ class CustomRecordServiceTest {
         given(customRecordRepository.existsByDescription("Base-jumping")).willReturn(true);
 
         //then
-        assertThrows(EntityAlreadyFoundException.class,
+        assertThrows(EntityAlreadyExistsException.class,
                 () -> customRecordService.createNewRecord(new CustomRecordDTO("Base-jumping", 12.0, current)));
     }
 

@@ -1,5 +1,3 @@
-package codeenthusiast.TrainingCenterApp.services;
-
 //import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
 //import codeenthusiast.TrainingCenterApp.muscle.MuscleDTO;
 //import codeenthusiast.TrainingCenterApp.image.Image;

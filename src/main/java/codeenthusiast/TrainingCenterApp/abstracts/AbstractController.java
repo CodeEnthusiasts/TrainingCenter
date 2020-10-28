@@ -27,7 +27,7 @@ public abstract class AbstractController<E extends AbstractEntity, D extends Abs
         return getService().update(id, dto);
     }
     @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable("id") Long id)throws Exception{
+    public void delete(@PathVariable("id") Long id)throws Exception {
         getService().delete(id);
     }
 }

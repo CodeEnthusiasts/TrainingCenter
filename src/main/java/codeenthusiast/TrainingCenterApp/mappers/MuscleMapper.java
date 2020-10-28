@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.mappers;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.muscle.Muscle;
 import codeenthusiast.TrainingCenterApp.muscle.MuscleDTO;
 import org.mapstruct.Mapper;

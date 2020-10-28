@@ -1,0 +1,9 @@
+package codeenthusiast.TrainingCenterApp.mappers;
+
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
+import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.keytechniqueelement.KeyTechniqueElement;
+import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.keytechniqueelement.KeyTechniqueElementDTO;
+
+public interface KeyTechniqueElementMapper extends AbstractMapper<KeyTechniqueElement, KeyTechniqueElementDTO> {
+
+}

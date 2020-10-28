@@ -1,6 +1,6 @@
 package codeenthusiast.TrainingCenterApp.record.custom;
 
-import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyFoundException;
+import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
@@ -50,7 +50,7 @@ public class CustomRecordService {
     void validateNewRecord(CustomRecordDTO customRecord) {
         String description = customRecord.getDescription();
         if (customRecordRepository.existsByDescription(description)) {
-            throw new EntityAlreadyFoundException(description);
+            throw new EntityAlreadyExistsException(description);
         }
     }
 

@@ -17,9 +17,12 @@ class KeyTechniqueElementServiceImplTest {
 
     @BeforeEach
     void setUp() {
-        keyTechniqueElement1 = new KeyTechniqueElement("Rozstaw nogi na szerkości barków");
-        keyTechniqueElement2 = new KeyTechniqueElement("Stopy delikatnie na zewnątrz");
-        keyTechniqueElement3 = new KeyTechniqueElement("Napnij mięsnie brzucha");
+        keyTechniqueElement1 = new KeyTechniqueElement("Stand with the bar on your upper-back, " +
+                                                                "and your feet shoulder-width apart.");
+        keyTechniqueElement2 = new KeyTechniqueElement("Stand with the bar on your upper-back, " +
+                                                                "and your feet shoulder-width apart.");
+        keyTechniqueElement3 = new KeyTechniqueElement("Break parallel by Squatting down until " +
+                                                                "your hips are lower than your knees");
     }
 
 //    @Test

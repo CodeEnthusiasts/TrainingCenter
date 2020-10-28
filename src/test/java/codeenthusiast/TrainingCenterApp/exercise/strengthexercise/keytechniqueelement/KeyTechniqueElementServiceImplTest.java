@@ -24,19 +24,4 @@ class KeyTechniqueElementServiceImplTest {
         keyTechniqueElement3 = new KeyTechniqueElement("Break parallel by Squatting down until " +
                                                                 "your hips are lower than your knees");
     }
-
-//    @Test
-//    @DisplayName("Checking method existsById when exists")
-//
-//
-//    @Test
-//    @DisplayName("Checking method existsById when not exists")
-//
-//
-//    @Test
-//    @DisplayName("Checking method existsByName when exists")
-//
-//
-//    @Test
-//    @DisplayName("Checking method existsByName when not exists")
 }

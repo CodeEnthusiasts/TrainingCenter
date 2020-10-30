@@ -1,6 +1,7 @@
 package codeenthusiast.TrainingCenterApp.user;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
+import codeenthusiast.TrainingCenterApp.image.Image;
 import codeenthusiast.TrainingCenterApp.movement.CustomMovement;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import lombok.Getter;
@@ -17,12 +18,14 @@ import java.util.List;
 @NoArgsConstructor
 public class User extends AbstractEntity {
 
-
     private String username;
 
     private String password;
 
     private String email;
+
+    @OneToOne
+    private Image image;
 
     @Embedded
     private UserDetails userDetails;

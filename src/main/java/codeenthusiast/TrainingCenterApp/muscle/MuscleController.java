@@ -20,8 +20,7 @@ public class MuscleController extends AbstractController<Muscle, MuscleDTO> {
         return muscleServiceImpl;
     }
 
-
-/*
+    /*
     @PostMapping("{id}//images")
     public ResponseEntity<MuscleDTO> addImageToMuscle(@PathVariable Long id, @RequestParam String filePath) {
         return ResponseEntity.ok(muscleServiceImpl.addImageToMuscle(id, filePath));

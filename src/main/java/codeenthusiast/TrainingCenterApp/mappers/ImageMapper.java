@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface ImageMapper extends AbstractMapper<Image, ImageDTO> {
+
     ImageMapper INSTANCE = Mappers.getMapper(ImageMapper.class);
 
 

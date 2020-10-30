@@ -9,5 +9,6 @@ import lombok.Setter;
 public class ImageDTO extends AbstractDTO {
 
     private String filePath;
+
     private String fileUrl;
 }

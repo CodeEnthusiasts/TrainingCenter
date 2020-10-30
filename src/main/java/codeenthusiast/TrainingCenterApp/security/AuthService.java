@@ -10,6 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class AuthService {
 
+    public AuthService(UserService userService) {
+        this.userService = userService;
+    }
+
     UserService userService;
 
 

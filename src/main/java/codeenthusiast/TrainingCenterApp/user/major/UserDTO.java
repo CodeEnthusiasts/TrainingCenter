@@ -1,6 +1,8 @@
-package codeenthusiast.TrainingCenterApp.user;
+package codeenthusiast.TrainingCenterApp.user.major;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
+import codeenthusiast.TrainingCenterApp.user.details.UserDetails;
+import codeenthusiast.TrainingCenterApp.user.details.UserDetailsDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,14 +16,14 @@ public class UserDTO extends AbstractDTO {
 
     private String email;
 
-    private UserDetailsDTO userDetailsDto;
+    private UserDetailsDTO userDetailsDTO;
 
     private String imageUrl;
 
-    public UserDTO(String username, String email, UserDetailsDTO userDetailsDto, String imageUrl) {
+    public UserDTO(String username, String email, UserDetailsDTO userDetailsDTO, String imageUrl) {
         this.username = username;
         this.email = email;
-        this.userDetailsDto = userDetailsDto;
+        this.userDetailsDTO = userDetailsDTO;
         this.imageUrl = imageUrl;
     }
 }

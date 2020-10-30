@@ -1,9 +1,10 @@
-package codeenthusiast.TrainingCenterApp.user;
+package codeenthusiast.TrainingCenterApp.user.major;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.image.Image;
 import codeenthusiast.TrainingCenterApp.movement.CustomMovement;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
+import codeenthusiast.TrainingCenterApp.user.details.UserDetails;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -36,11 +37,10 @@ public class User extends AbstractEntity {
     @OneToMany(mappedBy = "user")
     private List<CustomMovement> customMovements = new ArrayList<>();
 
-    public User(String username, String password, String email, UserDetails userDetails) {
+    public User(String username, String password, String email) {
         this.password = password;
         this.username = username;
         this.email = email;
-        this.userDetails = userDetails;
     }
 
     public void addTrainingPlan(TrainingPlan trainingPlan){

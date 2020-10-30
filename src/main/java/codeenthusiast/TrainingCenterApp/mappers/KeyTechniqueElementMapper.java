@@ -3,10 +3,7 @@ package codeenthusiast.TrainingCenterApp.mappers;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.keytechniqueelement.KeyTechniqueElement;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.keytechniqueelement.KeyTechniqueElementDTO;
-import codeenthusiast.TrainingCenterApp.user.User;
-import codeenthusiast.TrainingCenterApp.user.UserDTO;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;

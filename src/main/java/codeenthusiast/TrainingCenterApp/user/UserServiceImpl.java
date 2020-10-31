@@ -22,12 +22,6 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserDTO> implemen
         this.userRepository = userRepository;
     }
 
-//    @Override
-//    public UserDTO addDetails(UserDetailsDTO userDetailsDTO, Long id) {
-//        UserDTO user = findById(id);
-//        return save(user.setUserDetails(userDetailsDTO));
-//    }
-
     @Override
     public boolean existsByUsernameAndPassword(String username, String password) {
         return userRepository.existsByUsernameAndPassword(username, password);

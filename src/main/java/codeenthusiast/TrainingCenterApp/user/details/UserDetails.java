@@ -1,8 +1,9 @@
-package codeenthusiast.TrainingCenterApp.user;
+package codeenthusiast.TrainingCenterApp.user.details;
 
-import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.constants.BodyWeightUnit;
 import codeenthusiast.TrainingCenterApp.constants.HeightUnit;
+import codeenthusiast.TrainingCenterApp.constants.Sex;
+import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

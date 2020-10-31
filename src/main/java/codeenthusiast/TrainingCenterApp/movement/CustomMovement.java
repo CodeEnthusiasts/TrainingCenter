@@ -1,9 +1,7 @@
 package codeenthusiast.TrainingCenterApp.movement;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
-import codeenthusiast.TrainingCenterApp.user.User;
+import codeenthusiast.TrainingCenterApp.user.major.User;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;

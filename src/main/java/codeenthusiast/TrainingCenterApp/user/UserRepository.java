@@ -1,11 +1,11 @@
 package codeenthusiast.TrainingCenterApp.user;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
-import org.springframework.data.jpa.repository.JpaRepository;
+import codeenthusiast.TrainingCenterApp.user.major.User;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends AbstractRepository<User>{
+public interface UserRepository extends AbstractRepository<User> {
 
     boolean existsByUsernameAndPassword(String username, String password);
 

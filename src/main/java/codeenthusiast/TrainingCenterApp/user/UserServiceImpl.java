@@ -3,7 +3,10 @@ package codeenthusiast.TrainingCenterApp.user;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
+import codeenthusiast.TrainingCenterApp.image.ImageDTO;
 import codeenthusiast.TrainingCenterApp.mappers.UserMapper;
+import codeenthusiast.TrainingCenterApp.user.major.User;
+import codeenthusiast.TrainingCenterApp.user.major.UserDTO;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -18,6 +21,12 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserDTO> implemen
         this.userMapper = userMapper;
         this.userRepository = userRepository;
     }
+
+//    @Override
+//    public UserDTO addDetails(UserDetailsDTO userDetailsDTO, Long id) {
+//        UserDTO user = findById(id);
+//        return save(user.setUserDetails(userDetailsDTO));
+//    }
 
     @Override
     public boolean existsByUsernameAndPassword(String username, String password) {
@@ -42,5 +51,19 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserDTO> implemen
     @Override
     public void saveEntity(User user) {
         userRepository.save(user);
+    }
+
+    @Override
+    public UserDTO addImage(Long id, ImageDTO image) {
+        UserDTO user = findById(id);
+        user.setImageUrl(image.getFileUrl());
+        return save(user);
+    }
+
+    @Override
+    public void removeImage(Long id) {
+        UserDTO user = findById(id);
+        user.setImageUrl(null);
+        save(user);
     }
 }

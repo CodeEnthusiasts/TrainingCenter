@@ -1,12 +1,15 @@
-package codeenthusiast.TrainingCenterApp.abstracts;
+package codeenthusiast.TrainingCenterApp.services;
 
+import codeenthusiast.TrainingCenterApp.abstracts.*;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import javax.persistence.EntityManager;
 import java.util.Arrays;
 import java.util.List;
 
@@ -22,6 +25,9 @@ public abstract class AbstractServiceImplTest<ENTITY extends AbstractEntity, DTO
 
     abstract AbstractMapper<ENTITY, DTO> getMapper();
 
+    @Mock
+    EntityManager entityManager;
+
     abstract Class<DTO> getDTOClass();
 
     abstract Class<ENTITY> getEntityClass();
@@ -30,7 +36,7 @@ public abstract class AbstractServiceImplTest<ENTITY extends AbstractEntity, DTO
     ArgumentCaptor<DTO> dtoCaptor;
 
     @Test
-    @DisplayName("Check if a search by id returns DTO, and execute mapping")
+    @DisplayName("Check if a search by id return DTO, and execute mapping")
     public void shouldExecuteMappingAndReturnDTO() {
         //given
         ENTITY returnedEntity = mock(getEntityClass());
@@ -42,7 +48,7 @@ public abstract class AbstractServiceImplTest<ENTITY extends AbstractEntity, DTO
         DTO result = getService().findById(1L);
 
         //then
-        verify(getRepository()).findById(1L);
+        verify(getRepository()).getOne(1L);
         verify(getMapper()).mapToDTO(returnedEntity);
         assertThat(result).isEqualTo(mappedDTO);
     }

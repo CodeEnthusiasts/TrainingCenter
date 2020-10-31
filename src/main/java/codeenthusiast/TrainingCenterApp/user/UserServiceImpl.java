@@ -21,7 +21,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserDTO> implemen
         this.userMapper = userMapper;
         this.userRepository = userRepository;
     }
-
+    // THIS METHODS EXIST ONLY FOR SIMPLE SIGN-UP/IN implementation - will be deleted after adding security
     @Override
     public boolean existsByUsernameAndPassword(String username, String password) {
         return userRepository.existsByUsernameAndPassword(username, password);

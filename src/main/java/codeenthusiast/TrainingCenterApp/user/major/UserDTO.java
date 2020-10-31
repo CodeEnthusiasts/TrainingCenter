@@ -1,7 +1,6 @@
 package codeenthusiast.TrainingCenterApp.user.major;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
-import codeenthusiast.TrainingCenterApp.user.details.UserDetails;
 import codeenthusiast.TrainingCenterApp.user.details.UserDetailsDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,6 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserDTO extends AbstractDTO {
+
 
     private String username;
 

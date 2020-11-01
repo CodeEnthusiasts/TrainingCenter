@@ -114,13 +114,13 @@ git clone https://github.com/CodeEnthusiasts/TrainingCenter.git
 #### FAQ
  
 ## Contributors
-1. Damian Naglak - concept, backend, project management, group formation
-2. Paweł Karpiel - backend
-3. Paweł Abramowicz - mentor, guidenance
-4. Przemysław Saja - frontend, concept
-5. Igor Chmielewski - backend
-6. Agnieszka Dzierzkowska - ui/ux
-7. Karol Kaczorowski - frontend
-8. [Kamil Cecherz](https://github.com/pangeon) - general support
+1. [Damian Naglak](mailto:damiannaglak1@gmail.com) as [naslakboss](https://github.com/naslakboss) - concept, backend, project management, group formation
+2. [Paweł Karpiel](mailto:pawel21599@gmail.com) - backend
+3. [Paweł Abramowicz](mailto:pawel21599@gmail.com) - mentor, guidenance
+4. [Przemysław Saja](mailto:przemyslawsaja@gmail.com) as [przemyslawsaja](https://github.com/przemyslawsaja) - frontend, concept
+5. [Igor Chmielewski](mailto:igorchmielewski@gmail.com) - backend
+6. [Agnieszka Dzierzkowska](mailto:aga.dzierzkowska21@gmail.com) - ui/ux
+7. [Karol Kaczorowski](mailto:KarolKaczorowskiC.dev@gmail.com) as [KarolKaczorowski78](https://github.com/KarolKaczorowski78) - frontend
+8. [Kamil Cecherz](mailto:cecherz@outlook.com) as [pangeon](https://github.com/pangeon) - general support
 
 ## License

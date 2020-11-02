@@ -25,7 +25,7 @@ public class User extends AbstractEntity {
 
     private String email;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Image image;
 
     @Embedded
@@ -43,15 +43,22 @@ public class User extends AbstractEntity {
         this.email = email;
     }
 
-    public void addTrainingPlan(TrainingPlan trainingPlan){
+    public User(String username, String password, String email, UserDetails userDetails) {
+        this.username = username;
+        this.password = password;
+        this.email = email;
+        this.userDetails = userDetails;
+    }
+
+    public void addTrainingPlan(TrainingPlan trainingPlan) {
         trainingPlans.add(trainingPlan);
     }
 
-    public void addCustomMovement(CustomMovement customMovement){
+    public void addCustomMovement(CustomMovement customMovement) {
         customMovements.add(customMovement);
     }
 
-    public void deleteCustomMovement(CustomMovement customMovement){
+    public void deleteCustomMovement(CustomMovement customMovement) {
         customMovements.remove(customMovement);
     }
 

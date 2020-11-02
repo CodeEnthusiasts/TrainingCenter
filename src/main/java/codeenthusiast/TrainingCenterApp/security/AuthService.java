@@ -35,7 +35,8 @@ public class AuthService {
         if (userService.existsByUsername(signUpRequest.getEmail()) || userService.existsByEmail(signUpRequest.getUsername())) {
             return "This user currently exists in database";
         } else if (signUpRequest.getPassword().equals(signUpRequest.getConfirmPassword())) {
-            User user = new User(signUpRequest.getUsername(), signUpRequest.getPassword(), signUpRequest.getEmail());
+            User user = new User(signUpRequest.getUsername(), signUpRequest.getPassword(), signUpRequest.getEmail(),
+            new UserDetails(BodyWeightUnit.KILOGRAMS, 93.0, HeightUnit.METER, 1.82, 21, Sex.MALE, null));
             userService.saveEntity(user);
             return "Your account has successfully been created!";
         } else {

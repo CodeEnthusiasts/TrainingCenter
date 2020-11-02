@@ -4,6 +4,7 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.user.details.UserDetails;
 import codeenthusiast.TrainingCenterApp.user.details.UserDetailsDTO;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 
 import java.util.List;
@@ -16,6 +17,7 @@ public interface UserDetailsMapper extends AbstractMapper<UserDetails, UserDetai
 
     UserDetailsDTO mapToDTO(UserDetails userDetails);
 
+    @Mapping(target = "personalRecords", ignore = true)
     UserDetails mapToEntity(UserDetailsDTO userDetailsDTO);
 
     default List<UserDetails> mapToEntities(List<UserDetailsDTO> dtos) {

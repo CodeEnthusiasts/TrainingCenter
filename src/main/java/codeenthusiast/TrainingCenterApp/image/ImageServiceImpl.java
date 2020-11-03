@@ -5,31 +5,41 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.mappers.ImageMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class ImageServiceImpl extends AbstractServiceImpl<Image, ImageDTO> implements ImageService {
 
     private final ImageRepository repository;
     private final ImageMapper mapper;
+    private final ImageUploader imageUploader;
 
-    public ImageServiceImpl(AbstractRepository<Image> reposiotory, AbstractMapper<Image, ImageDTO> mapper, ImageRepository repository, ImageMapper mapper1) {
+    public ImageServiceImpl(AbstractRepository<Image> reposiotory, AbstractMapper<Image, ImageDTO> mapper, ImageRepository repository, ImageMapper mapper1, ImageUploader imageUploader) {
         super(reposiotory, mapper);
         this.repository = repository;
         this.mapper = mapper1;
-    }
-
-    //todo add Cloudinary api here and adding img methods.
-
-    @Override
-    public Image createNewImage(String filePath) {
-        return new Image();
+        this.imageUploader = imageUploader;
     }
 
     @Override
-    public Image findByFileUrl(String fileUrl) {
-        return new Image();
-
+    public ImageDTO createNewImage(MultipartFile file){
+        String fileUrl = uploadImageOnHosting(file);
+        return new ImageDTO(fileUrl);
     }
+
+    @Override
+    public String uploadImageOnHosting(MultipartFile file) {
+        return imageUploader.uploadImage(file);
+    }
+
+
+
+
+
+
+
+
+
 
 
 }

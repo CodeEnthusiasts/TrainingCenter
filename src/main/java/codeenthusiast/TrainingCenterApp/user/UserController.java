@@ -32,7 +32,7 @@ public class UserController extends AbstractController<User, UserDTO> {
 
     @PostMapping("{id}/image")
     public ResponseEntity<UserDTO> addImage(@PathVariable("id") Long id, @RequestParam ("file") MultipartFile file) {
-        ImageDTO image = imageServiceImpl.saveImage(file);
+        ImageDTO image = imageServiceImpl.createNewImage(file);
         return ResponseEntity.ok(userServiceImpl.addImage(id, image));
     }
 

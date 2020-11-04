@@ -32,9 +32,7 @@ public abstract class AbstractServiceImpl<E extends AbstractEntity, D extends Ab
 
     @Override
     public D save(D dto) {
-        // HERE IS PROBLEM -> mapping UserDTO to User : losing imageUrl, userDetails
         E entity = mapper.mapToEntity(dto);
-        //
         return mapper.mapToDTO(repository.save(entity));
     }
 

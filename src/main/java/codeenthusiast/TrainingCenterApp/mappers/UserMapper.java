@@ -14,18 +14,13 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring", uses = {UserDetailsMapper.class})
 public interface UserMapper extends AbstractMapper<User, UserDTO> {
 
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
 
     @Mapping(target = "imageUrl", source = "image.fileUrl")
     @Mapping(target = "userDetailsDTO", source = "userDetails")
     UserDTO mapToDTO(User entity);
 
-    @InheritInverseConfiguration
-    User mapToEntity(UserDTO dto);
-
-    default List<User> mapToEntities(List<UserDTO> dtos) {
-        return dtos.stream().map(this::mapToEntity).collect(Collectors.toList());
-    }
+    @Override
+    User mapToEntity(UserDTO userDTO);
 
     default List<UserDTO> mapToDTOs(List<User> entities) {
         return entities.stream().map(this::mapToDTO).collect(Collectors.toList());

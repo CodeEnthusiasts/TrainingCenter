@@ -1,21 +1,21 @@
 package codeenthusiast.TrainingCenterApp.mappers;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanSuperficialDTO;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Mapper
-public interface TrainingPlanMapper {
+@Mapper(componentModel = "spring", uses = {PriorityMapper.class})
+public interface TrainingPlanMapper extends AbstractMapper<TrainingPlan, TrainingPlanSuperficialDTO> {
 
-    TrainingPlanMapper INSTANCE = Mappers.getMapper(TrainingPlanMapper.class);
 
-    TrainingPlanSuperficialDTO mapToDTO(TrainingPlan trainingPlan);
+    TrainingPlanSuperficialDTO mapToDTO(TrainingPlan entity);
 
-    default List<TrainingPlanSuperficialDTO> mapToDTOs(List<TrainingPlan> trainingPlans) {
-        return trainingPlans.stream().map(this::mapToDTO).collect(Collectors.toList());
+    default List<TrainingPlanSuperficialDTO> mapToDTOs(List<TrainingPlan> entities) {
+        return entities.stream().map(this::mapToDTO).collect(Collectors.toList());
     }
+
 }

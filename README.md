@@ -120,6 +120,6 @@ git clone https://github.com/CodeEnthusiasts/TrainingCenter.git
 4. [Igor Chmielewski](mailto:igorchmielewski@gmail.com) - backend
 5. [Agnieszka Dzierzkowska](mailto:aga.dzierzkowska21@gmail.com) - ui/ux
 6. [Karol Kaczorowski](mailto:KarolKaczorowskiC.dev@gmail.com) as [KarolKaczorowski78](https://github.com/KarolKaczorowski78) - frontend
-7. [Kamil Cecherz](mailto:cecherz@outlook.com) as [pangeon](https://github.com/pangeon) - general support
+7. [Kamil Cecherz](mailto:cecherz@outlook.com) as [pangeon](https://github.com/pangeon) - update read.me
 
 ## License

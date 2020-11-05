@@ -130,15 +130,15 @@ public class AuthService {
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getEmail(),
                 new codeenthusiast.TrainingCenterApp.user.details.UserDetails(
-                        BodyWeightUnit.KILOGRAMS, 93.0, HeightUnit.METER, 183, 22, Sex.MALE, null));
+                        BodyWeightUnit.KILOGRAMS, 0.0, HeightUnit.METER, 0.0, 0, Sex.MALE, null));
     }
 
     // User generator //
-    @EventListener(ApplicationReadyEvent.class)
-    public void addUser() {
-        Role role = new Role(ERole.ROLE_USER);
-        roleRepository.save(role);
-    }
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void addUser() {
+//        Role role = new Role(ERole.ROLE_USER);
+//        roleRepository.save(role);
+//    }
 
     public void assignUserRole(User user) {
         List<Role> defaultRoles = new ArrayList<>();

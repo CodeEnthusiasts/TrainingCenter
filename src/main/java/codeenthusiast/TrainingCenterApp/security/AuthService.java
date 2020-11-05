@@ -1,46 +1,150 @@
 package codeenthusiast.TrainingCenterApp.security;
 
 import codeenthusiast.TrainingCenterApp.constants.BodyWeightUnit;
+import codeenthusiast.TrainingCenterApp.constants.ERole;
 import codeenthusiast.TrainingCenterApp.constants.HeightUnit;
+import codeenthusiast.TrainingCenterApp.constants.Sex;
+import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
+import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
+import codeenthusiast.TrainingCenterApp.security.jwt.JwtUtils;
 import codeenthusiast.TrainingCenterApp.security.request.LoginRequest;
 import codeenthusiast.TrainingCenterApp.security.request.SignUpRequest;
-import codeenthusiast.TrainingCenterApp.constants.Sex;
+import codeenthusiast.TrainingCenterApp.security.response.JwtResponse;
+import codeenthusiast.TrainingCenterApp.security.response.MessageResponse;
+import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
+import codeenthusiast.TrainingCenterApp.user.UserRepository;
+import codeenthusiast.TrainingCenterApp.user.major.Role;
+import codeenthusiast.TrainingCenterApp.user.major.RoleRepository;
 import codeenthusiast.TrainingCenterApp.user.major.User;
-import codeenthusiast.TrainingCenterApp.user.details.UserDetails;
-import codeenthusiast.TrainingCenterApp.user.UserService;
+
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AuthService {
 
-    public AuthService(UserService userService) {
-        this.userService = userService;
+    private final AuthenticationManager authenticationManager;
+
+    private final JwtUtils jwtUtils;
+
+    private final PasswordEncoder encoder;
+
+    private final UserRepository userRepository;
+
+    private final RoleRepository roleRepository;
+
+    public AuthService(AuthenticationManager authenticationManager,
+                       JwtUtils jwtUtils, UserRepository userRepository,
+                       RoleRepository roleRepository, PasswordEncoder encoder) {
+        this.authenticationManager = authenticationManager;
+        this.jwtUtils = jwtUtils;
+        this.userRepository = userRepository;
+        this.roleRepository = roleRepository;
+        this.encoder = encoder;
     }
 
-    UserService userService;
+    public JwtResponse authenticateUser(LoginRequest loginRequest) {
 
+        Authentication authentication = createUsernamePasswordAuthenticationToken(loginRequest);
 
-    public String login(LoginRequest loginRequest) {
-        if (userService.existsByUsernameAndPassword(loginRequest.getUsernameOrEmail(), loginRequest.getPassword()) ||
-                userService.existsByEmailAndPassword(loginRequest.getUsernameOrEmail(), loginRequest.getPassword())) {
-            return "Logged correctly";
-        } else {
-            return "Combination of credentials is wrong";
+        setAuthentication(authentication);
+
+        String jwt = generateJwtToken(authentication);
+
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+
+        List<String> roles = createNamesOfRoles(userDetails);
+
+        return new JwtResponse(jwt,
+                userDetails.getId(),
+                userDetails.getUsername(),
+                userDetails.getEmail(),
+                roles);
+    }
+
+    public Authentication createUsernamePasswordAuthenticationToken(LoginRequest loginRequest) {
+        return authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+    }
+
+    public void setAuthentication(Authentication authentication) {
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+    }
+
+    public String generateJwtToken(Authentication authentication) {
+        return jwtUtils.generateJwtToken(authentication);
+    }
+
+    public List<String> createNamesOfRoles(UserDetails userDetails) {
+
+        return userDetails.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority)
+                .collect(Collectors.toList());
+    }
+
+    public MessageResponse registerUser(SignUpRequest signUpRequest) {
+
+        validateRequest(signUpRequest);
+
+        User user = createNewUserAccount(signUpRequest);
+
+        assignUserRole(user);
+
+        userRepository.save(user);
+
+        return new MessageResponse("User registered successfully!");
+    }
+
+    public void validateRequest(SignUpRequest signUpRequest) {
+
+        String username = signUpRequest.getUsername();
+        if (userRepository.existsByUsername(username)) {
+            throw new EntityAlreadyExistsException(username);
+        }
+
+        String email = signUpRequest.getEmail();
+        if (userRepository.existsByEmail(email)) {
+            throw new EntityAlreadyExistsException(email);
+        }
+
+        if (!signUpRequest.getPassword().equals(signUpRequest.getConfirmPassword())) {
+            throw new RuntimeException("Passwords are different");
         }
     }
-    @Transactional
-    public String register(SignUpRequest signUpRequest) {
-        if (userService.existsByUsername(signUpRequest.getEmail()) || userService.existsByEmail(signUpRequest.getUsername())) {
-            return "This user currently exists in database";
-        } else if (signUpRequest.getPassword().equals(signUpRequest.getConfirmPassword())) {
-            User user = new User(signUpRequest.getUsername(), signUpRequest.getPassword(), signUpRequest.getEmail(),
-            new UserDetails(BodyWeightUnit.KILOGRAMS, 93.0, HeightUnit.METER, 1.82, 21, Sex.MALE, null));
-            userService.saveEntity(user);
-            return "Your account has successfully been created!";
-        } else {
-            return "Password are not the match";
-        }
+
+    public User createNewUserAccount(SignUpRequest signUpRequest) {
+
+        return new User(signUpRequest.getUsername(),
+                encoder.encode(signUpRequest.getPassword()),
+                signUpRequest.getEmail(),
+                new codeenthusiast.TrainingCenterApp.user.details.UserDetails(
+                        BodyWeightUnit.KILOGRAMS, 0.0, HeightUnit.METER, 0.0, 0, Sex.MALE, null));
     }
+
+    // User generator //
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void addUser() {
+//        Role role = new Role(ERole.ROLE_USER);
+//        roleRepository.save(role);
+//    }
+
+    public void assignUserRole(User user) {
+        List<Role> defaultRoles = new ArrayList<>();
+        defaultRoles.add(roleRepository.findByName(ERole.ROLE_USER)
+                .orElseThrow(() -> new EntityNotFoundException("Basic USER role is not created yet")));
+        user.setRoles(defaultRoles);
+    }
+
 }

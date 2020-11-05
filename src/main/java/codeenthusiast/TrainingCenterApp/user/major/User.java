@@ -25,6 +25,9 @@ public class User extends AbstractEntity {
 
     private String email;
 
+    @ManyToMany
+    private List<Role> roles;
+
     @OneToOne(cascade = CascadeType.ALL)
     private Image image;
 

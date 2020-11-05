@@ -4,6 +4,8 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
 import codeenthusiast.TrainingCenterApp.user.major.User;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface UserRepository extends AbstractRepository<User> {
 
@@ -14,4 +16,6 @@ public interface UserRepository extends AbstractRepository<User> {
     boolean existsByEmail(String email);
 
     boolean existsByUsername(String username);
+
+    Optional<User> findByUsername(String username);
 }

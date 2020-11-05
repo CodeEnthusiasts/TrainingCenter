@@ -4,7 +4,6 @@ import codeenthusiast.TrainingCenterApp.security.request.LoginRequest;
 import codeenthusiast.TrainingCenterApp.security.request.SignUpRequest;
 import codeenthusiast.TrainingCenterApp.security.response.JwtResponse;
 import codeenthusiast.TrainingCenterApp.security.response.MessageResponse;
-import org.aspectj.bridge.Message;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,12 +23,12 @@ public class AuthController {
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<JwtResponse> login(@RequestBody @Valid LoginRequest loginRequest){
+    public ResponseEntity<JwtResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
         return ResponseEntity.ok(authService.authenticateUser(loginRequest));
     }
 
     @PostMapping("/sign-up")
-    public ResponseEntity<MessageResponse> register(@RequestBody @Valid SignUpRequest signUpRequest){
+    public ResponseEntity<MessageResponse> register(@RequestBody @Valid SignUpRequest signUpRequest) {
         return ResponseEntity.ok(authService.registerUser(signUpRequest));
     }
 

@@ -16,6 +16,7 @@ import codeenthusiast.TrainingCenterApp.user.UserRepository;
 import codeenthusiast.TrainingCenterApp.user.major.Role;
 import codeenthusiast.TrainingCenterApp.user.major.RoleRepository;
 import codeenthusiast.TrainingCenterApp.user.major.User;
+
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -28,9 +29,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
@@ -68,27 +67,27 @@ public class AuthService {
 
         List<String> roles = createNamesOfRoles(userDetails);
 
-        return  new JwtResponse(jwt,
+        return new JwtResponse(jwt,
                 userDetails.getId(),
                 userDetails.getUsername(),
                 userDetails.getEmail(),
                 roles);
     }
 
-    public Authentication createUsernamePasswordAuthenticationToken(LoginRequest loginRequest){
+    public Authentication createUsernamePasswordAuthenticationToken(LoginRequest loginRequest) {
         return authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
     }
 
-    public void setAuthentication(Authentication authentication){
+    public void setAuthentication(Authentication authentication) {
         SecurityContextHolder.getContext().setAuthentication(authentication);
     }
 
-    public String generateJwtToken(Authentication authentication){
+    public String generateJwtToken(Authentication authentication) {
         return jwtUtils.generateJwtToken(authentication);
     }
 
-    public List<String> createNamesOfRoles(UserDetails userDetails){
+    public List<String> createNamesOfRoles(UserDetails userDetails) {
 
         return userDetails.getAuthorities().stream()
                 .map(GrantedAuthority::getAuthority)
@@ -108,7 +107,6 @@ public class AuthService {
         return new MessageResponse("User registered successfully!");
     }
 
-
     public void validateRequest(SignUpRequest signUpRequest) {
 
         String username = signUpRequest.getUsername();
@@ -120,6 +118,10 @@ public class AuthService {
         if (userRepository.existsByEmail(email)) {
             throw new EntityAlreadyExistsException(email);
         }
+
+        if (!signUpRequest.getPassword().equals(signUpRequest.getConfirmPassword())) {
+            throw new RuntimeException("Passwords are different");
+        }
     }
 
     public User createNewUserAccount(SignUpRequest signUpRequest) {
@@ -130,14 +132,15 @@ public class AuthService {
                 new codeenthusiast.TrainingCenterApp.user.details.UserDetails(
                         BodyWeightUnit.KILOGRAMS, 93.0, HeightUnit.METER, 183, 22, Sex.MALE, null));
     }
+
     // User generator //
     @EventListener(ApplicationReadyEvent.class)
-    public void addUser(){
+    public void addUser() {
         Role role = new Role(ERole.ROLE_USER);
         roleRepository.save(role);
     }
 
-    public void assignUserRole(User user){
+    public void assignUserRole(User user) {
         List<Role> defaultRoles = new ArrayList<>();
         defaultRoles.add(roleRepository.findByName(ERole.ROLE_USER)
                 .orElseThrow(() -> new EntityNotFoundException("Basic USER role is not created yet")));

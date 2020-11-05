@@ -2,6 +2,7 @@ package codeenthusiast.TrainingCenterApp.security.services;
 
 import codeenthusiast.TrainingCenterApp.user.UserRepository;
 import codeenthusiast.TrainingCenterApp.user.major.User;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

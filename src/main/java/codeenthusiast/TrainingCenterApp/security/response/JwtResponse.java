@@ -1,6 +1,5 @@
 package codeenthusiast.TrainingCenterApp.security.response;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 

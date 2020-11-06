@@ -31,15 +31,4 @@ public class TrainingPlanServiceImpl
 
 
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void init() {
-        TrainingPlanSuperficialDTO trainingPlanSuperficialDTO
-                = new TrainingPlanSuperficialDTO("Strength", LocalDate.of(2020, Month.OCTOBER, 1),
-                LocalDate.of(2020, Month.JANUARY, 1), 5, 8, Difficulty.MEDIUM,
-                Collections.emptyList());
-        save(trainingPlanSuperficialDTO);
-
-
-    }
-
 }

@@ -18,7 +18,7 @@ public class TrainingPlanDTO extends AbstractDTO {
 
     private String name;
     //change there
-    private List<TrainingSession> changeThere;
+    private List<TrainingSession> trainingSessions;
 
     private int numberOfPlannedTrainings;
 

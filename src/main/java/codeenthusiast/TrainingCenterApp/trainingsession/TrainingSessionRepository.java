@@ -1,8 +1,8 @@
 package codeenthusiast.TrainingCenterApp.trainingsession;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TrainingSessionRepository extends JpaRepository<TrainingSession, Long> {
+public interface TrainingSessionRepository extends AbstractRepository<TrainingSession> {
 }

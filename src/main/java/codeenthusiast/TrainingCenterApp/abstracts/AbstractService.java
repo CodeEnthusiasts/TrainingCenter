@@ -6,7 +6,9 @@ public interface AbstractService <E extends AbstractEntity, D extends AbstractDT
 
     D findById (Long id);
     List<D> getAll();
+
     D save (D dto);
     D update (Long id, D dto);
+
     void delete (Long id);
 }

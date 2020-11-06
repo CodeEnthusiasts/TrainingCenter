@@ -4,10 +4,7 @@ import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
 import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
 import codeenthusiast.TrainingCenterApp.movement.Exercisable;
-import codeenthusiast.TrainingCenterApp.movement.Movement;
-import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -20,8 +17,6 @@ public class StrengthExercise extends Exercise{
     @Enumerated(EnumType.STRING)
     private RepetitionUnit repetitionUnit;
 
-    @ManyToOne
-    private TrainingSession trainingSession;
 
     private int[] reps;
 
@@ -33,12 +28,11 @@ public class StrengthExercise extends Exercise{
     @Embedded
     private StrengthExerciseDetails strengthExerciseDetails;
 
-    public StrengthExercise(Long id, Exercisable exercisable, int sets,
-                            RepetitionUnit repetitionUnit, TrainingSession trainingSession,
+    public StrengthExercise(Exercisable exercisable, int sets,
+                            RepetitionUnit repetitionUnit,
                             int[] reps, WeightUnit weightUnit, int[] weights, StrengthExerciseDetails strengthExerciseDetails) {
-        super(id, exercisable, sets);
+        super(exercisable, sets);
         this.repetitionUnit = repetitionUnit;
-        this.trainingSession = trainingSession;
         this.reps = reps;
         this.weightUnit = weightUnit;
         this.weights = weights;

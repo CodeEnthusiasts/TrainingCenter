@@ -1,9 +1,13 @@
 package codeenthusiast.TrainingCenterApp.abstracts;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Service
 public abstract class AbstractServiceImpl<E extends AbstractEntity, D extends AbstractDTO> implements AbstractService<E, D> {
 
     private final AbstractRepository<E> repository;
@@ -32,9 +36,7 @@ public abstract class AbstractServiceImpl<E extends AbstractEntity, D extends Ab
 
     @Override
     public D save(D dto) {
-        // HERE IS PROBLEM -> mapping UserDTO to User : losing imageUrl, userDetails
         E entity = mapper.mapToEntity(dto);
-        //
         return mapper.mapToDTO(repository.save(entity));
     }
 

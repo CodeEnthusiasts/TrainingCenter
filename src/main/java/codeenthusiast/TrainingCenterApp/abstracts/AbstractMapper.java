@@ -1,7 +1,10 @@
 package codeenthusiast.TrainingCenterApp.abstracts;
 
+import org.mapstruct.Mapper;
+
 import java.util.List;
 import java.util.stream.Collectors;
+
 
 public interface AbstractMapper<ENTITY, DTO> {
 

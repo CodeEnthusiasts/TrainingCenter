@@ -6,6 +6,7 @@ import codeenthusiast.TrainingCenterApp.exercise.Exercise;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -18,14 +19,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class TrainingSession extends AbstractEntity {
 
-
-
     private String name;
-
-    @ManyToOne
-    private TrainingPlan trainingPlan;
 
     @OneToMany
     private List<Exercise> exercises;
@@ -47,13 +44,4 @@ public class TrainingSession extends AbstractEntity {
 
     private String notes;
 
-    public TrainingSession(String name, TrainingPlan trainingPlan,
-                           DayOfWeek dayOfWeek, LocalDate date, Difficulty difficulty) {
-        this.name = name;
-        this.exercises = exercises;
-        this.trainingPlan = trainingPlan;
-        this.dayOfWeek = dayOfWeek;
-        this.date = date;
-        this.difficulty = difficulty;
-    }
 }

@@ -1,22 +1,14 @@
 package codeenthusiast.TrainingCenterApp.trainingplan;
 
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractController;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
-import codeenthusiast.TrainingCenterApp.constants.Difficulty;
-import codeenthusiast.TrainingCenterApp.priority.PrioritySuperficialDTO;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDate;
-import java.time.Month;
-import java.util.Arrays;
+import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/training_plans")
-public class TrainingPlanController extends AbstractController<TrainingPlan, TrainingPlanSuperficialDTO> {
+public class TrainingPlanController {
 
     private TrainingPlanService trainingPlanService;
 
@@ -24,9 +16,29 @@ public class TrainingPlanController extends AbstractController<TrainingPlan, Tra
         this.trainingPlanService = trainingPlanService;
     }
 
-    @Override
-    public AbstractService<TrainingPlan, TrainingPlanSuperficialDTO> getService() {
-        return trainingPlanService;
+    @GetMapping(value = "/{id}")
+    public TrainingPlanSuperficialDTO getById(@PathVariable("id") Long id) {
+        return trainingPlanService.findById(id);
+    }
+
+    @GetMapping(value = "/all")
+    public List<TrainingPlanSuperficialDTO> getAll() {
+        return trainingPlanService.getAll();
+    }
+
+    @PostMapping
+    public TrainingPlanDTO create(@RequestBody @Valid TrainingPlanDTO dto) {
+        return trainingPlanService.save(dto);
+    }
+
+    @PutMapping(value = "/{id}")
+    public TrainingPlanDTO update(@PathVariable("id") Long id, @RequestBody @Valid TrainingPlanDTO dto) {
+        return trainingPlanService.update(id, dto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable("id") Long id) throws Exception {
+        trainingPlanService.delete(id);
     }
 
 }

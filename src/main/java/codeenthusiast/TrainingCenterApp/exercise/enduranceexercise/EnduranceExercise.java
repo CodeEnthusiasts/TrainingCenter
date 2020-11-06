@@ -34,10 +34,10 @@ public class EnduranceExercise extends Exercise {
     @Embedded
     private EnduranceExerciseDetails enduranceExerciseDetails;
 
-    public EnduranceExercise(Long id, Exercisable exercisable, int sets, DistanceUnit distanceUnit,
+    public EnduranceExercise(Exercisable exercisable, int sets, DistanceUnit distanceUnit,
                              TrainingSession trainingSession, int[] distance, TimeUnit timeUnit,
                              Duration[] time, EnduranceExerciseDetails enduranceExerciseDetails) {
-        super(id, exercisable, sets);
+        super(exercisable, sets);
         this.distanceUnit = distanceUnit;
         this.trainingSession = trainingSession;
         this.distance = distance;

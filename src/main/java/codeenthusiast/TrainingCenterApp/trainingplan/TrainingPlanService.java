@@ -2,13 +2,16 @@ package codeenthusiast.TrainingCenterApp.trainingplan;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
 
-public interface TrainingPlanService extends AbstractService<TrainingPlan, TrainingPlanSuperficialDTO> {
+import java.util.List;
 
-  // Wypierdolic abstrakcje i stworzyc metody osobno do 1DTO i 2DTO (get, getbYid) + (patch,save)
-    // Stworzyc odpowiedniego mappera
-    // stworzyc dobry kontroller
+public interface TrainingPlanService  {
 
+    TrainingPlanSuperficialDTO findById (Long id);
+    List<TrainingPlanSuperficialDTO> getAll();
 
+    TrainingPlanDTO save (TrainingPlanDTO dto);
+    TrainingPlanDTO update (Long id, TrainingPlanDTO dto);
 
+    void delete (Long id);
 
 }

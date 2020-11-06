@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.exercise.strengthexercise.pace;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +16,7 @@ import javax.persistence.Id;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pace {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Pace extends AbstractEntity {
 
     private String name;
 

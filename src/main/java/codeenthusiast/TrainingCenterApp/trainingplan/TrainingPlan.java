@@ -21,7 +21,7 @@ public class TrainingPlan extends AbstractEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "trainingPlan")
+    @OneToMany
     private List<TrainingSession> trainingSessions;
 
     private int numberOfExecutedTrainings;
@@ -40,7 +40,7 @@ public class TrainingPlan extends AbstractEntity {
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
 
-    @OneToMany(mappedBy = "trainingPlan")
+    @OneToMany
     private List<Priority> priorities;
 
 

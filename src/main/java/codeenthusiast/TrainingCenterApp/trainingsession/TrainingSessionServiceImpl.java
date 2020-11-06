@@ -4,6 +4,8 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
 import codeenthusiast.TrainingCenterApp.mappers.TrainingSessionMapper;
+import org.springframework.boot.context.event.ApplicationReadyEvent;
+import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 
 @Service

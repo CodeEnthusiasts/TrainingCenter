@@ -12,7 +12,6 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface MuscleMapper extends AbstractMapper<Muscle, MuscleDTO> {
 
-    MuscleMapper INSTANCE = Mappers.getMapper(MuscleMapper.class);
 
     /*@Mapping(source = "images", target = "imagesDTO")*/
     MuscleDTO mapToDto(Muscle entity);
@@ -20,11 +19,7 @@ public interface MuscleMapper extends AbstractMapper<Muscle, MuscleDTO> {
     /*@Mapping(source = "imagesDTO", target = "images")*/
     Muscle mapToEntity(MuscleDTO dto);
 
-    default List<Muscle> mapToEntieties(List<MuscleDTO> dtos) {
-        return dtos.stream().map(this::mapToEntity).collect(Collectors.toList());
-    }
+    List<Muscle> mapToEntities(List<MuscleDTO> dtos);
 
-    default List<MuscleDTO> mapToDtos(List<Muscle> entieties) {
-        return entieties.stream().map(this::mapToDto).collect(Collectors.toList());
-    }
+//    List<MuscleDTO> mapToDtos(List<Muscle> entities);
 }

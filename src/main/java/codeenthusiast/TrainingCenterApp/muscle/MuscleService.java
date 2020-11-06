@@ -9,14 +9,4 @@ public interface MuscleService extends AbstractService<Muscle, MuscleDTO> {
 
     boolean existsByName(String name);
 
-    MuscleDTO addImageToMuscle(Long id, String filePath);
-
-    void addImage(Muscle muscle, Image image);
-
-    void deleteImageFromMuscle(Long id, String fileUrl);
-
-    void removeImage(Muscle muscle, Image image);
-
-    void removeAllImages(Muscle muscle);
-
 }

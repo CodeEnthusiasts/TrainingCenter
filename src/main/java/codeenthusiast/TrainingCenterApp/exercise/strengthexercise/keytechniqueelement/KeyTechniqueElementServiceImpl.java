@@ -26,8 +26,4 @@ public class KeyTechniqueElementServiceImpl extends AbstractServiceImpl<KeyTechn
         return repository.existsById(id);
     }
 
-    @Override
-    public boolean existsByContent(String name) {
-        return repository.existsByContent(name);
-    }
 }

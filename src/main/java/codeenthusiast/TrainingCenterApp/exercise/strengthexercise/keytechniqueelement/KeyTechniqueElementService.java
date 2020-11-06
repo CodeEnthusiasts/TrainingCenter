@@ -8,5 +8,4 @@ public interface KeyTechniqueElementService extends AbstractService<KeyTechnique
 
     boolean existsById(Long id);
 
-    boolean existsByContent(String name);
 }

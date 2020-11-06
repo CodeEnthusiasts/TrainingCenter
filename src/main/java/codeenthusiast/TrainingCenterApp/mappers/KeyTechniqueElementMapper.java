@@ -14,16 +14,12 @@ public interface KeyTechniqueElementMapper extends AbstractMapper<KeyTechniqueEl
 
     KeyTechniqueElementMapper INSTANCE = Mappers.getMapper(KeyTechniqueElementMapper.class);
 
-    KeyTechniqueElementDTO mapToDto(KeyTechniqueElement entity);
+    KeyTechniqueElementDTO mapToDTO(KeyTechniqueElement entity);
 
 
     KeyTechniqueElement mapToEntity(KeyTechniqueElementDTO dto);
 
-    default List<KeyTechniqueElement> mapToEntities(List<KeyTechniqueElementDTO> dtos) {
-        return dtos.stream().map(this::mapToEntity).collect(Collectors.toList());
-    }
+    List<KeyTechniqueElement> mapToEntities(List<KeyTechniqueElementDTO> dtos);
 
-    default List<KeyTechniqueElementDTO> mapToDTOs(List<KeyTechniqueElement> entieties) {
-        return entieties.stream().map(this::mapToDto).collect(Collectors.toList());
-    }
+    List<KeyTechniqueElementDTO> mapToDTOs(List<KeyTechniqueElement> entities);
 }

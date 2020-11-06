@@ -20,11 +20,7 @@ public interface UserDetailsMapper extends AbstractMapper<UserDetails, UserDetai
     @Mapping(target = "personalRecords", ignore = true)
     UserDetails mapToEntity(UserDetailsDTO userDetailsDTO);
 
-    default List<UserDetails> mapToEntities(List<UserDetailsDTO> dtos) {
-        return dtos.stream().map(this::mapToEntity).collect(Collectors.toList());
-    }
+    List<UserDetails> mapToEntities(List<UserDetailsDTO> dtos);
 
-    default List<UserDetailsDTO> mapToDTOs(List<UserDetails> entities) {
-        return entities.stream().map(this::mapToDTO).collect(Collectors.toList());
-    }
+    List<UserDetailsDTO> mapToDTOs(List<UserDetails> entities);
 }

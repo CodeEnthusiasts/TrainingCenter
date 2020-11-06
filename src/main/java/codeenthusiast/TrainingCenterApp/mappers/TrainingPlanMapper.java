@@ -15,20 +15,15 @@ public interface TrainingPlanMapper {
 
     TrainingPlanSuperficialDTO mapToSuperficialDTO(TrainingPlan entity);
 
-    default List<TrainingPlanSuperficialDTO> mapToSuperficialDTOs(List<TrainingPlan> entities) {
-        return entities.stream().map(this::mapToSuperficialDTO).collect(Collectors.toList());
-    }
+    List<TrainingPlanSuperficialDTO> mapToSuperficialDTOs(List<TrainingPlan> entities);
 
     TrainingPlanDTO mapToDTO(TrainingPlan entity);
 
-    default List<TrainingPlanDTO> mapToDTOs(List<TrainingPlan> entities) {
-        return entities.stream().map(this::mapToDTO).collect(Collectors.toList());
-    }
+    List<TrainingPlanDTO> mapToDTOs(List<TrainingPlan> entities);
+
     @Mapping(ignore = true, target = "numberOfExecutedTrainings")
     TrainingPlan mapToEntity(TrainingPlanDTO dto);
 
-    default List<TrainingPlan> mapToEntities(List<TrainingPlanDTO> entities) {
-        return entities.stream().map(this::mapToEntity).collect(Collectors.toList());
-    }
+    List<TrainingPlan> mapToEntities(List<TrainingPlanDTO> entities);
 
 }

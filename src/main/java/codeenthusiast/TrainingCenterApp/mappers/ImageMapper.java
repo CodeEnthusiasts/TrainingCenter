@@ -12,19 +12,11 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface ImageMapper extends AbstractMapper<Image, ImageDTO> {
 
-    ImageMapper INSTANCE = Mappers.getMapper(ImageMapper.class);
-
-
-    ImageDTO mapToDto(Image entity);
-
+    ImageDTO mapToDTO(Image entity);
 
     Image mapToEntity(ImageDTO dto);
 
-    default List<Image> mapToEntieties(List<ImageDTO> dtos) {
-        return dtos.stream().map(this::mapToEntity).collect(Collectors.toList());
-    }
+    List<Image> mapToEntities(List<ImageDTO> dtos);
 
-    default List<ImageDTO> mapToDtos(List<Image> entieties) {
-        return entieties.stream().map(this::mapToDto).collect(Collectors.toList());
-    }
+    List<ImageDTO> mapToDTOs(List<Image> entities);
 }

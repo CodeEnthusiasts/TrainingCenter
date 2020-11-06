@@ -2,7 +2,7 @@ package codeenthusiast.TrainingCenterApp.user.major;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.image.Image;
-import codeenthusiast.TrainingCenterApp.movement.CustomMovement;
+import codeenthusiast.TrainingCenterApp.movement.custom.CustomMovement;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.user.details.UserDetails;
 import lombok.Getter;

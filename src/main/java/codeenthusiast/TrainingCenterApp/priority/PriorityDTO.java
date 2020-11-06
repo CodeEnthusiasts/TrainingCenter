@@ -10,7 +10,9 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class PrioritySuperficialDTO extends AbstractDTO {
+public class PriorityDTO extends AbstractDTO {
 
     private String name;
+
+    private String details;
 }

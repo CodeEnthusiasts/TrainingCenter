@@ -17,13 +17,7 @@ public interface TrainingSessionMapper extends AbstractMapper<TrainingSession, T
 
     TrainingSession mapToEntity(TrainingSessionDTO trainingSessionDTO);
 
+    List<TrainingSession> mapToEntities(List<TrainingSessionDTO> dtos);
 
-    default List<TrainingSession> mapToEntities(List<TrainingSessionDTO> dtos) {
-        return dtos.stream().map(this::mapToEntity).collect(Collectors.toList());
-    }
-
-
-    default List<TrainingSessionDTO> mapToDTOs(List<TrainingSession> entities) {
-        return entities.stream().map(this::mapToDTO).collect(Collectors.toList());
-    }
+    List<TrainingSessionDTO> mapToDTOs(List<TrainingSession> entities);
 }

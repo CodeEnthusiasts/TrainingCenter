@@ -22,7 +22,5 @@ public interface UserMapper extends AbstractMapper<User, UserDTO> {
     @Override
     User mapToEntity(UserDTO userDTO);
 
-    default List<UserDTO> mapToDTOs(List<User> entities) {
-        return entities.stream().map(this::mapToDTO).collect(Collectors.toList());
-    }
+    List<UserDTO> mapToDTOs(List<User> entities);
 }

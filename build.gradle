@@ -30,8 +30,8 @@ dependencies {
 	testAnnotationProcessor "org.mapstruct:mapstruct-processor:1.4.1.Final"
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compile group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.1'
-	compile group: 'io.springfox', name: 'springfox-swagger2', version: '3.0.0'
-	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '3.0.0'
+	compile group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+	compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	compile group: 'com.cloudinary', name: 'cloudinary-http44', version: '1.26.0'
 	runtimeOnly 'com.h2database:h2'
 	runtimeOnly 'mysql:mysql-connector-java'

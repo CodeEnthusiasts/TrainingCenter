@@ -6,8 +6,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 public class TrainingCenterAppApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(TrainingCenterAppApplication.class, args);
-	}
-
+    public static void main(String[] args) {
+        SpringApplication.run(TrainingCenterAppApplication.class, args);
+        System.out.println("DODAJ TEN SAM POCZĄTEK ENDPOINTOW : np. /api/** -> łatwiejsze osecurowanie");
+        System.out.println("ZMIEN NAZWY ENDPOINTOW -> /movements -> dla all i /movements/id dla id");
+    }
 }

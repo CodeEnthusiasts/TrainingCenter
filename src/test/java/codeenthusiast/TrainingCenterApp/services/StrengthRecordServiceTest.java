@@ -1,10 +1,11 @@
 package codeenthusiast.TrainingCenterApp.services;
 
-import codeenthusiast.TrainingCenterApp.dto.StrengthRecordDTO;
-import codeenthusiast.TrainingCenterApp.entities.records.StrengthRecord;
-import codeenthusiast.TrainingCenterApp.entities.units.RepetitionUnit;
-import codeenthusiast.TrainingCenterApp.entities.units.WeightUnit;
-import codeenthusiast.TrainingCenterApp.repositories.StrengthRecordRepository;
+import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecordDTO;
+import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecord;
+import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
+import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
+import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecordService;
+import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecordRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -81,7 +82,6 @@ class StrengthRecordServiceTest {
 
         //then
         assertAll(
-                () -> assertThat(result, not(hasProperty("id"))),
                 () -> assertThat(result.getExerciseName(), equalTo(squatRM.getExerciseName())),
                 () -> assertThat(result.getSetDate(), equalTo(squatRM.getSetDate())));
     }
@@ -95,8 +95,7 @@ class StrengthRecordServiceTest {
         //then
         assertAll(
                 () -> assertThat(result.size(), equalTo(strengthRecords.size())),
-                () -> assertThat(result.get(0).getExerciseName(), equalTo(strengthRecords.get(0).getExerciseName())),
-                () -> assertThat(result.get(1), not(hasProperty("id"))));
+                () -> assertThat(result.get(0).getExerciseName(), equalTo(strengthRecords.get(0).getExerciseName())));
     }
 
 
@@ -113,7 +112,6 @@ class StrengthRecordServiceTest {
         //then
         assertAll(
                 () -> assertThat(result.size(), equalTo(strengthRecords.size())),
-                () -> assertThat(result.get(0), not(hasProperty("id"))),
                 () -> assertThat(result.get(1).getExerciseName(), equalTo("Bench press")));
     }
 
@@ -132,7 +130,6 @@ class StrengthRecordServiceTest {
         //then
         assertAll(
                 () -> assertThat(result.size(), equalTo(squatRecords.size())),
-                () -> assertThat(result.get(0), not(hasProperty("id"))),
                 () -> assertThat(result.get(1).getExerciseName(), equalTo("Squat")));
     }
 

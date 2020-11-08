@@ -133,7 +133,7 @@ public class AuthService {
                         BodyWeightUnit.KILOGRAMS, 0.0, HeightUnit.METER, 0.0, 0, Sex.MALE, null));
     }
 
-    // User generator //
+//     User generator //
 //    @EventListener(ApplicationReadyEvent.class)
 //    public void addUser() {
 //        Role role = new Role(ERole.ROLE_USER);

@@ -24,7 +24,7 @@ public class TrainingSession extends AbstractEntity {
 
     private String name;
 
-    @OneToMany
+    @ManyToMany
     private List<Exercise> exercises;
 
     @Enumerated(EnumType.STRING)

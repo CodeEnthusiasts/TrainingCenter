@@ -2,6 +2,7 @@ package codeenthusiast.TrainingCenterApp.exercise;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.movement.Exercisable;
+import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import lombok.*;
 import lombok.AllArgsConstructor;
 

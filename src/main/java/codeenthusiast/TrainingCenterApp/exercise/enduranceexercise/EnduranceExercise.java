@@ -22,9 +22,6 @@ public class EnduranceExercise extends Exercise {
 
     private int[] distance;
 
-    @ManyToOne
-    private TrainingSession trainingSession;
-
     @Enumerated(EnumType.STRING)
     private TimeUnit timeUnit;
 
@@ -33,15 +30,5 @@ public class EnduranceExercise extends Exercise {
     @Embedded
     private EnduranceExerciseDetails enduranceExerciseDetails;
 
-    public EnduranceExercise(Exercisable exercisable, int sets, DistanceUnit distanceUnit,
-                             TrainingSession trainingSession, int[] distance, TimeUnit timeUnit,
-                             Duration[] time, EnduranceExerciseDetails enduranceExerciseDetails) {
-        super(exercisable, sets);
-        this.distanceUnit = distanceUnit;
-        this.trainingSession = trainingSession;
-        this.distance = distance;
-        this.timeUnit = timeUnit;
-        this.time = time;
-        this.enduranceExerciseDetails = enduranceExerciseDetails;
-    }
+
 }

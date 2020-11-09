@@ -8,11 +8,13 @@ import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity(name = "strength_exercises")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class StrengthExercise extends Exercise{
 
 
@@ -28,6 +30,9 @@ public class StrengthExercise extends Exercise{
 
     @Embedded
     private StrengthExerciseDetails strengthExerciseDetails;
+
+    @ManyToOne
+    private TrainingSession trainingSession;
 
 
 

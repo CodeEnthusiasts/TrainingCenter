@@ -13,6 +13,7 @@ in endurance-type sports.
     * Requirements for developers
     * Running application on local machine
     * Connecting with database
+    * Test API with swagger
 * Data model
     * UML graph
     * Database structure graph
@@ -65,6 +66,10 @@ git clone https://github.com/CodeEnthusiasts/TrainingCenter.git
 ![info_about_db](readme-img/test_db.PNG) 
 
 ![info_about_db_2](readme-img/test_db_2.PNG)
+
+### Test API with swagger
+
+Test API using browser [trainingcenterapp.herokuapp.com](https://trainingcenterapp.herokuapp.com/swagger-ui.html)
 
 ## Data model
 * UML graph:

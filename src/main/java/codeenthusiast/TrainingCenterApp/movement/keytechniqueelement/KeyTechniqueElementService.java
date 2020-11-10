@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.exercise.strengthexercise.keytechniqueelement;
+package codeenthusiast.TrainingCenterApp.movement.keytechniqueelement;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
 import org.springframework.stereotype.Service;

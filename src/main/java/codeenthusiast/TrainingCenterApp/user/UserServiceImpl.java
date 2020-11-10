@@ -39,4 +39,5 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserDTO> implemen
         user.setImageUrl(null);
         save(user);
     }
+
 }

@@ -10,11 +10,11 @@ public class EnduranceExerciseDTO extends AbstractDTO {
 
     private DistanceUnit distanceUnit;
 
-    private int[] distance;
+    private int distance;
 
     private TimeUnit timeUnit;
 
-    private Duration time[];
+    private Duration time;
 
     private EnduranceExerciseDetails enduranceExerciseDetails;
 }

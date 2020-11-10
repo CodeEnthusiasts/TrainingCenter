@@ -14,7 +14,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class EnduranceExerciseDetails {
 
-    private int hearthRate;
+    private int heartRate;
 
     private int vO2maxPercentage;
 

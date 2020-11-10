@@ -10,6 +10,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Duration;
+import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
 @Entity(name = "endurance_exercises")
@@ -20,15 +21,18 @@ public class EnduranceExercise extends Exercise {
     @Enumerated(EnumType.STRING)
     private DistanceUnit distanceUnit;
 
-    private int[] distance;
+    private double distance;
 
     @Enumerated(EnumType.STRING)
     private TimeUnit timeUnit;
 
-    private Duration[] time;
+    private LocalTime duration;
 
     @Embedded
     private EnduranceExerciseDetails enduranceExerciseDetails;
+
+    @ManyToOne
+    private TrainingSession trainingSession;
 
 
 }

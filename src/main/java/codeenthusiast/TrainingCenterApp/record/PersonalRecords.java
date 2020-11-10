@@ -13,7 +13,6 @@ import java.util.List;
 @Embeddable
 public class PersonalRecords extends AbstractEntity {
 
-
     @OneToMany
     private List<StrengthRecord> strengthRecords = new ArrayList<>();
 

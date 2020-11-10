@@ -16,5 +16,5 @@ public class CustomRecordDTO extends AbstractDTO {
 
     private String description;
     private double value;
-    private LocalDate setDate;
+    private LocalDate date;
 }

@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import springfox.documentation.builders.ApiInfoBuilder;
@@ -19,7 +20,8 @@ import java.util.Collections;
 @EnableSwagger2
 public class SwaggerConfig {
 
-    private final String TOKEN = "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJwYXdlbDIiLCJpYXQiOjE2MDQ4MjEzNTYsImV4cCI6MTYwNDkwNzc1Nn0.x0Fbxj_Nh48OLP4e3VKK0JUuxzdBrvdYDq9P_qJbMGz95ZIoUOIifGJJJbXUK5ZNiFR9WI4Onsm7qKIgLcehCA";
+    @Value("${token.for.swagger}")
+    private String token;
 
     @Bean
     public Docket docket() {
@@ -35,7 +37,7 @@ public class SwaggerConfig {
                                 .parameterType("header")
                                 .required(true)
                                 .hidden(true)
-                                .defaultValue("Bearer " + TOKEN)
+                                .defaultValue("Bearer " + token)
                                 .build()));
     }
 

@@ -5,6 +5,7 @@ import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
 import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
@@ -14,10 +15,11 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Entity
+@Entity(name = "strength_records")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class StrengthRecord extends AbstractEntity {
     @NotNull
     private String exerciseName;
@@ -29,32 +31,14 @@ public class StrengthRecord extends AbstractEntity {
     private int weight;
     @NotNull
     @Enumerated(EnumType.STRING)
+
     private RepetitionUnit repetitionUnit;
     @NotNull
     @Range(min = 0, max = 1000)
-    private int repetition;
+    private int reps;
 
-    private LocalDate setDate;
+    private LocalDate date;
 
-
-    public StrengthRecord(StrengthRecordDTO strengthRecordDTO) {
-        this.exerciseName = strengthRecordDTO.getExerciseName();
-        this.weightUnit = strengthRecordDTO.getWeightUnit();
-        this.weight = strengthRecordDTO.getWeight();
-        this.repetitionUnit = strengthRecordDTO.getRepetitionUnit();
-        this.repetition = strengthRecordDTO.getRepetition();
-        this.setDate = strengthRecordDTO.getSetDate();
-    }
-
-    public StrengthRecord(String exerciseName, WeightUnit weightUnit, int weight,
-                          RepetitionUnit repetitionUnit, int repetition, LocalDate setDate) {
-        this.exerciseName = exerciseName;
-        this.weightUnit = weightUnit;
-        this.weight = weight;
-        this.repetitionUnit = repetitionUnit;
-        this.repetition = repetition;
-        this.setDate = setDate;
-    }
 
 }
 

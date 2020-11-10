@@ -4,6 +4,7 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.DistanceUnit;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.AllArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
@@ -12,12 +13,14 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
-@Entity
+@Entity(name = "endurance_records")
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class EnduranceRecord extends AbstractEntity {
 
     @NotNull
@@ -28,33 +31,14 @@ public class EnduranceRecord extends AbstractEntity {
     private DistanceUnit distanceUnit;
     @NotNull
     @Range(min = 0, max = 10000)
-    private int distance;
+    private double distance;
     @NotNull
     @Enumerated(EnumType.STRING)
     private TimeUnit timeUnit;
+
     @NotNull
-    @Range(min = 0, max = 1000)
-    private int time;
+    private LocalTime duration;
 
-    private LocalDate setDate;
-
-    public EnduranceRecord(EnduranceRecordDTO enduranceRecordDTO) {
-        this.exerciseName = enduranceRecordDTO.getExerciseName();
-        this.distanceUnit = enduranceRecordDTO.getDistanceUnit();
-        this.distance = enduranceRecordDTO.getDistance();
-        this.timeUnit = enduranceRecordDTO.getTimeUnit();
-        this.time = enduranceRecordDTO.getTime();
-        this.setDate = enduranceRecordDTO.getSetDate();
-    }
-
-    public EnduranceRecord(String exerciseName, DistanceUnit distanceUnit, int distance,
-                           TimeUnit timeUnit, int time, LocalDate setDate) {
-        this.exerciseName = exerciseName;
-        this.distanceUnit = distanceUnit;
-        this.distance = distance;
-        this.timeUnit = timeUnit;
-        this.time = time;
-        this.setDate = setDate;
-    }
+    private LocalDate date;
 
 }

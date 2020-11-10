@@ -3,13 +3,17 @@ package codeenthusiast.TrainingCenterApp.trainingsession;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.Difficulty;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
-import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
+import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExercise;
+import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.AllArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
+import javax.persistence.OneToMany;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -24,8 +28,11 @@ public class TrainingSession extends AbstractEntity {
 
     private String name;
 
-    @ManyToMany
-    private List<Exercise> exercises;
+    @OneToMany
+    private List<StrengthExercise> strengthExercises;
+
+    @OneToMany
+    private List<EnduranceExercise> enduranceExercises;
 
     @Enumerated(EnumType.STRING)
     private DayOfWeek dayOfWeek;
@@ -37,7 +44,6 @@ public class TrainingSession extends AbstractEntity {
     private LocalTime endTime;
 
     private LocalTime trainingDuration;
-    // endTime - startTime in service;
 
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;

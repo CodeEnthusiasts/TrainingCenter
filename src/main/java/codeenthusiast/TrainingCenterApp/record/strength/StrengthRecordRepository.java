@@ -8,9 +8,9 @@ import java.util.List;
 @Repository
 public interface StrengthRecordRepository extends JpaRepository<StrengthRecord, Long> {
 
-    List<StrengthRecord> findByExerciseName(String exerciseName);
-
-    void deleteByExerciseNameAndWeightAndRepetition(String exerciseName, int weight, int repetition);
-
-    List<StrengthRecord> findByExerciseNameAndRepetition(String exerciseName, int repetition);
+//    List<StrengthRecord> findByExerciseName(String exerciseName);
+//
+//    void deleteByExerciseNameAndWeightAndRepetition(String exerciseName, int weight, int repetition);
+//
+//    List<StrengthRecord> findByExerciseNameAndRepetition(String exerciseName, int repetition);
 }

@@ -78,7 +78,7 @@ class CustomRecordServiceTest {
         //then
         assertAll(
                 () -> assertThat(result.getDescription(), equalTo(recordI.getDescription())),
-                () -> assertThat(result.getSetDate(), equalTo(recordI.getSetDate())));
+                () -> assertThat(result.getDate(), equalTo(recordI.getDate())));
     }
 
     @Test
@@ -152,7 +152,7 @@ class CustomRecordServiceTest {
         assertAll(
                 () -> verify(customRecordRepository, times(1)).save(ArgumentMatchers.any()),
                 () -> assertThat(result.getDescription(), equalTo("Horizontal jump")),
-                () -> assertThat(result.getSetDate(), equalTo(current)));
+                () -> assertThat(result.getDate(), equalTo(current)));
     }
 
     @Test

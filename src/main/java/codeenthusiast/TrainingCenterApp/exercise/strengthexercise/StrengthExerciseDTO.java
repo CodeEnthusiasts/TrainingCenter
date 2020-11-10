@@ -16,11 +16,11 @@ public class StrengthExerciseDTO extends AbstractDTO {
 
     private RepetitionUnit repetitionUnit;
 
-    private int[] reps;
+    private int reps;
 
     private WeightUnit weightUnit;
 
-    private int[] weights;
+    private int weights;
 
     private StrengthExerciseDetails strengthExerciseDetails;
 }

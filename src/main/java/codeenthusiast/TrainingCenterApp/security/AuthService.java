@@ -130,7 +130,7 @@ public class AuthService {
                 encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getEmail(),
                 new codeenthusiast.TrainingCenterApp.user.details.UserDetails(
-                        BodyWeightUnit.KILOGRAMS, 0.0, HeightUnit.METER, 0.0, 0, Sex.MALE, null));
+                        BodyWeightUnit.KILOGRAMS, 0.0, HeightUnit.METERS, 0.0, 0, Sex.MALE, null));
     }
 
 //     User generator //

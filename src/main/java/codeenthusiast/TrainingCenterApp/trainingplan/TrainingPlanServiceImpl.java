@@ -1,34 +1,9 @@
 package codeenthusiast.TrainingCenterApp.trainingplan;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
-import codeenthusiast.TrainingCenterApp.constants.Difficulty;
-import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
-import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
-import codeenthusiast.TrainingCenterApp.exercise.Exercise;
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExerciseDetails;
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.keytechniqueelement.KeyTechniqueElement;
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.pace.Pace;
 import codeenthusiast.TrainingCenterApp.mappers.TrainingPlanMapper;
-import codeenthusiast.TrainingCenterApp.movement.Exercisable;
-import codeenthusiast.TrainingCenterApp.movement.Movement;
-import codeenthusiast.TrainingCenterApp.priority.Priority;
-import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.beans.Transient;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.LocalTime;
-import java.time.Month;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 @Service

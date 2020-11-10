@@ -1,6 +1,7 @@
 package codeenthusiast.TrainingCenterApp.movement;
 
 import codeenthusiast.TrainingCenterApp.image.Image;
+import codeenthusiast.TrainingCenterApp.movement.keytechniqueelement.KeyTechniqueElement;
 import codeenthusiast.TrainingCenterApp.muscle.Muscle;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -23,6 +24,9 @@ public class Movement extends Exercisable {
 
     @OneToMany
     private List<Image> images;
+
+    @OneToMany
+    private List<KeyTechniqueElement> keyTechniqueElements;
 
     public Movement(String name, List<Muscle> musclesInvolved) {
         super(name);

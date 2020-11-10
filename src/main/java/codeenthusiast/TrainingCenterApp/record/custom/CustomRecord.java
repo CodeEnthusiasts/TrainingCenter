@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Entity
+@Entity(name = "custom_records")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -20,18 +20,18 @@ public class CustomRecord extends AbstractEntity {
     @NotNull
     private double value;
     @NotNull
-    private LocalDate setDate;
+    private LocalDate date;
 
     public CustomRecord(CustomRecordDTO customRecord) {
         this.description = customRecord.getDescription();
         this.value = customRecord.getValue();
-        this.setDate = customRecord.getSetDate();
+        this.date = customRecord.getDate();
     }
 
     public CustomRecord(String description, double value, LocalDate setData) {
         this.description = description;
         this.value = value;
-        this.setDate = setData;
+        this.date = setData;
     }
 
 }

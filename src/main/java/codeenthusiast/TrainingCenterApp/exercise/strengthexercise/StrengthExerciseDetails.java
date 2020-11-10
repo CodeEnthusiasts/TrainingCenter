@@ -1,14 +1,13 @@
 package codeenthusiast.TrainingCenterApp.exercise.strengthexercise;
 
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.keytechniqueelement.KeyTechniqueElement;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.pace.Pace;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
-import java.util.List;
+import javax.persistence.Embeddable;
+import javax.persistence.OneToOne;
 
 @Embeddable
 @Getter
@@ -22,6 +21,4 @@ public class StrengthExerciseDetails {
 
     private int repsInReserve;
 
-    @OneToMany
-    private List<KeyTechniqueElement> keyTechniqueElements;
 }

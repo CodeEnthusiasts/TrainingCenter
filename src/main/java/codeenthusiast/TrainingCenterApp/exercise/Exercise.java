@@ -21,5 +21,4 @@ public abstract class Exercise extends AbstractEntity {
     @OneToOne
     private Exercisable exercisable;
 
-    int sets;
 }

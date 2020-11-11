@@ -8,7 +8,7 @@ import lombok.Setter;
 
 import javax.persistence.Entity;
 
-@Entity(name = "images")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor

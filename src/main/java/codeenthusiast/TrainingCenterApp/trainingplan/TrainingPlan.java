@@ -13,7 +13,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity(name = "training_plans")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor

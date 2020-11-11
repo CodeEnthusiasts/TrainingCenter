@@ -13,7 +13,7 @@ import java.time.Duration;
 import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
-@Entity(name = "endurance_exercises")
+@Entity
 @Getter
 @Setter
 public class EnduranceExercise extends Exercise {

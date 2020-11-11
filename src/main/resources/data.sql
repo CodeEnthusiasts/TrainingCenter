@@ -140,37 +140,26 @@ INSERT INTO training_session_endurance_exercises(training_session_id, endurance_
           (2, 1), (2, 2), (2, 3);
 
 -- STRENGTH RECORDS
-INSERT INTO strength_record(id, exercise_name, reps, repetition_unit, date, weight, weight_unit) VALUES
-        (1, 'Squat', 1, 'MOTION', '2020-09-09', 190, 'KILOGRAMS'),
-        (2, 'Squat', 5, 'MOTION', '2020-07-09', 140, 'KILOGRAMS'),
-        (3, 'Bench press', 1, 'MOTION', '2020-05-09', 150, 'KILOGRAMS');
+INSERT INTO strength_record(id, exercise_name, reps, repetition_unit, date, weight, weight_unit, personal_records_id) VALUES
+        (1, 'Squat', 1, 'MOTION', '2020-09-09', 190, 'KILOGRAMS', 1),
+        (2, 'Squat', 5, 'MOTION', '2020-07-09', 140, 'KILOGRAMS', 1),
+        (3, 'Bench press', 1, 'MOTION', '2020-05-09', 150, 'KILOGRAMS', 1);
 
--- STRENGTH RECORDS FOR PERSONAL RECORDS
-INSERT INTO personal_records_strength_records(personal_records_id, strength_records_id) VALUES
-        (1, 1), (1,2), (1,3);
 
 -- ENDURANCE RECORDS
 
-INSERT INTO endurance_record(id, distance, distance_unit, date, exercise_name, duration, time_unit) VALUES
-        (1, 1.0, 'KILOMETERS', '2020-05-09','Running',  '00:03','HOURS'),
-        (2, 5.0, 'KILOMETERS', '2020-07-09','Running',  '00:28','HOURS'),
-        (3, 100, 'METERS', '2021-05-09','Swimming',  '00:10','HOURS');
+INSERT INTO endurance_record(id, distance, distance_unit, date, exercise_name, duration, time_unit, personal_records_id) VALUES
+        (1, 1.0, 'KILOMETERS', '2020-05-09','Running',  '00:03','HOURS', 1),
+        (2, 5.0, 'KILOMETERS', '2020-07-09','Running',  '00:28','HOURS', 1),
+        (3, 100, 'METERS', '2021-05-09','Swimming',  '00:10','HOURS', 1);
 
--- ENDURANCE RECORDS FOR PERSONAL RECORDS
-
-INSERT INTO personal_records_endurance_records(personal_records_id, endurance_records_id) VALUES
-        (1, 1), (1,2), (1,3);
 
 -- CUSTOM RECORDS
 
-INSERT INTO custom_record(id, description, date, value) VALUES
-        (1, 'Vertical jump', '2020-10-10', 0.8),
-        (2, 'Drive 100km on bike', '2020-03-03', 100);
+INSERT INTO custom_record(id, description, date, value, personal_records_id) VALUES
+        (1, 'Vertical jump', '2020-10-10', 0.8, 1),
+        (2, 'Drive 100km on bike', '2020-03-03', 100, 1);
 
--- CUSTOM RECORDS FOR PERSONAL RECORDS
-
-INSERT INTO personal_records_custom_records(personal_records_id, custom_records_id) VALUES
-        (1, 1), (1, 2);
 
 
 

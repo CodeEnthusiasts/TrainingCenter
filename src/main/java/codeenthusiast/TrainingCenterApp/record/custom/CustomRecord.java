@@ -9,7 +9,7 @@ import javax.persistence.Entity;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Entity(name = "custom_records")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor

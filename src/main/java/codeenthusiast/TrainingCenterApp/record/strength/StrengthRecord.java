@@ -15,7 +15,7 @@ import javax.persistence.Enumerated;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
-@Entity(name = "strength_records")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor

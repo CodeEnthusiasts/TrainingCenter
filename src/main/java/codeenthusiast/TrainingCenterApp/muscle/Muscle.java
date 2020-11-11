@@ -12,7 +12,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import java.util.List;
 
-@Entity(name = "muscles")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor

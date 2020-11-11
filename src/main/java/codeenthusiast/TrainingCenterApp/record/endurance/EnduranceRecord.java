@@ -16,7 +16,7 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
-@Entity(name = "endurance_records")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor

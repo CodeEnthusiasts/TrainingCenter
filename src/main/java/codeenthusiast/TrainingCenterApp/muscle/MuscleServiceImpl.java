@@ -1,16 +1,12 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
-import codeenthusiast.TrainingCenterApp.image.Image;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
+import codeenthusiast.TrainingCenterApp.image.ImageDTO;
 import codeenthusiast.TrainingCenterApp.mappers.MuscleMapper;
-import codeenthusiast.TrainingCenterApp.movement.MovementDTO;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
+import codeenthusiast.TrainingCenterApp.user.major.UserDTO;
 import org.springframework.stereotype.Service;
-
-import java.util.Collections;
 
 @Service
 public class MuscleServiceImpl extends AbstractServiceImpl<Muscle, MuscleDTO> implements MuscleService {
@@ -35,14 +31,19 @@ public class MuscleServiceImpl extends AbstractServiceImpl<Muscle, MuscleDTO> im
         return repository.existsByName(name);
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void init(){
-//        MuscleDTO muscle = new MuscleDTO("Quadratus", "Biggest human muscle");
-//        MuscleDTO muscle1 = new MuscleDTO("Chest", "Pecs description muscle");
-//        MuscleDTO muscle2 = new MuscleDTO("Erector spinae", "Long human muscle on the back");
-//        save(muscle);
-//        save(muscle1);
-//        save(muscle2);
-//    }
+    @Override
+    public MuscleDTO addImage(Long id, ImageDTO image) {
+        MuscleDTO muscle = findById(id);
+        muscle.setImageUrl(image.getFileUrl());
+        return save(muscle);
+    }
+
+    @Override
+    public void removeImage(Long id) {
+        MuscleDTO muscle = findById(id);
+        muscle.setImageUrl(null);
+        save(muscle);
+    }
+
 
 }

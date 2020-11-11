@@ -1,7 +1,7 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
-import codeenthusiast.TrainingCenterApp.image.Image;
+import codeenthusiast.TrainingCenterApp.image.ImageDTO;
 
 public interface MuscleService extends AbstractService<Muscle, MuscleDTO> {
 
@@ -9,4 +9,7 @@ public interface MuscleService extends AbstractService<Muscle, MuscleDTO> {
 
     boolean existsByName(String name);
 
+    MuscleDTO addImage(Long id, ImageDTO image);
+
+    void removeImage(Long id);
 }

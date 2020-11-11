@@ -15,6 +15,7 @@ public class MuscleDTO extends AbstractDTO {
 
     private String name;
     private String description;
+    private String imageUrl;
     private List<Image> images;
 
     public MuscleDTO(String name, String description) {

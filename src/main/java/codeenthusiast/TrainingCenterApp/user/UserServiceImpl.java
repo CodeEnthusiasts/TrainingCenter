@@ -7,6 +7,7 @@ import codeenthusiast.TrainingCenterApp.image.ImageDTO;
 import codeenthusiast.TrainingCenterApp.mappers.UserMapper;
 import codeenthusiast.TrainingCenterApp.user.major.User;
 import codeenthusiast.TrainingCenterApp.user.major.UserDTO;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,7 +16,7 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserDTO> implemen
     private UserMapper userMapper;
     private UserRepository userRepository;
 
-    public UserServiceImpl(AbstractRepository<User> repository, AbstractMapper<User,
+    public UserServiceImpl(@Qualifier("userRepository") AbstractRepository<User> repository, AbstractMapper<User,
             UserDTO> mapper, UserMapper userMapper, UserRepository userRepository) {
         super(repository, mapper);
         this.userMapper = userMapper;

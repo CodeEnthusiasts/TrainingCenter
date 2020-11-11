@@ -2,6 +2,7 @@ package codeenthusiast.TrainingCenterApp.record.endurance;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.DistanceUnit;
+import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
@@ -11,6 +12,7 @@ import org.hibernate.validator.constraints.Range;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -29,9 +31,11 @@ public class EnduranceRecord extends AbstractEntity {
     @NotNull
     @Enumerated(EnumType.STRING)
     private DistanceUnit distanceUnit;
+
     @NotNull
     @Range(min = 0, max = 10000)
     private double distance;
+
     @NotNull
     @Enumerated(EnumType.STRING)
     private TimeUnit timeUnit;
@@ -40,5 +44,8 @@ public class EnduranceRecord extends AbstractEntity {
     private LocalTime duration;
 
     private LocalDate date;
+
+    @ManyToOne
+    private PersonalRecords personalRecords;
 
 }

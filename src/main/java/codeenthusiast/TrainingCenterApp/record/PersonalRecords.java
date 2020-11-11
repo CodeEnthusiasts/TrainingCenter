@@ -13,13 +13,13 @@ import java.util.List;
 @Embeddable
 public class PersonalRecords extends AbstractEntity {
 
-    @OneToMany
+    @OneToMany(mappedBy = "personalRecords")
     private List<StrengthRecord> strengthRecords = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "personalRecords")
     private List<EnduranceRecord> enduranceRecords = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "personalRecords")
     private List<CustomRecord> customRecords = new ArrayList<>();
 
 

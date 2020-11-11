@@ -18,9 +18,6 @@ public interface MovementMapper extends AbstractMapper<Movement, MovementDTO> {
 
     MovementDTO mapToDTO(Movement movement);
 
-    Movement mapToEntity(MovementDTO movementDTO);
-
     List<Movement> mapToEntities(List<MovementDTO> movementDTOS);
 
-    List<MovementDTO> mapToDTOs(List<Movement> movements);
 }

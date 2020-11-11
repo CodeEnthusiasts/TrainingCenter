@@ -10,7 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 
-@Entity(name = "roles")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor

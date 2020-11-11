@@ -10,7 +10,7 @@ import lombok.*;
 import javax.persistence.*;
 import java.util.List;
 
-@Entity(name = "strength_exercises")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor

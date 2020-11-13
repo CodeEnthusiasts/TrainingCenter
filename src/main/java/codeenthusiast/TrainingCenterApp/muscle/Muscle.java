@@ -16,12 +16,8 @@ import java.util.List;
 @AllArgsConstructor
 public class Muscle extends AbstractEntity {
 
-    @NonNull
-    @Length(min = 3, max = 48)
     private String name;
 
-    @NonNull
-    @Length(min = 3, max = 500)
     private String description;
 
     @OneToMany
@@ -35,7 +31,6 @@ public class Muscle extends AbstractEntity {
     public Muscle(MuscleDTO muscleDTO) {
         this.name = muscleDTO.getName();
         this.description = muscleDTO.getDescription();
-//        this.images = muscleDTO.getImages();
     }
 
 }

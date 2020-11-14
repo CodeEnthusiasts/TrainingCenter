@@ -3,23 +3,20 @@ package codeenthusiast.TrainingCenterApp.mappers;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.muscle.Muscle;
 import codeenthusiast.TrainingCenterApp.muscle.MuscleDTO;
+import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.mapstruct.Mapping;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface MuscleMapper extends AbstractMapper<Muscle, MuscleDTO> {
 
 
-    /*@Mapping(source = "images", target = "imagesDTO")*/
-    MuscleDTO mapToDto(Muscle entity);
+    MuscleDTO mapToDTO(Muscle entity);
 
-    /*@Mapping(source = "imagesDTO", target = "images")*/
-    Muscle mapToEntity(MuscleDTO dto);
+    @InheritInverseConfiguration
+    Muscle mapToEntity(MuscleDTO muscleDTO);
 
-    List<Muscle> mapToEntities(List<MuscleDTO> dtos);
-
-//    List<MuscleDTO> mapToDtos(List<Muscle> entities);
+    List<MuscleDTO> mapToDTOs(List<Muscle> entities);
 }

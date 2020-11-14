@@ -7,6 +7,8 @@ import codeenthusiast.TrainingCenterApp.mappers.ImageMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
+
 @Service
 public class ImageServiceImpl extends AbstractServiceImpl<Image, ImageDTO> implements ImageService {
 
@@ -24,7 +26,8 @@ public class ImageServiceImpl extends AbstractServiceImpl<Image, ImageDTO> imple
     @Override
     public ImageDTO createNewImage(MultipartFile file){
         String fileUrl = uploadImageOnHosting(file);
-        return new ImageDTO(fileUrl);
+        ImageDTO image = new ImageDTO(fileUrl);
+        return save(image);
     }
 
     @Override
@@ -32,6 +35,11 @@ public class ImageServiceImpl extends AbstractServiceImpl<Image, ImageDTO> imple
         return imageUploader.uploadImage(file);
     }
 
+    public void deleteImagesById(List<Long> idImages){
+        for(int i = 0; i < idImages.size(); i++){
+            repository.deleteById(idImages.get(i));
+        }
+    }
 
 
 

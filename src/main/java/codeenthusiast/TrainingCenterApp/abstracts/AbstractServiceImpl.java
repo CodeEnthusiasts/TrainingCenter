@@ -49,4 +49,5 @@ public abstract class AbstractServiceImpl<E extends AbstractEntity, D extends Ab
     public List<D> getAll() {
         return mapper.mapToDTOs(repository.findAll());
     }
+
 }

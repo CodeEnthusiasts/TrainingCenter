@@ -1,12 +1,30 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
-import codeenthusiast.TrainingCenterApp.image.Image;
+import codeenthusiast.TrainingCenterApp.image.ImageDTO;
 
-public interface MuscleService extends AbstractService<Muscle, MuscleDTO> {
+import java.util.List;
 
-    boolean existsById(Long id);
+public interface MuscleService {
 
-    boolean existsByName(String name);
+    void deleteById(Long id);
+
+    void checkExistence(Long id);
+
+    void checkExistenceByName(String name);
+
+    MuscleDTO findById(Long id);
+
+    MuscleDTO update(Long id, MuscleDTO dto);
+
+    MuscleDTO create(MuscleDTO dto);
+
+    MuscleDTO save(MuscleDTO dto);
+
+    MuscleDTO addImage(Long id, ImageDTO image);
+
+    List<Long> removeAllImages(Long id);
+
+    List<Long> getIdOfDeletedImages(List<ImageDTO> images);
+
 
 }

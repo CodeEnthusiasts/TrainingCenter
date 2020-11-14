@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(HttpStatus.BAD_REQUEST)
 public class EntityNotFoundException extends RuntimeException{
     public EntityNotFoundException(Long id){
-        super("Entity with ID: " + id + "does not exist.");
+        super("Entity with ID: " + id + " does not exist.");
     }
 
     public EntityNotFoundException(String name){

@@ -43,7 +43,7 @@ public class EnduranceRecord extends AbstractEntity {
     @NotNull
     private LocalTime duration;
 
-    private LocalDate date;
+    private LocalDate setDate;
 
     @ManyToOne
     private PersonalRecords personalRecords;

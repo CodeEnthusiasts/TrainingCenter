@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
 @Getter
@@ -21,5 +22,6 @@ public class EnduranceRecordDTO extends AbstractDTO {
     private int distance;
     private TimeUnit timeUnit;
     private int time;
+    private LocalTime duration;
     private LocalDate setDate;
 }

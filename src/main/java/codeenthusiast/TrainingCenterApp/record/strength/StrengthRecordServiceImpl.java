@@ -15,7 +15,9 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
 
     private final PersonalRecordsServiceImpl personalRecordsServiceImpl;
 
-    public StrengthRecordServiceImpl(StrengthRecordRepository repository, StrengthRecordMapper mapper, PersonalRecordsServiceImpl personalRecordsServiceImpl) {
+    public StrengthRecordServiceImpl(StrengthRecordRepository repository,
+                                     StrengthRecordMapper mapper,
+                                     PersonalRecordsServiceImpl personalRecordsServiceImpl) {
         this.repository = repository;
         this.mapper = mapper;
         this.personalRecordsServiceImpl = personalRecordsServiceImpl;

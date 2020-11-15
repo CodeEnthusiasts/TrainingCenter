@@ -51,6 +51,12 @@ public class MuscleServiceImpl implements MuscleService {
     }
 
     @Override
+    public List<MuscleDTO> findByMovementId(Long id) {
+        List<Muscle> muscleList = muscleRepository.findByMovementId(id);
+        return muscleMapper.mapToDTOs(muscleList);
+    }
+
+    @Override
     public MuscleDTO update(Long id, MuscleDTO dto) {
         checkExistence(id);
         dto.setId(id);

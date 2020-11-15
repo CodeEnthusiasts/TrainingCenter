@@ -3,6 +3,7 @@ package codeenthusiast.TrainingCenterApp.muscle;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
 import codeenthusiast.TrainingCenterApp.image.Image;
 import codeenthusiast.TrainingCenterApp.image.ImageDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.UniqueElements;
@@ -24,10 +25,7 @@ public class MuscleDTO extends AbstractDTO {
     @Length(min = 5, max = 500)
     private String description;
 
+    @JsonIgnore
     private List<ImageDTO> images;
 
-    public MuscleDTO(String name, String description) {
-        this.name = name;
-        this.description = description;
-    }
 }

@@ -3,6 +3,7 @@ package codeenthusiast.TrainingCenterApp.movement;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
 import codeenthusiast.TrainingCenterApp.image.ImageDTO;
 import codeenthusiast.TrainingCenterApp.muscle.MuscleDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,11 +18,12 @@ import java.util.List;
 @AllArgsConstructor
 public class MovementDTO extends AbstractDTO {
 
-
+    @NotNull
     private String name;
 
-    private List<MuscleDTO> musclesInvolved;
-
+    @JsonIgnore
     private List<ImageDTO> images;
 
+    @JsonIgnore
+    private List<MuscleDTO> muscles;
 }

@@ -10,12 +10,15 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface MovementMapper extends AbstractMapper<Movement, MovementDTO> {
 
-
+    @Override
     MovementDTO mapToDTO(Movement movement);
 
+    @Override
     Movement mapToEntity(MovementDTO movementDTO);
 
+    @Override
     List<Movement> mapToEntities(List<MovementDTO> movementDTOS);
+
 
 
 }

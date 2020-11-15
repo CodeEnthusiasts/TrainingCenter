@@ -19,10 +19,10 @@ import java.util.List;
 @NoArgsConstructor
 public class Movement extends Exercisable {
 
-    @OneToMany
+    @OneToMany(mappedBy = "movement")
     private List<Muscle> musclesInvolved;
 
-    @OneToMany
+    @OneToMany(mappedBy = "movement")
     private List<Image> images;
 
     @OneToMany

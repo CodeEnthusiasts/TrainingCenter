@@ -10,6 +10,8 @@ import java.util.List;
 @Repository
 public interface StrengthRecordRepository extends AbstractRepository<StrengthRecord> {
 
+    StrengthRecord findById(long id);
+
     void deleteById(Long id);
 
     List<StrengthRecord> findAllByPersonalRecordsId(Long id);

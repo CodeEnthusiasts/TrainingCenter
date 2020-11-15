@@ -53,8 +53,8 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
         return "Record deleted successfully. ";
     }
 
-    private EnduranceRecord save(EnduranceRecord strengthRecord) {
-        return repository.save(strengthRecord);
+    private EnduranceRecord save(EnduranceRecord enduranceRecord) {
+        return repository.save(enduranceRecord);
     }
 
     private EnduranceRecord getEnduranceRecordByIdFromRepo(long id) {

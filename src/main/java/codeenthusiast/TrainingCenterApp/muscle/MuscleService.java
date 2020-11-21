@@ -14,6 +14,8 @@ public interface MuscleService {
 
     MuscleDTO findById(Long id);
 
+    List<MuscleDTO> findByMovementId(Long id);
+
     MuscleDTO update(Long id, MuscleDTO dto);
 
     MuscleDTO create(MuscleDTO dto);

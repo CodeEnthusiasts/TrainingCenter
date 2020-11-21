@@ -5,4 +5,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MovementRepository extends AbstractRepository<Movement> {
+    boolean existsByName(String name);
 }

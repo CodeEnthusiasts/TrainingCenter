@@ -15,7 +15,7 @@ public interface EnduranceExerciseMapper extends AbstractMapper<EnduranceExercis
 
     EnduranceExercise mapToEntity(EnduranceExerciseDTO enduranceExerciseDTO);
 
-    List<EnduranceExercise> mapToEntities(List<EnduranceExerciseDTO> enduranceExerciseDTOS);
+    List<EnduranceExercise> mapToEntities(List<EnduranceExerciseDTO> enduranceExerciseDTOs);
 
     List<EnduranceExerciseDTO> mapToDTOs(List<EnduranceExercise> enduranceExercises);
 }

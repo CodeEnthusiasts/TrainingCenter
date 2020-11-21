@@ -1,9 +1,8 @@
 package codeenthusiast.TrainingCenterApp.exercise.strengthexercise.pace;
 
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.pace.Pace;
-import org.springframework.data.jpa.repository.JpaRepository;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PaceRepository extends JpaRepository<Pace, Long> {
+public interface PaceRepository extends AbstractRepository<Pace> {
 }

@@ -11,7 +11,9 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface PriorityMapper extends AbstractMapper<Priority, PriorityDTO> {
 
+    @Override
     PriorityDTO mapToDTO(Priority priority);
 
+    @Override
     List<PriorityDTO> mapToDTOs(List<Priority> priorities);
 }

@@ -4,5 +4,5 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface EnduranceExerciseRepository extends AbstractRepository {
+public interface EnduranceExerciseRepository extends AbstractRepository<EnduranceExercise> {
 }

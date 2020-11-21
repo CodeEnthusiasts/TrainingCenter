@@ -1,28 +1,38 @@
 package codeenthusiast.TrainingCenterApp.record.strength;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
 import codeenthusiast.TrainingCenterApp.mappers.StrengthRecordMapper;
+import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class StrengthRecordServiceImpl extends AbstractServiceImpl<StrengthRecord, StrengthRecordDTO>
-        implements StrengthRecordService {
+public class StrengthRecordServiceImpl implements StrengthRecordService {
 
     private final StrengthRecordRepository repository;
 
     private final StrengthRecordMapper mapper;
 
-    public StrengthRecordServiceImpl(AbstractRepository<StrengthRecord> repository,
-                                     AbstractMapper<StrengthRecord, StrengthRecordDTO> mapper,
-                                     StrengthRecordRepository repository1,
-                                     StrengthRecordMapper mapper1) {
-        super(repository, mapper);
-        this.repository = repository1;
-        this.mapper = mapper1;
+    private final PersonalRecordsServiceImpl personalRecordsServiceImpl;
+
+    public StrengthRecordServiceImpl(StrengthRecordRepository repository, StrengthRecordMapper mapper, PersonalRecordsServiceImpl personalRecordsServiceImpl) {
+        this.repository = repository;
+        this.mapper = mapper;
+        this.personalRecordsServiceImpl = personalRecordsServiceImpl;
+    }
+
+    @Override
+    public StrengthRecordDTO createStrengthRecord(Long personalRecordsId, StrengthRecordDTO strengthRecordDTO) {
+        StrengthRecord strengthRecord = mapToEntity(strengthRecordDTO);
+        strengthRecord.setPersonalRecords(personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId));
+        return mapToDTO(save(strengthRecord));
+    }
+
+    @Override
+    public StrengthRecordDTO updateStrengthRecord(Long strengthRecordId, StrengthRecordDTO strengthRecordDTO) {
+        StrengthRecord strengthRecord = getStrengthRecordByIdFromRepo(strengthRecordId);
+        updateStrengthRecord(strengthRecord, strengthRecordDTO);
+        return mapToDTO(save(strengthRecord));
     }
 
     @Override
@@ -36,9 +46,38 @@ public class StrengthRecordServiceImpl extends AbstractServiceImpl<StrengthRecor
     }
 
     @Override
-    public String deleteById(Long id) {
-        repository.deleteById(id);
+    public String deleteStrengthRecord(Long id) {
+        deleteById(id);
         return "Record deleted successfully. ";
+    }
+
+    private StrengthRecord save(StrengthRecord strengthRecord) {
+        return repository.save(strengthRecord);
+    }
+
+    private StrengthRecord getStrengthRecordByIdFromRepo(long id) {
+        return repository.findById(id);
+    }
+
+    private void updateStrengthRecord(StrengthRecord strengthRecord, StrengthRecordDTO strengthRecordDTO) {
+        strengthRecord.setExerciseName(strengthRecordDTO.getExerciseName());
+        strengthRecord.setWeightUnit(strengthRecordDTO.getWeightUnit());
+        strengthRecord.setWeight(strengthRecord.getWeight());
+        strengthRecord.setRepetitionUnit(strengthRecord.getRepetitionUnit());
+        strengthRecord.setReps(strengthRecord.getReps());
+        strengthRecord.setDate(strengthRecord.getDate());
+    }
+
+    private void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
+    private StrengthRecord mapToEntity(StrengthRecordDTO strengthRecordDTO) {
+        return mapper.mapToEntity(strengthRecordDTO);
+    }
+
+    private StrengthRecordDTO mapToDTO(StrengthRecord strengthRecord) {
+        return mapper.mapToDTO(strengthRecord);
     }
 
     private List<StrengthRecordDTO> mapToDTOs(List<StrengthRecord> list) {

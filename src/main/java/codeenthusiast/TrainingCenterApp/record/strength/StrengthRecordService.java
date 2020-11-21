@@ -1,19 +1,17 @@
 package codeenthusiast.TrainingCenterApp.record.strength;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
-import org.modelmapper.ModelMapper;
-import org.springframework.stereotype.Service;
-
-import java.util.Comparator;
 import java.util.List;
-import java.util.stream.Collectors;
 
-public interface StrengthRecordService extends AbstractService<StrengthRecord, StrengthRecordDTO> {
+public interface StrengthRecordService {
 
-    String deleteById(Long id);
+    StrengthRecordDTO createStrengthRecord(Long personalRecordsId, StrengthRecordDTO strengthRecordDTO);
+
+    StrengthRecordDTO updateStrengthRecord(Long strengthRecordId, StrengthRecordDTO strengthRecordDTO);
 
     List<StrengthRecordDTO> getAllStrengthRecordsByPersonalRecordsId(Long id);
 
     List<StrengthRecordDTO> getThreeLatestStrengthRecordsByPersonalRecordsId(Long id);
+
+    String deleteStrengthRecord(Long id);
 
 }

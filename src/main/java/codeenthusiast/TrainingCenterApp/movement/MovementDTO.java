@@ -15,7 +15,6 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
 public class MovementDTO extends AbstractDTO {
 
     @NotNull
@@ -26,4 +25,8 @@ public class MovementDTO extends AbstractDTO {
 
     @JsonIgnore
     private List<MuscleDTO> muscles;
+
+    public MovementDTO(String name) {
+        this.name = name;
+    }
 }

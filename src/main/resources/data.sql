@@ -57,17 +57,14 @@ INSERT INTO training_plan_training_sessions(training_plan_id, training_sessions_
       (1,2),
       (1,3);
 
--- EXERCISABLE
-INSERT INTO exercisable(id, name) VALUES
+-- MOVEMENT
+INSERT INTO movement(id, name) VALUES
         (1, 'Squat'),
         (2, 'Bench Press'),
         (3, 'Dead lift'),
         (4, 'Pull Up'),
         (5, 'Overhead Press'),
         (6, 'Run outdoor');
-
--- MOVEMENT
-INSERT INTO movement(id) VALUES(1),(2),(3),(4),(5);
 
 -- MUSCLES
 INSERT INTO muscle(id, description, name, movement_id) VALUES
@@ -82,14 +79,6 @@ INSERT INTO muscle(id, description, name, movement_id) VALUES
 UPDATE image SET muscle_id = 1 WHERE id = 7;
 UPDATE image SET muscle_id = 2 WHERE id = 8;
 UPDATE image SET muscle_id = 3 WHERE id = 9;
-
----- IMAGES FOR MUSCLE
---INSERT INTO muscle_images(muscle_id, images_id) VALUES
---        (1, 7), (2,8), (3,9);
-
----- MUSCLES FOR MOVEMENT
---INSERT INTO movement_muscles_involved(movement_id, muscles_involved_id) VALUES
---        (1, 1), (2,2), (3,3), (4,4), (5,5);
 
 -- KEY TECHNIQUE ELEMENTS
 INSERT INTO key_technique_element(id, content) VALUES
@@ -109,10 +98,6 @@ UPDATE image SET movement_id = 1 WHERE id = 4;
 UPDATE image SET movement_id = 2 WHERE id = 5;
 UPDATE image SET movement_id = 3 WHERE id = 6;
 
--- IMAGES FOR MOVEMENT
-INSERT INTO movement_images(movement_id, images_id) VALUES
-        (1, 4), (2, 5), (3,6);
-
 --PACE
 INSERT INTO pace(id, holding_down, holding_up, lowering, name, raising) VALUES
         (1, 0, 1, 1, 'Fast', 1),
@@ -122,7 +107,7 @@ INSERT INTO pace(id, holding_down, holding_up, lowering, name, raising) VALUES
         (5, 2, 1, 0, 'Fast and short pause', 1);
 
 -- STRENGTH EXERCISES
-INSERT INTO strength_exercise(id, repetition_unit, reps, reps_in_reserve, weight,  weight_unit, exercisable_id, training_session_id, pace_id) VALUES
+INSERT INTO strength_exercise(id, repetition_unit, reps, reps_in_reserve, weight,  weight_unit, movement_id, training_session_id, pace_id) VALUES
         (1, 'MOTION', 8, 3, 100,  'KILOGRAMS', 1, 1, 1),
         (2, 'MOTION', 8, 2, 100,  'KILOGRAMS', 1, 1, 1),
         (3, 'MOTION', 8, 1, 100,  'KILOGRAMS', 1, 1, 1),
@@ -138,7 +123,7 @@ INSERT INTO training_session_strength_exercises(training_session_id, strength_ex
           (1, 1), (1, 2), (1, 3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9);
 
 --ENDURANCE EXERCISES
-INSERT INTO endurance_exercise(id, distance, distance_unit, heart_rate, vo2max_percentage, duration, time_unit, exercisable_id, training_session_id) VALUES
+INSERT INTO endurance_exercise(id, distance, distance_unit, heart_rate, vo2max_percentage, duration, time_unit, movement_id, training_session_id) VALUES
         (1, 2.0, 'KILOMETERS', 130, 70, '00:15', 'MINUTES', 6, 2),
         (2, 2.0, 'KILOMETERS', 150, 80, '00:10', 'MINUTES', 6, 2),
         (3, 1.0, 'KILOMETERS', 170, 90, '00:05', 'MINUTES', 6, 2);

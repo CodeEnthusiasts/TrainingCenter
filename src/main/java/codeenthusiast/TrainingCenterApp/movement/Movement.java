@@ -34,4 +34,8 @@ public class Movement extends AbstractEntity {
     public Movement(String name, List<Muscle> musclesInvolved) {
         this.musclesInvolved = musclesInvolved;
     }
+
+    public Movement(MovementDTO movementDTO){
+        this.name = movementDTO.getName();
+    }
 }

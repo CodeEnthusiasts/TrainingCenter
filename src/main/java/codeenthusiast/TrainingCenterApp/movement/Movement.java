@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.movement;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.image.Image;
 import codeenthusiast.TrainingCenterApp.movement.keytechniqueelement.KeyTechniqueElement;
 import codeenthusiast.TrainingCenterApp.muscle.Muscle;
@@ -17,7 +18,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Movement extends Exercisable {
+public class Movement extends AbstractEntity {
+
+    private String name;
 
     @OneToMany(mappedBy = "movement")
     private List<Muscle> musclesInvolved;
@@ -29,7 +32,6 @@ public class Movement extends Exercisable {
     private List<KeyTechniqueElement> keyTechniqueElements;
 
     public Movement(String name, List<Muscle> musclesInvolved) {
-        super(name);
         this.musclesInvolved = musclesInvolved;
     }
 }

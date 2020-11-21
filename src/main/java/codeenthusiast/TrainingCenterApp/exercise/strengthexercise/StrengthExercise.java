@@ -3,19 +3,20 @@ package codeenthusiast.TrainingCenterApp.exercise.strengthexercise;
 import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
 import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
-import codeenthusiast.TrainingCenterApp.movement.Exercisable;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class StrengthExercise extends Exercise{
+public class StrengthExercise extends Exercise {
 
 
     @Enumerated(EnumType.STRING)
@@ -33,7 +34,6 @@ public class StrengthExercise extends Exercise{
 
     @ManyToOne
     private TrainingSession trainingSession;
-
 
 
 }

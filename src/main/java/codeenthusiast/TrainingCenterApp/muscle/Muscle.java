@@ -29,7 +29,6 @@ public class Muscle extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "movement_id")
-    @JsonIgnore
     private Movement movement;
 
     public Muscle(String name, String description) {

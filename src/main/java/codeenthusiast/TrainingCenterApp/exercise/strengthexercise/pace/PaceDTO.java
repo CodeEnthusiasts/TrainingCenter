@@ -12,6 +12,8 @@ import lombok.Setter;
 @AllArgsConstructor
 public class PaceDTO extends AbstractDTO {
 
+    private String name;
+
     private int lowering;
 
     private int holdingDown;

@@ -21,12 +21,12 @@ public class TrainingPlan extends AbstractEntity {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "trainingPlan")
     private List<TrainingSession> trainingSessions;
 
-    private int numberOfExecutedTrainings;
+    private short numberOfExecutedTrainings;
 
-    private int numberOfPlannedTrainings;
+    private short numberOfPlannedTrainings;
 
     private LocalDate startDate;
 
@@ -35,6 +35,7 @@ public class TrainingPlan extends AbstractEntity {
     private String description;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Enumerated(EnumType.STRING)

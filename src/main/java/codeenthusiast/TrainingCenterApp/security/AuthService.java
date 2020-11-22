@@ -125,12 +125,9 @@ public class AuthService {
     }
 
     public User createNewUserAccount(SignUpRequest signUpRequest) {
-
-        return new User(signUpRequest.getUsername(),
-                encoder.encode(signUpRequest.getPassword()),
-                signUpRequest.getEmail(),
-                new codeenthusiast.TrainingCenterApp.user.details.UserDetails(
-                        BodyWeightUnit.KILOGRAMS, 0.0, HeightUnit.METERS, 0.0, 0, Sex.MALE, null));
+        short s = 0;
+        return new User(signUpRequest.getUsername(), signUpRequest.getPassword(),
+                signUpRequest.getPassword());
     }
 
 //     User generator //

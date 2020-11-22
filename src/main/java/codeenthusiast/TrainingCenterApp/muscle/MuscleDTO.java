@@ -1,14 +1,11 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
-import codeenthusiast.TrainingCenterApp.image.Image;
 import codeenthusiast.TrainingCenterApp.image.ImageDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
-import org.hibernate.validator.constraints.UniqueElements;
 
-import javax.persistence.Column;
 import java.util.List;
 
 @Getter

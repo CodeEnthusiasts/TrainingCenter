@@ -24,7 +24,7 @@ public class UserDetailsDTO {
     private double height;
 
     @Range(min = 1, max = 120)
-    private int age;
+    private short age;
 
     private Sex sex;
 

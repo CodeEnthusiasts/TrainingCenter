@@ -7,7 +7,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.Valid;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @Getter
@@ -19,6 +21,8 @@ public class UserDTO extends AbstractDTO {
     @Size(min = 5, max = 30)
     private String username;
 
+    @Email
+    @NotNull
     private String email;
 
     @Valid
@@ -26,10 +30,4 @@ public class UserDTO extends AbstractDTO {
 
     private String imageUrl;
 
-    public UserDTO(String username, String email, UserDetailsDTO userDetailsDTO, String imageUrl) {
-        this.username = username;
-        this.email = email;
-        this.userDetailsDTO = userDetailsDTO;
-        this.imageUrl = imageUrl;
-    }
 }

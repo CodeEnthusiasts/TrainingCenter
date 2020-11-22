@@ -4,14 +4,18 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.record.custom.CustomRecord;
 import codeenthusiast.TrainingCenterApp.record.endurance.EnduranceRecord;
 import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecord;
+import codeenthusiast.TrainingCenterApp.user.major.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Embeddable
 public class PersonalRecords extends AbstractEntity {
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @OneToMany(mappedBy = "personalRecords")
     private List<StrengthRecord> strengthRecords = new ArrayList<>();

@@ -7,7 +7,7 @@ import org.mapstruct.Mapper;
 
 import java.util.List;
 
-@Mapper(componentModel = "Spring")
+@Mapper(componentModel = "spring")
 public interface StrengthRecordMapper extends AbstractMapper<StrengthRecord, StrengthRecordDTO> {
 
     List<StrengthRecordDTO> mapToDTOs(List<StrengthRecord> strengthRecords);

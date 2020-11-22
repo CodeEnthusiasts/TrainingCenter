@@ -16,10 +16,15 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class EnduranceRecordDTO extends AbstractDTO {
 
-    private String exerciseName;
+    private String movementName;
+
     private DistanceUnit distanceUnit;
+
     private int distance;
+
     private TimeUnit timeUnit;
+
     private int time;
+
     private LocalDate setDate;
 }

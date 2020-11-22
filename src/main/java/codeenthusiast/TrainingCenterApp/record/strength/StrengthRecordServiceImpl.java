@@ -60,7 +60,7 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
     }
 
     private void updateStrengthRecord(StrengthRecord strengthRecord, StrengthRecordDTO strengthRecordDTO) {
-        strengthRecord.setExerciseName(strengthRecordDTO.getExerciseName());
+        strengthRecord.setMovementName(strengthRecordDTO.getMovementName());
         strengthRecord.setWeightUnit(strengthRecordDTO.getWeightUnit());
         strengthRecord.setWeight(strengthRecord.getWeight());
         strengthRecord.setRepetitionUnit(strengthRecord.getRepetitionUnit());

@@ -15,6 +15,8 @@ import java.time.LocalDate;
 public class CustomRecordDTO extends AbstractDTO {
 
     private String description;
+
     private double value;
+
     private LocalDate date;
 }

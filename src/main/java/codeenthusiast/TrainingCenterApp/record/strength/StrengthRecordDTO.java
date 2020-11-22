@@ -16,7 +16,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class StrengthRecordDTO extends AbstractDTO {
 
-    private String exerciseName;
+    private String movementName;
     private WeightUnit weightUnit;
     private int weight;
     private RepetitionUnit repetitionUnit;

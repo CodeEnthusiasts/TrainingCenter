@@ -30,6 +30,7 @@ public class EnduranceExercise extends Exercise {
     private EnduranceExerciseDetails enduranceExerciseDetails;
 
     @ManyToOne
+    @JoinColumn(name = "training_session_id")
     private TrainingSession trainingSession;
 
 

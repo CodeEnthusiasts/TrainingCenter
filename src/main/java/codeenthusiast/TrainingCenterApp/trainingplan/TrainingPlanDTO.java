@@ -19,8 +19,6 @@ import java.util.List;
 public class TrainingPlanDTO extends AbstractDTO {
 
     private String name;
-    //change there
-    private List<TrainingSession> trainingSessions;
 
     private int numberOfPlannedTrainings;
 
@@ -31,6 +29,5 @@ public class TrainingPlanDTO extends AbstractDTO {
     private String description;
 
     private Difficulty difficulty;
-    //change there
-    private List<Priority> priorities;
+
 }

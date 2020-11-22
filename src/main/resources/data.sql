@@ -16,12 +16,19 @@ INSERT INTO image(id, file_url) VALUES
       (8,'https://www.performancehealth.com/media/wysiwyg/blog/articles/Hamstring-quadriceps_3.PNG'),
       (9,'https://encrypted-tbn0.gstatic.com/images?q=tbn%3AANd9GcQvd9IRdgVMu8sf0J0E_sQG4jYcvuZLFludzw&usqp=CAU');
 
--- PERSONAL RECORDS (ENTITY NOT FINISHED YET)
-INSERT INTO personal_records(id) VALUES (1), (2), (3);
-
 -- USER
-INSERT INTO users(id, email, password, age, body_weight_unit, height, height_unit, sex, weight, username, image_id, personal_records_id) values
-      (1, 'user@gmail.com', '$2a$10$j3y4WrBpcBLAfir0W5C/6eUEfHwwV9LCN27Eg7libt7HURTirh4O.', 20, 'KILOGRAMS', 183, 'METERS', 'MALE', 93.0, 'usertest', 1, 1);
+INSERT INTO users(id, email, password, username) values
+      (1, 'user@gmail.com', '$2a$10$j3y4WrBpcBLAfir0W5C/6eUEfHwwV9LCN27Eg7libt7HURTirh4O.', 'usertest');
+
+-- IMAGE FOR USER
+UPDATE image SET user_id = 1 WHERE id = 1;
+
+-- PERSONAL RECORDS
+INSERT INTO personal_records(id, user_id) VALUES (1,1);
+
+--USER DETAILS
+INSERT INTO user_details(id, age, body_weight_unit, height, height_unit, sex, weight, user_id) values
+      (1, 20, 'KILOGRAMS', 183, 'METERS', 'MALE', 93.0, 1);
 
 -- ROLES FOR USERS
 INSERT INTO users_roles(users_id, roles_id) VALUES (1,1);
@@ -50,12 +57,6 @@ INSERT INTO priority(id, details, name) VALUES
 -- PRIORITIES IN TRAINING PLANS
 INSERT INTO training_plan_priorities(training_plan_id, priorities_id) VALUES
         (1,1), (1,2), (2,3), (2,4), (3,5), (3,6);
-
--- SESSIONS IN TRAINING PLANS
-INSERT INTO training_plan_training_sessions(training_plan_id, training_sessions_id) VALUES
-      (1,1),
-      (1,2),
-      (1,3);
 
 -- MOVEMENT
 INSERT INTO movement(id, name) VALUES
@@ -133,7 +134,7 @@ INSERT INTO training_session_endurance_exercises(training_session_id, endurance_
           (2, 1), (2, 2), (2, 3);
 
 -- STRENGTH RECORDS
-INSERT INTO strength_record(id, exercise_name, reps, repetition_unit, date, weight, weight_unit, personal_records_id) VALUES
+INSERT INTO strength_record(id, movement_name, reps, repetition_unit, date, weight, weight_unit, personal_records_id) VALUES
         (1, 'Squat', 1, 'MOTION', '2020-09-09', 190, 'KILOGRAMS', 1),
         (2, 'Squat', 5, 'MOTION', '2020-07-09', 140, 'KILOGRAMS', 1),
         (3, 'Bench press', 1, 'MOTION', '2020-05-09', 150, 'KILOGRAMS', 1);
@@ -141,7 +142,7 @@ INSERT INTO strength_record(id, exercise_name, reps, repetition_unit, date, weig
 
 -- ENDURANCE RECORDS
 
-INSERT INTO endurance_record(id, distance, distance_unit, date, exercise_name, duration, time_unit, personal_records_id) VALUES
+INSERT INTO endurance_record(id, distance, distance_unit, date, movement_name, duration, time_unit, personal_records_id) VALUES
         (1, 1.0, 'KILOMETERS', '2020-05-09','Running',  '00:03','HOURS', 1),
         (2, 5.0, 'KILOMETERS', '2020-07-09','Running',  '00:28','HOURS', 1),
         (3, 100, 'METERS', '2021-05-09','Swimming',  '00:10','HOURS', 1);

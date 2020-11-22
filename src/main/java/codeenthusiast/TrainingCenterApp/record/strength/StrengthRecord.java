@@ -10,10 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Setter;
 import org.hibernate.validator.constraints.Range;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
@@ -23,25 +20,23 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StrengthRecord extends AbstractEntity {
-    @NotNull
-    private String exerciseName;
-    @NotNull
+
+    private String movementName;
+
     @Enumerated(EnumType.STRING)
     private WeightUnit weightUnit;
-    @NotNull
-    @Range(min = -30, max = 500)
-    private int weight;
-    @NotNull
-    @Enumerated(EnumType.STRING)
 
+    private double weight;
+
+    @Enumerated(EnumType.STRING)
     private RepetitionUnit repetitionUnit;
-    @NotNull
-    @Range(min = 0, max = 1000)
-    private int reps;
+
+    private short reps;
 
     private LocalDate date;
 
     @ManyToOne
+    @JoinColumn(name = "personal_records_id")
     private PersonalRecords personalRecords;
 
 }

@@ -21,8 +21,6 @@ public class TrainingSessionDTO extends AbstractDTO {
 
     private String name;
 
-    private List<Exercise> exercises;
-
     private DayOfWeek dayOfWeek;
 
     private LocalDate date;

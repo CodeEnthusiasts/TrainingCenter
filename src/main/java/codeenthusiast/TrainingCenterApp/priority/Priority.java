@@ -20,4 +20,8 @@ public class Priority extends AbstractEntity {
 
     private String details;
 
+    @ManyToOne
+    @JoinColumn(name = "training_plan_id")
+    private TrainingPlan trainingPlan;
+
 }

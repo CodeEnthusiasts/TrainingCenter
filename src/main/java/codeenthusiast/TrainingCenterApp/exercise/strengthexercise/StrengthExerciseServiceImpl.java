@@ -48,9 +48,10 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
 
     @Override
     public StrengthExerciseDTO create(StrengthExerciseDTO dto) {
-        StrengthExercise muscle = new StrengthExercise(dto);
-        return strengthExerciseMapper.mapToDTO(muscle);
+        StrengthExercise strengthExercise = new StrengthExercise(dto);
+        return strengthExerciseMapper.mapToDTO(strengthExercise);
     }
+
 
     @Override
     public void deleteById(Long id) {

@@ -28,7 +28,7 @@ public class StrengthExerciseController {
 
 
     @PostMapping
-    public StrengthExerciseDTO create(@RequestBody @Valid StrengthExerciseDTO dto) {
+    public StrengthExerciseDTO create(@RequestBody @Valid StrengthExerciseDTO dto, @PathVariable("id") Long id) {
         return strengthExerciseService.create(dto);
     }
 

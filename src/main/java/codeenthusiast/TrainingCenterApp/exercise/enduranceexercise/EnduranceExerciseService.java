@@ -8,11 +8,11 @@ public interface EnduranceExerciseService {
 
     EnduranceExerciseDTO findById(Long id);
 
-    EnduranceExerciseDTO save(EnduranceExercise enduranceExercise, Long trainingPlanId, Long movementId);
+    EnduranceExerciseDTO save(EnduranceExercise enduranceExercise, Long trainingSessionId, Long movementId);
 
     List<EnduranceExerciseDTO> getAllByTrainingSessionId(Long id);
 
-    EnduranceExerciseDTO create(EnduranceExerciseDTO dto, Long trainingPlanId, Long movementId);
+    EnduranceExerciseDTO create(EnduranceExerciseDTO dto, Long trainingSessionId, Long movementId);
 
     EnduranceExerciseDTO update(Long id, EnduranceExerciseDTO dto);
 

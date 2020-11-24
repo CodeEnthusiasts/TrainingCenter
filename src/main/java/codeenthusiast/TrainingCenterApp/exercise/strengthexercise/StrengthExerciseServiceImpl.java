@@ -36,9 +36,9 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
     }
 
     @Override
-    public StrengthExerciseDTO save(StrengthExercise strengthExercise, Long trainingPlanId, Long movementId) {
+    public StrengthExerciseDTO save(StrengthExercise strengthExercise, Long trainingSessionId, Long movementId) {
 
-        TrainingSession trainingSession = trainingSessionService.findEntityById(trainingPlanId);
+        TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
         Movement movement = movementService.findEntityById(movementId);
 
         strengthExercise.setMovement(movement);

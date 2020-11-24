@@ -13,10 +13,10 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring")
 public interface UserDetailsMapper extends AbstractMapper<UserDetails, UserDetailsDTO> {
 
-    UserDetailsMapper INSTANCE = Mappers.getMapper(UserDetailsMapper.class);
-
     UserDetailsDTO mapToDTO(UserDetails userDetails);
 
+    @Mapping(target = "id", ignore = true)
+    @Mapping(target = "user", ignore = true)
     UserDetails mapToEntity(UserDetailsDTO userDetailsDTO);
 
     List<UserDetails> mapToEntities(List<UserDetailsDTO> dtos);

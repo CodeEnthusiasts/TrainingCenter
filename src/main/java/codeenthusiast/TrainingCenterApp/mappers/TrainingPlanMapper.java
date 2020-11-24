@@ -21,7 +21,7 @@ public interface TrainingPlanMapper {
 
     List<TrainingPlanDTO> mapToDTOs(List<TrainingPlan> entities);
 
-    @Mapping(ignore = true, target = "numberOfExecutedTrainings")
+    @Mapping(ignore = true, target = "user")
     TrainingPlan mapToEntity(TrainingPlanDTO dto);
 
     List<TrainingPlan> mapToEntities(List<TrainingPlanDTO> entities);

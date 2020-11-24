@@ -7,16 +7,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/pace")
-public class PaceController extends AbstractController<Pace, PaceDTO> {
+public class PaceController {
 
     private PaceServiceImpl paceService;
 
     public PaceController(PaceServiceImpl paceService) {
         this.paceService = paceService;
-    }
-
-    @Override
-    public AbstractService<Pace, PaceDTO> getService() {
-        return paceService;
     }
 }

@@ -15,5 +15,6 @@ public interface PriorityMapper extends AbstractMapper<Priority, PriorityDTO> {
     PriorityDTO mapToDTO(Priority priority);
 
     @Override
-    List<PriorityDTO> mapToDTOs(List<Priority> priorities);
+    Priority mapToEntity(PriorityDTO priorityDTO);
+
 }

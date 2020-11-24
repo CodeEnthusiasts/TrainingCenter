@@ -10,11 +10,12 @@ import org.mapstruct.Mapping;
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface MuscleMapper extends AbstractMapper<Muscle, MuscleDTO> {
+public interface MuscleMapper {
 
 
     MuscleDTO mapToDTO(Muscle entity);
 
+    @Mapping(target = "movement", ignore = true)
     Muscle mapToEntity(MuscleDTO muscleDTO);
 
     List<MuscleDTO> mapToDTOs(List<Muscle> entities);

@@ -5,15 +5,18 @@ import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.movement.MovementDTO;
 import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-public interface MovementMapper extends AbstractMapper<Movement, MovementDTO> {
+public interface MovementMapper {
 
+    @Mapping(target = "muscles", ignore = true)
     MovementDTO mapToDTO(Movement movement);
 
-    @InheritInverseConfiguration
+    @Mapping(target = "musclesInvolved", ignore = true)
+    @Mapping(target = "keyTechniqueElements", ignore = true)
     Movement mapToEntity(MovementDTO movementDTO);
 
     List<Movement> mapToEntities(List<MovementDTO> movementDTOS);

@@ -19,7 +19,6 @@ public interface UserMapper extends AbstractMapper<User, UserDTO> {
     @Mapping(target = "userDetailsDTO", source = "userDetails")
     UserDTO mapToDTO(User entity);
 
-    @Override
     User mapToEntity(UserDTO userDTO);
 
     List<UserDTO> mapToDTOs(List<User> entities);

@@ -95,4 +95,8 @@ public class MovementServiceImpl implements MovementService {
                 .collect(Collectors.toList());
     }
 
+    public Movement findEntityById(Long movementId) {
+        return movementRepository.findById(movementId).orElseThrow(
+                () -> new EntityNotFoundException(movementId));
+    }
 }

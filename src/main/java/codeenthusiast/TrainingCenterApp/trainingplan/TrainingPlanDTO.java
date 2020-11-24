@@ -25,7 +25,6 @@ public class TrainingPlanDTO extends AbstractDTO {
     @NotNull
     private String name;
 
-
     private short numberOfPlannedTrainings;
 
     private short numberOfExecutedTrainings;

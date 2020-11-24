@@ -5,6 +5,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@CrossOrigin(origins = "*", maxAge = 3600)
+@RestController
 public class CustomRecordController {
 
     private final CustomRecordServiceImpl customRecordService;
@@ -13,19 +15,19 @@ public class CustomRecordController {
         this.customRecordService = customRecordService;
     }
 
-    @GetMapping(value = "/{personal_record_id}/custom-records/all")
+    @GetMapping(value = "/personal_records/{personal_record_id}/custom-records/all")
     public ResponseEntity<List<CustomRecordDTO>> getCustomRecords(@PathVariable("personal_records_id") Long id) {
         return ResponseEntity.ok(customRecordService.getAllCustomRecordsByPersonalRecordsId(id));
     }
 
-    @GetMapping(value = "/{personal_record_id}/custom-records/three")
+    @GetMapping(value = "/personal_records/{personal_record_id}/custom-records/three")
     public ResponseEntity<List<CustomRecordDTO>> getThreeLatestCustomRecords(@PathVariable("personal_records_id")
                                                                                            Long id) {
         return ResponseEntity.ok(customRecordService.getThreeLatestCustomRecordsByPersonalRecordsId(id));
     }
 
 
-    @PostMapping(value = "/{personal_record_id}/custom-records")
+    @PostMapping(value = "/personal_records/{personal_record_id}/custom-records")
     public ResponseEntity<CustomRecordDTO> createCustomRecord(@PathVariable("personal_records_id") Long id,
                                                               @RequestBody CustomRecordDTO customRecordDTO) {
         return ResponseEntity.ok(customRecordService.createCustomRecord(id, customRecordDTO));

@@ -21,6 +21,11 @@ public class UserServiceImpl extends AbstractServiceImpl<User, UserDTO> implemen
         this.userMapper = userMapper;
         this.userRepository = userRepository;
     }
+
+    public User getUserById(long id) {
+        return userRepository.findById(id);
+    }
+
     @Override
     public boolean existsByEmailAndPassword(String email, String password) {
         return userRepository.existsByEmailAndPassword(email, password);

@@ -1,14 +1,14 @@
 package codeenthusiast.TrainingCenterApp.exercise.strengthexercise;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractController;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
+
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/strength_exercises")
-public class StrengthExerciseController extends AbstractController<StrengthExercise, StrengthExerciseDTO> {
+@RequestMapping("/strength-exercises")
+public class StrengthExerciseController {
 
     private StrengthExerciseServiceImpl strengthExerciseService;
 
@@ -16,10 +16,32 @@ public class StrengthExerciseController extends AbstractController<StrengthExerc
         this.strengthExerciseService = strengthExerciseService;
     }
 
-
-    @Override
-    public AbstractService<StrengthExercise, StrengthExerciseDTO> getService() {
-        return strengthExerciseService;
+    @GetMapping(value = "/{id}")
+    public StrengthExerciseDTO getById(@PathVariable("id") Long id) {
+        return strengthExerciseService.findById(id);
     }
+
+    @GetMapping(value = "training-plan/{id}")
+    public List<StrengthExerciseDTO> getAllByTrainingPlanId(@PathVariable("id") Long id) {
+        return strengthExerciseService.getAllByTrainingSessionId(id);
+    }
+
+
+    @PostMapping(value = "/training-plan/{training_plan_id}/movement/{movement_id}")
+    public StrengthExerciseDTO create(@RequestBody @Valid StrengthExerciseDTO dto
+            , @PathVariable("training_plan_id") Long trainingPlanId, @PathVariable("movement_id") Long movementId) {
+        return strengthExerciseService.create(dto, trainingPlanId, movementId);
+    }
+
+    @PatchMapping(value = "/{id}")
+    public StrengthExerciseDTO update(@PathVariable("id") Long id, @RequestBody @Valid StrengthExerciseDTO dto) {
+        return strengthExerciseService.update(id, dto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable("id") Long id) throws Exception {
+        strengthExerciseService.deleteById(id);
+    }
+
 }
 

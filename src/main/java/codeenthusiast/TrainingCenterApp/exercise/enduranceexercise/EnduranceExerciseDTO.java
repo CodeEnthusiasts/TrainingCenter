@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Setter;
 
 import java.time.Duration;
+import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
 @Getter
@@ -22,7 +23,7 @@ public class EnduranceExerciseDTO extends AbstractDTO {
 
     private TimeUnit timeUnit;
 
-    private Duration time;
+    private LocalTime duration;
 
     private EnduranceExerciseDetails enduranceExerciseDetails;
 }

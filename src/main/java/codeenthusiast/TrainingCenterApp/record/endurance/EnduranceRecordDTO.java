@@ -34,4 +34,5 @@ public class EnduranceRecordDTO extends AbstractDTO {
     private LocalTime duration;
 
     private LocalDate date;
+
 }

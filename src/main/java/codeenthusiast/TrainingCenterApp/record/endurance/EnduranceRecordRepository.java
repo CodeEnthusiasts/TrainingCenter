@@ -1,16 +1,22 @@
 package codeenthusiast.TrainingCenterApp.record.endurance;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
 @Repository
-public interface EnduranceRecordRepository extends JpaRepository<EnduranceRecord, Long> {
+public interface EnduranceRecordRepository extends AbstractRepository<EnduranceRecord> {
 
-//    List<EnduranceRecord> findByExerciseName(String exerciseName);
-//
-//    void deleteByExerciseNameAndDistanceAndTime(String exerciseName, int distance, int time);
-//
-//    List<EnduranceRecord> findByExerciseNameAndTime(String exerciseName, int time);
+    EnduranceRecord findById(long id);
+
+    void deleteById(Long id);
+
+    List<EnduranceRecord> findAllByPersonalRecordsId(Long id);
+
+    @Query(nativeQuery = true, value = "SELECT * FROM endurance_record WHERE personal_records_id = ? " +
+            "ORDER BY date DESC LIMIT 3")
+    List<EnduranceRecord> findThreeLatestByPersonalRecordsId(Long id);
+
 }

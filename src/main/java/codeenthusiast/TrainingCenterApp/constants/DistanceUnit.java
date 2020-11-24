@@ -1,8 +1,8 @@
 package codeenthusiast.TrainingCenterApp.constants;
 
 public enum DistanceUnit {
-    METER,
-    KILOMETER,
-    MILE,
+    METERS,
+    KILOMETERS,
+    MILES,
     FEET
 }

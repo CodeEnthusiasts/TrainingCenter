@@ -5,15 +5,13 @@ import codeenthusiast.TrainingCenterApp.constants.Difficulty;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
 import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExercise;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
+import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -49,5 +47,9 @@ public class TrainingSession extends AbstractEntity {
     private Difficulty difficulty;
 
     private String notes;
+
+    @ManyToOne
+    @JoinColumn(name = "training_plan_id")
+    private TrainingPlan trainingPlan;
 
 }

@@ -1,15 +1,13 @@
 package codeenthusiast.TrainingCenterApp.exercise.strengthexercise.pace;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
+import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -20,11 +18,15 @@ public class Pace extends AbstractEntity {
 
     private String name;
 
-    private int lowering;
+    private short lowering;
 
-    private int holdingDown;
+    private short holdingDown;
 
-    private int raising;
+    private short raising;
 
-    private int holdingUp;
+    private short holdingUp;
+
+    @OneToOne
+    @JoinColumn(name = "strength_exercise_id")
+    private StrengthExercise strengthExercise;
 }

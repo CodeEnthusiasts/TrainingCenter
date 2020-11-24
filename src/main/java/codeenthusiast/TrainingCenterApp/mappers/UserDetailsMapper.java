@@ -17,7 +17,6 @@ public interface UserDetailsMapper extends AbstractMapper<UserDetails, UserDetai
 
     UserDetailsDTO mapToDTO(UserDetails userDetails);
 
-    @Mapping(target = "personalRecords", ignore = true)
     UserDetails mapToEntity(UserDetailsDTO userDetailsDTO);
 
     List<UserDetails> mapToEntities(List<UserDetailsDTO> dtos);

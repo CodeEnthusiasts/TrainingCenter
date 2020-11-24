@@ -2,7 +2,7 @@ package codeenthusiast.TrainingCenterApp.user.major;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.image.Image;
-import codeenthusiast.TrainingCenterApp.movement.custom.CustomMovement;
+import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.user.details.UserDetails;
 import lombok.Getter;
@@ -28,17 +28,18 @@ public class User extends AbstractEntity {
     @ManyToMany
     private List<Role> roles;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Image image;
 
-    @Embedded
+    @OneToOne(mappedBy = "user")
     private UserDetails userDetails;
 
     @OneToMany(mappedBy = "user")
     private List<TrainingPlan> trainingPlans = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user")
-    private List<CustomMovement> customMovements = new ArrayList<>();
+    @OneToOne(mappedBy = "user")
+    private PersonalRecords personalRecords;
+
 
     public User(String username, String password, String email) {
         this.password = password;
@@ -52,18 +53,4 @@ public class User extends AbstractEntity {
         this.email = email;
         this.userDetails = userDetails;
     }
-
-    public void addTrainingPlan(TrainingPlan trainingPlan) {
-        trainingPlans.add(trainingPlan);
-    }
-
-    public void addCustomMovement(CustomMovement customMovement) {
-        customMovements.add(customMovement);
-    }
-
-    public void deleteCustomMovement(CustomMovement customMovement) {
-        customMovements.remove(customMovement);
-    }
-
-
 }

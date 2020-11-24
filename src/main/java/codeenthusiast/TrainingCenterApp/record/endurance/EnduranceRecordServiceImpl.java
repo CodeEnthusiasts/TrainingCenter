@@ -62,12 +62,12 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
     }
 
     private void updateEnduranceRecord(EnduranceRecord enduranceRecord, EnduranceRecordDTO enduranceRecordDTO) {
-        enduranceRecord.setExerciseName(enduranceRecordDTO.getExerciseName());
+        enduranceRecord.setMovementName(enduranceRecordDTO.getMovementName());
         enduranceRecord.setDistanceUnit(enduranceRecordDTO.getDistanceUnit());
         enduranceRecord.setDistance(enduranceRecordDTO.getDistance());
         enduranceRecord.setTimeUnit(enduranceRecordDTO.getTimeUnit());
         enduranceRecord.setDuration(enduranceRecordDTO.getDuration());
-        enduranceRecord.setSetDate(enduranceRecordDTO.getSetDate());
+        enduranceRecord.setDate(enduranceRecordDTO.getDate());
     }
 
     private void deleteById(Long id) {

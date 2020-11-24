@@ -15,7 +15,6 @@ public interface MuscleMapper extends AbstractMapper<Muscle, MuscleDTO> {
 
     MuscleDTO mapToDTO(Muscle entity);
 
-    @InheritInverseConfiguration
     Muscle mapToEntity(MuscleDTO muscleDTO);
 
     List<MuscleDTO> mapToDTOs(List<Muscle> entities);

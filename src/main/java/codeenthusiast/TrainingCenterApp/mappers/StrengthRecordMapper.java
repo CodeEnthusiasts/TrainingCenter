@@ -5,6 +5,13 @@ import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecord;
 import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecordDTO;
 import org.mapstruct.Mapper;
 
-@Mapper(componentModel = "Spring")
+import java.util.List;
+
+@Mapper(componentModel = "spring")
 public interface StrengthRecordMapper extends AbstractMapper<StrengthRecord, StrengthRecordDTO> {
+    StrengthRecordDTO mapToDTO(StrengthRecord entity);
+
+    StrengthRecord mapToEntity(StrengthRecordDTO entities);
+
+    List<StrengthRecordDTO> mapToDTOs(List<StrengthRecord> strengthRecords);
 }

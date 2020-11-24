@@ -3,13 +3,11 @@ package codeenthusiast.TrainingCenterApp.exercise.enduranceexercise;
 
 import codeenthusiast.TrainingCenterApp.constants.DistanceUnit;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
-import codeenthusiast.TrainingCenterApp.movement.Exercisable;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
-import java.time.Duration;
 import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
@@ -32,6 +30,7 @@ public class EnduranceExercise extends Exercise {
     private EnduranceExerciseDetails enduranceExerciseDetails;
 
     @ManyToOne
+    @JoinColumn(name = "training_session_id")
     private TrainingSession trainingSession;
 
 

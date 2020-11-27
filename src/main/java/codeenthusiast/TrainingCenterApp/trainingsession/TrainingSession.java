@@ -52,4 +52,15 @@ public class TrainingSession extends AbstractEntity {
     @JoinColumn(name = "training_plan_id")
     private TrainingPlan trainingPlan;
 
+    public TrainingSession(TrainingSessionDTO trainingSessionDTO){
+        this.date = trainingSessionDTO.getDate();
+        this.dayOfWeek = trainingSessionDTO.getDayOfWeek();
+        this.difficulty = trainingSessionDTO.getDifficulty();
+        this.endTime = trainingSessionDTO.getEndTime();
+        this.name = trainingSessionDTO.getName();
+        this.startTime = trainingSessionDTO.getStartTime();
+        this.trainingDuration = trainingSessionDTO.getTrainingDuration();
+        this.notes = trainingSessionDTO.getNotes();
+    }
+
 }

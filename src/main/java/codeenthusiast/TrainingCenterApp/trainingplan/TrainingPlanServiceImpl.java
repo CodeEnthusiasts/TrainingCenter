@@ -21,6 +21,10 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
         this.userService = userService;
     }
 
+    public TrainingPlan getTrainingPlanById(Long id) {
+        return getTrainingPlanByIdFromRepo(id);
+    }
+
     @Override
     public TrainingPlanDTO createTrainingPlan(Long userId, TrainingPlanDTO trainingPlanDTO) {
         TrainingPlan trainingPlan = mapToEntity(trainingPlanDTO);

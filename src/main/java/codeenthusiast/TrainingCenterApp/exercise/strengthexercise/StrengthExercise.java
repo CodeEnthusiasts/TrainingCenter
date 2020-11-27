@@ -36,5 +36,11 @@ public class StrengthExercise extends Exercise {
     @ManyToOne
     private TrainingSession trainingSession;
 
-
+    StrengthExercise(StrengthExerciseDTO dto){
+        this.repetitionUnit = dto.getRepetitionUnit();
+        this.reps = dto.getReps();
+        this.strengthExerciseDetails = dto.getStrengthExerciseDetails();
+        this.weight = dto.getWeight();
+        this.weightUnit = dto.getWeightUnit();
+    }
 }

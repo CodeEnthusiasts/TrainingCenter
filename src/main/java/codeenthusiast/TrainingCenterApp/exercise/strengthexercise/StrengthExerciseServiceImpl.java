@@ -28,6 +28,10 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
         this.strengthExerciseMapper = strengthExerciseMapper;
     }
 
+    public StrengthExercise getStrengthExerciseById(long id) {
+        return strengthExerciseRepository.findById(id);
+    }
+
     @Override
     public StrengthExerciseDTO findById(Long id) {
         StrengthExercise strengthExercise = strengthExerciseRepository.findById(id).orElseThrow(

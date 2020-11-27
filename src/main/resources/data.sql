@@ -40,10 +40,10 @@
 --      (3, 'Power training plan description', 'EASY', '2020-11-02', 'Power v1', 0, 9, '2020-12-01', 1);
 --
 ---- TRAINING SESSIONS
---INSERT INTO training_session(id, date, day_of_week, difficulty, end_time, name, notes, start_time, training_duration) VALUES
---      (1, '2020-09-02', 'MONDAY', 'HARD', '17:00', 'First strength training', 'Heavy squat and knee pain', '14:30', '2:30'),
---      (2, '2020-09-04', 'WEDNESDAY', 'EASY', '18:00', 'Second strength training', 'Light squat and easy bench ', '17:00', '1:00'),
---      (3, '2020-09-06', 'FRIDAY', 'MEDIUM', '19:00', 'Third strength training', 'Medium deadlift and accessories', '17:30', '1:30');
+--INSERT INTO training_session(id, date, day_of_week, difficulty, end_time, name, notes, start_time, training_duration, training_plan_id) VALUES
+--      (1, '2020-09-02', 'MONDAY', 'HARD', '17:00', 'First strength training', 'Heavy squat and knee pain', '14:30', '2:30',1),
+--      (2, '2020-09-04', 'WEDNESDAY', 'EASY', '18:00', 'Second strength training', 'Light squat and easy bench ', '17:00', '1:00',2),
+--      (3, '2020-09-06', 'FRIDAY', 'MEDIUM', '19:00', 'Third strength training', 'Medium deadlift and accessories', '17:30', '1:30',3);
 --
 ---- PRIORITIES
 --INSERT INTO priority(id, details, name) VALUES

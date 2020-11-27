@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.trainingplan;
 
+import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.mappers.TrainingPlanMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -46,6 +47,11 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
     @Override
     public void delete(Long id) {
         trainingPlanRepository.deleteById(id);
+    }
+
+    public TrainingPlan findEntityById(Long trainingPlanId) {
+        return trainingPlanRepository.findById(trainingPlanId).orElseThrow(
+                () -> new EntityNotFoundException(trainingPlanId));
     }
 
 //    @EventListener(ApplicationReadyEvent.class)

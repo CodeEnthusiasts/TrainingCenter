@@ -76,9 +76,9 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService {
 
 
     @Override
-    public EnduranceExerciseDTO create(EnduranceExerciseDTO dto, Long trainingPlanId, Long movementId) {
+    public EnduranceExerciseDTO create(EnduranceExerciseDTO dto, Long trainingSessionId, Long movementId) {
         EnduranceExercise enduranceExercise = new EnduranceExercise(dto);
-        save(enduranceExercise, trainingPlanId, movementId);
+        save(enduranceExercise, trainingSessionId, movementId);
         return enduranceExerciseMapper.mapToDTO(enduranceExercise);
     }
 

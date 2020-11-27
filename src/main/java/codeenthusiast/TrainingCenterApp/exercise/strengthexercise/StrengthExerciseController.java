@@ -21,16 +21,16 @@ public class StrengthExerciseController {
         return strengthExerciseService.findById(id);
     }
 
-    @GetMapping(value = "training-plan/{id}")
+    @GetMapping(value = "training-session/{id}")
     public List<StrengthExerciseDTO> getAllByTrainingPlanId(@PathVariable("id") Long id) {
         return strengthExerciseService.getAllByTrainingSessionId(id);
     }
 
 
-    @PostMapping(value = "/training-plan/{training_plan_id}/movement/{movement_id}")
+    @PostMapping(value = "/training-session/{training_session_id}/movement/{movement_id}")
     public StrengthExerciseDTO create(@RequestBody @Valid StrengthExerciseDTO dto
-            , @PathVariable("training_plan_id") Long trainingPlanId, @PathVariable("movement_id") Long movementId) {
-        return strengthExerciseService.create(dto, trainingPlanId, movementId);
+            , @PathVariable("training_session_id") Long trainingSessionId, @PathVariable("movement_id") Long movementId) {
+        return strengthExerciseService.create(dto, trainingSessionId, movementId);
     }
 
     @PatchMapping(value = "/{id}")

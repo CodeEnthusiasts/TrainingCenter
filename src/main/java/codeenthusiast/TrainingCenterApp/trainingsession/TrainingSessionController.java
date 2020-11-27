@@ -1,15 +1,14 @@
 package codeenthusiast.TrainingCenterApp.trainingsession;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractController;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/training_sessions")
-public class TrainingSessionController extends AbstractController<TrainingSession, TrainingSessionDTO> {
+@RequestMapping("/training-sessions")
+public class TrainingSessionController {
 
     private final TrainingSessionServiceImpl trainingSessionService;
 
@@ -17,8 +16,31 @@ public class TrainingSessionController extends AbstractController<TrainingSessio
         this.trainingSessionService = trainingSessionService;
     }
 
-    @Override
-    public AbstractService<TrainingSession, TrainingSessionDTO> getService() {
-        return trainingSessionService;
+    @GetMapping(value = "/{id}")
+    public TrainingSessionDTO getById(@PathVariable("id") Long id) {
+        return trainingSessionService.findById(id);
     }
+
+    @GetMapping(value = "training-plan/{id}")
+    public List<TrainingSessionDTO> getAllByTrainingPlanId(@PathVariable("id") Long id) {
+        return trainingSessionService.getAllByTrainingPlanId(id);
+    }
+
+
+    @PostMapping(value = "/training-plan/{training_session_id}")
+    public TrainingSessionDTO create(@RequestBody @Valid TrainingSessionDTO dto
+            , @PathVariable("training_session_id") Long trainingPlanId) {
+        return trainingSessionService.create(dto, trainingPlanId);
+    }
+
+    @PatchMapping(value = "/{id}")
+    public TrainingSessionDTO update(@PathVariable("id") Long id, @RequestBody @Valid TrainingSessionDTO dto) {
+        return trainingSessionService.update(id, dto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable("id") Long id) throws Exception {
+        trainingSessionService.deleteById(id);
+    }
+
 }

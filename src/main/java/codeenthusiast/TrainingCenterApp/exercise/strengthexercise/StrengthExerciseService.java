@@ -6,11 +6,11 @@ public interface StrengthExerciseService {
 
     StrengthExerciseDTO findById(Long id);
 
-    StrengthExerciseDTO save(StrengthExercise strengthExercise, Long trainingPlanId, Long movementId);
+    StrengthExerciseDTO save(StrengthExercise strengthExercise, Long trainingSessionId, Long movementId);
 
     List<StrengthExerciseDTO> getAllByTrainingSessionId(Long id);
 
-    StrengthExerciseDTO create(StrengthExerciseDTO dto, Long trainingPlanId, Long movementId);
+    StrengthExerciseDTO create(StrengthExerciseDTO dto, Long trainingSessionId, Long movementId);
 
     StrengthExerciseDTO update(Long id, StrengthExerciseDTO dto);
 

@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.exercise.strengthexercise.pace;
+package codeenthusiast.TrainingCenterApp.exercise.strengthexercise.details;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
@@ -7,16 +7,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class Pace extends AbstractEntity {
+public class StrengthExerciseDetails extends AbstractEntity {
 
-    private String name;
+    private String note;
 
     private short lowering;
 
@@ -26,7 +28,10 @@ public class Pace extends AbstractEntity {
 
     private short holdingUp;
 
+    private int repsInReserve;
+
     @OneToOne
     @JoinColumn(name = "strength_exercise_id")
     private StrengthExercise strengthExercise;
+
 }

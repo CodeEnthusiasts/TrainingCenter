@@ -3,7 +3,7 @@ package codeenthusiast.TrainingCenterApp.exercise.strengthexercise;
 import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
 import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.pace.Pace;
+import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.details.StrengthExerciseDetails;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -30,10 +30,10 @@ public class StrengthExercise extends Exercise {
 
     private double weight;
 
-    @Embedded
+    @OneToOne(orphanRemoval = true, mappedBy = "strengthExercise")
     private StrengthExerciseDetails strengthExerciseDetails;
 
-    @ManyToOne
+    @ManyToOne()
     private TrainingSession trainingSession;
 
     StrengthExercise(StrengthExerciseDTO dto){

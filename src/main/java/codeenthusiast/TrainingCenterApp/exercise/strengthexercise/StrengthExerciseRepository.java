@@ -10,4 +10,7 @@ import java.util.List;
 public interface StrengthExerciseRepository extends AbstractRepository<StrengthExercise> {
 
     List<StrengthExercise> findAllByTrainingSessionId(Long id);
+
+    StrengthExercise findById(long id);
+
 }

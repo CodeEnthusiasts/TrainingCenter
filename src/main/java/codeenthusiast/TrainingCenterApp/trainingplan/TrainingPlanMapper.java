@@ -1,21 +1,12 @@
 package codeenthusiast.TrainingCenterApp.trainingplan;
 
-import codeenthusiast.TrainingCenterApp.priority.PriorityMapper;
-import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
-import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanDTO;
-import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanSuperficialDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring", uses = {PriorityMapper.class})
+@Mapper(componentModel = "spring")
 public interface TrainingPlanMapper {
-
-
-    TrainingPlanSuperficialDTO mapToSuperficialDTO(TrainingPlan entity);
-
-    List<TrainingPlanSuperficialDTO> mapToSuperficialDTOs(List<TrainingPlan> entities);
 
     TrainingPlanDTO mapToDTO(TrainingPlan entity);
 
@@ -25,5 +16,5 @@ public interface TrainingPlanMapper {
     TrainingPlan mapToEntity(TrainingPlanDTO dto);
 
     List<TrainingPlan> mapToEntities(List<TrainingPlanDTO> entities);
-
+    
 }

@@ -4,16 +4,13 @@ import java.util.List;
 
 public interface TrainingPlanService {
 
-    TrainingPlan findEntityById(Long id);
+    TrainingPlanDTO createTrainingPlan(Long userId, TrainingPlanDTO dto);
 
-    TrainingPlanSuperficialDTO findById(Long id);
+    TrainingPlanDTO updateTrainingPlan(Long id, TrainingPlanDTO dto);
 
-    List<TrainingPlanSuperficialDTO> getAll();
+    List<TrainingPlanDTO> getAllTrainingPlansByUserId(Long id);
 
-    TrainingPlanDTO save(TrainingPlanDTO dto);
+    TrainingPlanDTO getTrainingPlanById(long id);
 
-    TrainingPlanDTO update(Long id, TrainingPlanDTO dto);
-
-    void delete(Long id);
-
+    String deleteTrainingPlan(Long id);
 }

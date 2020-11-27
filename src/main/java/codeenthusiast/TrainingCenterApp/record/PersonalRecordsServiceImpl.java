@@ -5,10 +5,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonalRecordsServiceImpl implements PersonalRecordsService {
 
-    private final PersonalRecordsRepository personalRecordsRepository;
+    private final PersonalRecordsRepository repository;
 
-    public PersonalRecordsServiceImpl(PersonalRecordsRepository personalRecordsRepository) {
-        this.personalRecordsRepository = personalRecordsRepository;
+    public PersonalRecordsServiceImpl(PersonalRecordsRepository repository) {
+        this.repository = repository;
     }
 
     @Override
@@ -16,9 +16,13 @@ public class PersonalRecordsServiceImpl implements PersonalRecordsService {
         return getPersonalRecordsByIdFromRepo(id);
     }
 
+    @Override
+    public PersonalRecords savePersonalRecords(PersonalRecords personalRecords) {
+        return repository.save(personalRecords);
+    }
 
     private PersonalRecords getPersonalRecordsByIdFromRepo(long id) {
-        return personalRecordsRepository.findById(id);
+        return repository.findById(id);
     }
 
 }

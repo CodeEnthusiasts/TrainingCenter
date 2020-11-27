@@ -18,4 +18,6 @@ public interface UserRepository extends AbstractRepository<User> {
     boolean existsByUsername(String username);
 
     Optional<User> findByUsername(String username);
+
+    User findById(long id);
 }

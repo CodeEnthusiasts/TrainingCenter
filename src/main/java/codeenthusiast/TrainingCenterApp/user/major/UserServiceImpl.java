@@ -41,7 +41,7 @@ public class UserServiceImpl implements UserService {
         return save(userMapper.mapToDTO(user));
     }
 
-    private User findEntityById(Long id) {
+    public User findEntityById(Long id) {
         return userRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(id));
     }

@@ -1,12 +1,8 @@
 package codeenthusiast.TrainingCenterApp.mappers;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
-import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExercise;
-import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExerciseDTO;
 import codeenthusiast.TrainingCenterApp.record.custom.CustomRecord;
 import codeenthusiast.TrainingCenterApp.record.custom.CustomRecordDTO;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.List;
 

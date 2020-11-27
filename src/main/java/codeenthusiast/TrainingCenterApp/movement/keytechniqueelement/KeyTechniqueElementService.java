@@ -1,11 +1,18 @@
 package codeenthusiast.TrainingCenterApp.movement.keytechniqueelement;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
 import org.springframework.stereotype.Service;
 
 @Service
-public interface KeyTechniqueElementService extends AbstractService<KeyTechniqueElement, KeyTechniqueElementDTO> {
+public interface KeyTechniqueElementService {
 
-    boolean existsById(Long id);
+    void deleteById(Long id);
+
+    KeyTechniqueElementDTO findById(Long id);
+
+    KeyTechniqueElementDTO update(Long id, KeyTechniqueElementDTO dto);
+
+    KeyTechniqueElementDTO create(Long id, KeyTechniqueElementDTO dto);
+
+    KeyTechniqueElementDTO save(KeyTechniqueElementDTO dto);
 
 }

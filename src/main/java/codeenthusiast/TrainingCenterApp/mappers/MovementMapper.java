@@ -1,9 +1,7 @@
 package codeenthusiast.TrainingCenterApp.mappers;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.movement.MovementDTO;
-import org.mapstruct.InheritInverseConfiguration;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -20,7 +18,6 @@ public interface MovementMapper {
     Movement mapToEntity(MovementDTO movementDTO);
 
     List<Movement> mapToEntities(List<MovementDTO> movementDTOS);
-
 
 
 }

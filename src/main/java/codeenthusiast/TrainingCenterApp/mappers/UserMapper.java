@@ -1,18 +1,14 @@
 package codeenthusiast.TrainingCenterApp.mappers;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
-import codeenthusiast.TrainingCenterApp.user.major.User;
 import codeenthusiast.TrainingCenterApp.user.major.UserDTO;
-import org.mapstruct.InheritInverseConfiguration;
+import codeenthusiast.TrainingCenterApp.user.role.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
-import org.mapstruct.factory.Mappers;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring", uses = {UserDetailsMapper.class})
-public interface UserMapper extends AbstractMapper<User, UserDTO> {
+@Mapper(componentModel = "spring")
+public interface UserMapper {
 
 
     @Mapping(target = "imageUrl", source = "image.fileUrl")
@@ -21,5 +17,4 @@ public interface UserMapper extends AbstractMapper<User, UserDTO> {
 
     User mapToEntity(UserDTO userDTO);
 
-    List<UserDTO> mapToDTOs(List<User> entities);
 }

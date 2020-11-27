@@ -1,13 +1,11 @@
 package codeenthusiast.TrainingCenterApp.mappers;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExercise;
 import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExerciseDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring")
 public interface EnduranceExerciseMapper {

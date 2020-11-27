@@ -1,13 +1,12 @@
 package codeenthusiast.TrainingCenterApp.movement.keytechniqueelement;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractController;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/key_technique_elements")
-public class KeyTechniqueElementController extends AbstractController<KeyTechniqueElement, KeyTechniqueElementDTO> {
+@RequestMapping("/key-technique-elements")
+public class KeyTechniqueElementController {
 
     private final KeyTechniqueElementServiceImpl keyTechniqueElementService;
 
@@ -15,8 +14,26 @@ public class KeyTechniqueElementController extends AbstractController<KeyTechniq
         this.keyTechniqueElementService = keyTechniqueElementService;
     }
 
-    @Override
-    public AbstractService<KeyTechniqueElement, KeyTechniqueElementDTO> getService() {
-        return keyTechniqueElementService;
+    @GetMapping(value = "/{id}")
+    public KeyTechniqueElementDTO getById(@PathVariable("id") Long id) {
+        return keyTechniqueElementService.findById(id);
     }
+
+    @PostMapping(value = "/movement/{movement-id}")
+    public KeyTechniqueElementDTO create(@PathVariable("movement_id") Long id,
+                                         @RequestBody @Valid KeyTechniqueElementDTO dto) {
+        return keyTechniqueElementService.create(id, dto);
+    }
+
+    @PatchMapping(value = "/{id}")
+    public KeyTechniqueElementDTO update(@PathVariable("id") Long id, @RequestBody @Valid KeyTechniqueElementDTO dto) {
+        return keyTechniqueElementService.update(id, dto);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable("id") Long id) throws Exception {
+        keyTechniqueElementService.deleteById(id);
+    }
+
+
 }

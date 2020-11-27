@@ -1,9 +1,6 @@
 package codeenthusiast.TrainingCenterApp.security;
 
-import codeenthusiast.TrainingCenterApp.constants.BodyWeightUnit;
 import codeenthusiast.TrainingCenterApp.constants.ERole;
-import codeenthusiast.TrainingCenterApp.constants.HeightUnit;
-import codeenthusiast.TrainingCenterApp.constants.Sex;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.security.jwt.JwtUtils;
@@ -12,13 +9,11 @@ import codeenthusiast.TrainingCenterApp.security.request.SignUpRequest;
 import codeenthusiast.TrainingCenterApp.security.response.JwtResponse;
 import codeenthusiast.TrainingCenterApp.security.response.MessageResponse;
 import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
-import codeenthusiast.TrainingCenterApp.user.UserRepository;
-import codeenthusiast.TrainingCenterApp.user.major.Role;
-import codeenthusiast.TrainingCenterApp.user.major.RoleRepository;
-import codeenthusiast.TrainingCenterApp.user.major.User;
+import codeenthusiast.TrainingCenterApp.user.major.UserRepository;
+import codeenthusiast.TrainingCenterApp.user.role.Role;
+import codeenthusiast.TrainingCenterApp.user.role.RoleRepository;
+import codeenthusiast.TrainingCenterApp.user.role.User;
 
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;

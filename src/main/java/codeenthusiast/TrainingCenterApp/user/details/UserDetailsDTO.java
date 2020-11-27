@@ -13,6 +13,8 @@ import org.hibernate.validator.constraints.Range;
 @NoArgsConstructor
 public class UserDetailsDTO {
 
+    private Long id;
+
     private BodyWeightUnit bodyWeightUnit;
 
     @Range(min = 0)

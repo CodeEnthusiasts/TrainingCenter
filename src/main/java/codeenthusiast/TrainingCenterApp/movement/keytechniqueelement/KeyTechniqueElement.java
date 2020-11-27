@@ -23,4 +23,8 @@ public class KeyTechniqueElement extends AbstractEntity {
     @ManyToOne
     @JoinColumn(name = "movement_id")
     private Movement movement;
+
+    public KeyTechniqueElement(KeyTechniqueElementDTO dto) {
+        this.content = dto.getContent();
+    }
 }

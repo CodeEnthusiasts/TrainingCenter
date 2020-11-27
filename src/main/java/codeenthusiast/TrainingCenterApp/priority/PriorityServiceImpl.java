@@ -1,36 +1,68 @@
 package codeenthusiast.TrainingCenterApp.priority;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
+import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.mappers.PriorityMapper;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.security.core.parameters.P;
+import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
+import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanServiceImpl;
+import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSessionDTO;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class PriorityServiceImpl extends AbstractServiceImpl<Priority, PriorityDTO>
-        implements PriorityService{
+public class PriorityServiceImpl implements PriorityService {
 
-    private PriorityRepository priorityRepository;
+    private final PriorityRepository priorityRepository;
 
-    private PriorityMapper priorityMapper;
+    private final TrainingPlanServiceImpl trainingPlanService;
 
-    public PriorityServiceImpl(AbstractRepository<Priority> repository, AbstractMapper<Priority,
-            PriorityDTO> mapper, PriorityRepository priorityRepository, PriorityMapper priorityMapper) {
-        super(repository, mapper);
+    private final PriorityMapper priorityMapper;
+
+
+    public PriorityServiceImpl(PriorityRepository priorityRepository,
+                               TrainingPlanServiceImpl trainingPlanService, PriorityMapper priorityMapper) {
         this.priorityRepository = priorityRepository;
+        this.trainingPlanService = trainingPlanService;
         this.priorityMapper = priorityMapper;
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void init(){
-//        PriorityDTO p1 = new PriorityDTO("Grow chest", "Train chest 3 x per week");
-//        PriorityDTO p2 = new PriorityDTO("Improve work tolerance", "Train with big volume");
-//        PriorityDTO p3 = new PriorityDTO("Heal knee", "Train legs weaker");
-//        save(p1);
-//        save(p2);
-//        save(p3);
-//    }
+
+    @Override
+    public void deleteById(Long id) {
+        priorityRepository.deleteById(id);
+    }
+
+    @Override
+    public List<PriorityDTO> getAllByTrainingPlanId(Long id) {
+        return priorityMapper.mapToDTOs(priorityRepository.findAllByTrainingPlanId(id));
+    }
+
+    @Override
+    public PriorityDTO findById(Long id) {
+        Priority priority = priorityRepository.findById(id).orElseThrow(
+                ()-> new EntityNotFoundException(id));
+        return priorityMapper.mapToDTO(priority);
+    }
+
+    @Override
+    public PriorityDTO update(Long id, PriorityDTO dto) {
+        dto.setId(id);
+        return save(dto);
+    }
+
+    @Override
+    public PriorityDTO create(Long id, PriorityDTO dto) {
+        TrainingPlan trainingPlan = trainingPlanService.findEntityById(id);
+        Priority priority = priorityMapper.mapToEntity(dto);
+
+        priority.setTrainingPlan(trainingPlan);
+        return save(priorityMapper.mapToDTO(priority));
+    }
+
+    @Override
+    public PriorityDTO save(PriorityDTO dto) {
+        Priority priority = priorityMapper.mapToEntity(dto);
+        priorityRepository.save(priority);
+        return dto;
+    }
 }

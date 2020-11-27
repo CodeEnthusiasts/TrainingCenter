@@ -1,6 +1,6 @@
 package codeenthusiast.TrainingCenterApp.security.services;
 
-import codeenthusiast.TrainingCenterApp.user.major.User;
+import codeenthusiast.TrainingCenterApp.user.role.User;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;

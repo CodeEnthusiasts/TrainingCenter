@@ -1,10 +1,11 @@
-package codeenthusiast.TrainingCenterApp.user.major;
+package codeenthusiast.TrainingCenterApp.user.role;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.image.Image;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.user.details.UserDetails;
+import codeenthusiast.TrainingCenterApp.user.role.Role;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

@@ -4,7 +4,7 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.record.custom.CustomRecord;
 import codeenthusiast.TrainingCenterApp.record.endurance.EnduranceRecord;
 import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecord;
-import codeenthusiast.TrainingCenterApp.user.major.User;
+import codeenthusiast.TrainingCenterApp.user.role.User;
 
 import javax.persistence.*;
 import java.util.ArrayList;

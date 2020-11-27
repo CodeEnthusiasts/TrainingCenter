@@ -1,22 +1,13 @@
 package codeenthusiast.TrainingCenterApp.exercise.strengthexercise.pace;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
-import codeenthusiast.TrainingCenterApp.mappers.PaceMapper;
 import org.springframework.stereotype.Service;
 
 @Service
-public class PaceServiceImpl extends AbstractServiceImpl<Pace, PaceDTO>
-        implements PaceService {
-    private PaceRepository paceRepository;
+public class PaceServiceImpl implements PaceService {
 
-    private PaceMapper paceMapper;
+    private final PaceRepository paceRepository;
 
-    public PaceServiceImpl(AbstractRepository<Pace> repository, AbstractMapper<Pace,
-            PaceDTO> mapper, PaceRepository paceRepository, PaceMapper paceMapper) {
-        super(repository, mapper);
+    public PaceServiceImpl(PaceRepository paceRepository) {
         this.paceRepository = paceRepository;
-        this.paceMapper = paceMapper;
     }
 }

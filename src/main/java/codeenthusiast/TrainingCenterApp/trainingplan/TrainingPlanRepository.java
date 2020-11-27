@@ -1,10 +1,17 @@
 package codeenthusiast.TrainingCenterApp.trainingplan;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
-import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface TrainingPlanRepository extends AbstractRepository<TrainingPlan>  {
+
+    List<TrainingPlan> findAllByUserId(Long id);
+
+    TrainingPlan findById(long id);
+
+    void deleteById(Long id);
+
 }

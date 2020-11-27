@@ -1,21 +1,17 @@
 package codeenthusiast.TrainingCenterApp.mappers;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
+import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecord;
+import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecordDTO;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanDTO;
-import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanSuperficialDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Mapper(componentModel = "spring", uses = {PriorityMapper.class})
-public interface TrainingPlanMapper {
-
-
-    TrainingPlanSuperficialDTO mapToSuperficialDTO(TrainingPlan entity);
-
-    List<TrainingPlanSuperficialDTO> mapToSuperficialDTOs(List<TrainingPlan> entities);
+@Mapper(componentModel = "spring")
+public interface TrainingPlanMapper extends AbstractMapper<TrainingPlan, TrainingPlanDTO> {
 
     TrainingPlanDTO mapToDTO(TrainingPlan entity);
 
@@ -25,5 +21,5 @@ public interface TrainingPlanMapper {
     TrainingPlan mapToEntity(TrainingPlanDTO dto);
 
     List<TrainingPlan> mapToEntities(List<TrainingPlanDTO> entities);
-
+    
 }

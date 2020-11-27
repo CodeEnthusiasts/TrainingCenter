@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.mappers;
+package codeenthusiast.TrainingCenterApp.exercise.strengthexercise.pace;
 
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.pace.Pace;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.pace.PaceDTO;

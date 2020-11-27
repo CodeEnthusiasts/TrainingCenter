@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.mappers;
+package codeenthusiast.TrainingCenterApp.user.major;
 
 import codeenthusiast.TrainingCenterApp.user.major.UserDTO;
 import codeenthusiast.TrainingCenterApp.user.role.User;

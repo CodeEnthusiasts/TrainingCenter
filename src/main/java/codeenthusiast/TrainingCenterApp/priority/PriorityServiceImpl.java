@@ -1,10 +1,8 @@
 package codeenthusiast.TrainingCenterApp.priority;
 
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.mappers.PriorityMapper;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanServiceImpl;
-import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSessionDTO;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.mappers;
+package codeenthusiast.TrainingCenterApp.movement.keytechniqueelement;
 
 import codeenthusiast.TrainingCenterApp.movement.keytechniqueelement.KeyTechniqueElement;
 import codeenthusiast.TrainingCenterApp.movement.keytechniqueelement.KeyTechniqueElementDTO;

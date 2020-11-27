@@ -1,5 +1,6 @@
-package codeenthusiast.TrainingCenterApp.mappers;
+package codeenthusiast.TrainingCenterApp.trainingplan;
 
+import codeenthusiast.TrainingCenterApp.priority.PriorityMapper;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanDTO;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanSuperficialDTO;
@@ -7,7 +8,6 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", uses = {PriorityMapper.class})
 public interface TrainingPlanMapper {

@@ -1,7 +1,6 @@
 package codeenthusiast.TrainingCenterApp.user.details;
 
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.mappers.UserDetailsMapper;
 import org.springframework.stereotype.Service;
 
 @Service

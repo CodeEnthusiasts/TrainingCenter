@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.mappers;
+package codeenthusiast.TrainingCenterApp.priority;
 
 import codeenthusiast.TrainingCenterApp.priority.Priority;
 import codeenthusiast.TrainingCenterApp.priority.PriorityDTO;

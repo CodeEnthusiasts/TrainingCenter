@@ -2,7 +2,6 @@ package codeenthusiast.TrainingCenterApp.user.major;
 
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.image.ImageDTO;
-import codeenthusiast.TrainingCenterApp.mappers.UserMapper;
 import codeenthusiast.TrainingCenterApp.user.role.User;
 import org.springframework.stereotype.Service;
 

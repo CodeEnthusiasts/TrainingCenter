@@ -4,7 +4,6 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.image.ImageDTO;
-import codeenthusiast.TrainingCenterApp.mappers.MovementMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

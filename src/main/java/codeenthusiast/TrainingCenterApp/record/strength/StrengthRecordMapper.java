@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.mappers;
+package codeenthusiast.TrainingCenterApp.record.strength;
 
 import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecord;
 import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecordDTO;

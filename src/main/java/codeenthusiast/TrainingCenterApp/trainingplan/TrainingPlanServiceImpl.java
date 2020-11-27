@@ -1,7 +1,6 @@
 package codeenthusiast.TrainingCenterApp.trainingplan;
 
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.mappers.TrainingPlanMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

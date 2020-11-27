@@ -1,9 +1,7 @@
 package codeenthusiast.TrainingCenterApp.movement.keytechniqueelement;
 
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.mappers.KeyTechniqueElementMapper;
 import codeenthusiast.TrainingCenterApp.movement.Movement;
-import codeenthusiast.TrainingCenterApp.movement.MovementDTO;
 import codeenthusiast.TrainingCenterApp.movement.MovementService;
 import org.springframework.stereotype.Service;
 

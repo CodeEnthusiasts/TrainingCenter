@@ -3,7 +3,7 @@ package codeenthusiast.TrainingCenterApp.services;
 //import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
 //import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
 //import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
-//import codeenthusiast.TrainingCenterApp.mappers.UserMapper;
+//import codeenthusiast.TrainingCenterApp.user.major.UserMapper;
 //import codeenthusiast.TrainingCenterApp.user.major.UserRepository;
 //import codeenthusiast.TrainingCenterApp.user.major.UserServiceImpl;
 //import codeenthusiast.TrainingCenterApp.user.role.User;

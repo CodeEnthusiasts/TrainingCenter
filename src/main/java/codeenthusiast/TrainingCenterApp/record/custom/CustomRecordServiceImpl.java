@@ -1,6 +1,5 @@
 package codeenthusiast.TrainingCenterApp.record.custom;
 
-import codeenthusiast.TrainingCenterApp.mappers.CustomRecordMapper;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
 import org.springframework.stereotype.Service;
 

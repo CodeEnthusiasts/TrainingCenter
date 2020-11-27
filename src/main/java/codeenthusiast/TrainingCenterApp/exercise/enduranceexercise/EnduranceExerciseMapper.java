@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.mappers;
+package codeenthusiast.TrainingCenterApp.exercise.enduranceexercise;
 
 import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExercise;
 import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExerciseDTO;

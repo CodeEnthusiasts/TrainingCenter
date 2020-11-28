@@ -1,4 +1,4 @@
-package codeenthusiast.TrainingCenterApp.user.major;
+package codeenthusiast.TrainingCenterApp.user.role;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.ERole;

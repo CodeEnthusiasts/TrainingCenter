@@ -1,7 +1,6 @@
 package codeenthusiast.TrainingCenterApp.trainingplan;
 
-import codeenthusiast.TrainingCenterApp.mappers.TrainingPlanMapper;
-import codeenthusiast.TrainingCenterApp.user.UserServiceImpl;
+import codeenthusiast.TrainingCenterApp.user.major.UserServiceImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,7 +27,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
     @Override
     public TrainingPlanDTO createTrainingPlan(Long userId, TrainingPlanDTO trainingPlanDTO) {
         TrainingPlan trainingPlan = mapToEntity(trainingPlanDTO);
-        trainingPlan.setUser(userService.getUserById(userId));
+        trainingPlan.setUser(userService.findEntityById(userId));
         return mapToDTO(save(trainingPlan));
     }
 

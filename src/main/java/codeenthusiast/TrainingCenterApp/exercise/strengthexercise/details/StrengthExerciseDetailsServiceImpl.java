@@ -1,7 +1,6 @@
 package codeenthusiast.TrainingCenterApp.exercise.strengthexercise.details;
 
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExerciseServiceImpl;
-import codeenthusiast.TrainingCenterApp.mappers.StrengthExerciseDetailsMapper;
 import org.springframework.stereotype.Service;
 
 @Service

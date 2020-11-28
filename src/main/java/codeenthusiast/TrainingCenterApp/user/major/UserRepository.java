@@ -1,7 +1,7 @@
-package codeenthusiast.TrainingCenterApp.user;
+package codeenthusiast.TrainingCenterApp.user.major;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
-import codeenthusiast.TrainingCenterApp.user.major.User;
+import codeenthusiast.TrainingCenterApp.user.role.User;
 import org.springframework.stereotype.Repository;
 
 import java.util.Optional;

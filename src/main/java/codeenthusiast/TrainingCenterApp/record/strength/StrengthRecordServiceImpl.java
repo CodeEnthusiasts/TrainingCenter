@@ -1,6 +1,5 @@
 package codeenthusiast.TrainingCenterApp.record.strength;
 
-import codeenthusiast.TrainingCenterApp.mappers.StrengthRecordMapper;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
 import org.springframework.stereotype.Service;
 

@@ -1,7 +1,9 @@
 package codeenthusiast.TrainingCenterApp.movement;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
+import codeenthusiast.TrainingCenterApp.image.Image;
 import codeenthusiast.TrainingCenterApp.image.ImageDTO;
+import codeenthusiast.TrainingCenterApp.muscle.Muscle;
 import codeenthusiast.TrainingCenterApp.muscle.MuscleDTO;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
@@ -29,7 +31,4 @@ public class MovementDTO extends AbstractDTO {
     @JsonIgnore
     private List<MuscleDTO> muscles;
 
-    public MovementDTO(String name) {
-        this.name = name;
-    }
 }

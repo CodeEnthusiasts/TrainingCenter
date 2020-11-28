@@ -1,6 +1,18 @@
 package codeenthusiast.TrainingCenterApp.priority;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
+import java.util.List;
 
-public interface PriorityService extends AbstractService<Priority, PriorityDTO> {
+public interface PriorityService {
+
+    void deleteById(Long id);
+
+    List<PriorityDTO> getAllByTrainingPlanId(Long id);
+
+    PriorityDTO findById(Long id);
+
+    PriorityDTO update(Long id, PriorityDTO dto);
+
+    PriorityDTO create(Long id, PriorityDTO dto);
+
+    PriorityDTO save(PriorityDTO dto);
 }

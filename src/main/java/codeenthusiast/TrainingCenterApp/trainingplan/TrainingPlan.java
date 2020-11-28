@@ -4,7 +4,7 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.Difficulty;
 import codeenthusiast.TrainingCenterApp.priority.Priority;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
-import codeenthusiast.TrainingCenterApp.user.major.User;
+import codeenthusiast.TrainingCenterApp.user.role.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

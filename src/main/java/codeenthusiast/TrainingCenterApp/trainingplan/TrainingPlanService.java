@@ -2,7 +2,7 @@ package codeenthusiast.TrainingCenterApp.trainingplan;
 
 import java.util.List;
 
-public interface TrainingPlanService  {
+public interface TrainingPlanService {
 
     TrainingPlanDTO createTrainingPlan(Long userId, TrainingPlanDTO dto);
 

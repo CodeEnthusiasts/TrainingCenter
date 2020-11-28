@@ -1,7 +1,6 @@
 package codeenthusiast.TrainingCenterApp.exercise.enduranceexercise;
 
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.mappers.EnduranceExerciseMapper;
 import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.movement.MovementServiceImpl;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;

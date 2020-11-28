@@ -1,6 +1,5 @@
 package codeenthusiast.TrainingCenterApp.record.endurance;
 
-import codeenthusiast.TrainingCenterApp.mappers.EnduranceRecordMapper;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
 import org.springframework.stereotype.Service;
 

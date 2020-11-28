@@ -17,6 +17,8 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class UserDTO extends AbstractDTO {
 
+
+
     @NotBlank
     @Size(min = 5, max = 30)
     private String username;

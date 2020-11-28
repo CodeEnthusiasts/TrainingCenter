@@ -1,10 +1,10 @@
 package codeenthusiast.TrainingCenterApp.user.details;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.BodyWeightUnit;
 import codeenthusiast.TrainingCenterApp.constants.HeightUnit;
 import codeenthusiast.TrainingCenterApp.constants.Sex;
-import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
-import codeenthusiast.TrainingCenterApp.user.major.User;
+import codeenthusiast.TrainingCenterApp.user.role.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +17,7 @@ import javax.persistence.*;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDetails {
+public class UserDetails extends AbstractEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;

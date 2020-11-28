@@ -25,4 +25,6 @@ public interface MovementService {
     List<Long> removeAllImages(Long id);
 
     List<Long> getIdOfDeletedImages(List<ImageDTO> images);
+
+    Movement findEntityById(Long id);
 }

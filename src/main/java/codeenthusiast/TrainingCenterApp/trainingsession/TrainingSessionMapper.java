@@ -1,16 +1,16 @@
 package codeenthusiast.TrainingCenterApp.trainingsession;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
-import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
-import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSessionDTO;
+import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExerciseMapper;
+import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExerciseMapper;
+import codeenthusiast.TrainingCenterApp.record.endurance.EnduranceRecordMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-@Mapper(componentModel = "Spring")
-public interface TrainingSessionMapper  {
+@Mapper(componentModel = "Spring", uses =
+        {StrengthExerciseMapper.class, EnduranceExerciseMapper.class})
+public interface TrainingSessionMapper {
 
     TrainingSessionDTO mapToDTO(TrainingSession trainingSession);
 

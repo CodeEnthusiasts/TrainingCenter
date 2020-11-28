@@ -1,13 +1,13 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
-import codeenthusiast.TrainingCenterApp.muscle.Muscle;
-import codeenthusiast.TrainingCenterApp.muscle.MuscleDTO;
+import codeenthusiast.TrainingCenterApp.image.ImageMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+import org.mapstruct.ReportingPolicy;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {ImageMapper.class})
 public interface MuscleMapper {
 
 

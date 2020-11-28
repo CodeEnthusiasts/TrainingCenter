@@ -6,7 +6,7 @@ package codeenthusiast.TrainingCenterApp.services;
 //import codeenthusiast.TrainingCenterApp.user.major.UserMapper;
 //import codeenthusiast.TrainingCenterApp.user.major.UserRepository;
 //import codeenthusiast.TrainingCenterApp.user.major.UserServiceImpl;
-//import codeenthusiast.TrainingCenterApp.user.role.User;
+//import codeenthusiast.TrainingCenterApp.user.major.User;
 //import codeenthusiast.TrainingCenterApp.user.major.UserDTO;
 //import org.mockito.InjectMocks;
 //import org.mockito.Mock;

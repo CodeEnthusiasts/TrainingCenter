@@ -1,6 +1,5 @@
 package codeenthusiast.TrainingCenterApp.user.major;
 
-import codeenthusiast.TrainingCenterApp.user.role.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

@@ -25,7 +25,7 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
     @Override
     public StrengthRecordDTO createStrengthRecord(Long personalRecordsId, StrengthRecordDTO strengthRecordDTO) {
         StrengthRecord strengthRecord = mapToEntity(strengthRecordDTO);
-        strengthRecord.setPersonalRecords(personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId));
+        strengthRecord.setPersonalRecords(personalRecordsServiceImpl.getPersonalRecordsByUserId(personalRecordsId));
         return mapToDTO(save(strengthRecord));
     }
 

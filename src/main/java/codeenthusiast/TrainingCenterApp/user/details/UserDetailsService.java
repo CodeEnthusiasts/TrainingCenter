@@ -2,7 +2,9 @@ package codeenthusiast.TrainingCenterApp.user.details;
 
 public interface UserDetailsService {
 
-    UserDetailsDTO findByUserId(long id);
+    UserDetails saveUserDetails(UserDetails userDetails);
 
-    UserDetailsDTO updateUserDetails(long id, UserDetailsDTO dto);
+    UserDetailsDTO getUserDetailsByUserId(long userId);
+
+    UserDetailsDTO updateUserDetails(long userDetailsId, UserDetailsDTO dto);
 }

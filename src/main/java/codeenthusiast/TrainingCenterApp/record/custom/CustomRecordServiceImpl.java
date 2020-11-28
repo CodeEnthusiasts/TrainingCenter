@@ -25,7 +25,7 @@ public class CustomRecordServiceImpl implements CustomRecordService {
     @Override
     public CustomRecordDTO createCustomRecord(Long personalRecordsId, CustomRecordDTO customRecordDTO) {
         CustomRecord customRecord = mapToEntity(customRecordDTO);
-        customRecord.setPersonalRecords(personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId));
+        customRecord.setPersonalRecords(personalRecordsServiceImpl.getPersonalRecordsByUserId(personalRecordsId));
         return mapToDTO(save(customRecord));
     }
 

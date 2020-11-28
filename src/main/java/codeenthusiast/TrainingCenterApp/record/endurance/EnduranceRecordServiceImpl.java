@@ -25,7 +25,7 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
     @Override
     public EnduranceRecordDTO createEnduranceRecord(Long personalRecordsId, EnduranceRecordDTO enduranceRecordDTO) {
         EnduranceRecord enduranceRecord = mapToEntity(enduranceRecordDTO);
-        enduranceRecord.setPersonalRecords(personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId));
+        enduranceRecord.setPersonalRecords(personalRecordsServiceImpl.getPersonalRecordsByUserId(personalRecordsId));
         return mapToDTO(save(enduranceRecord));
     }
 

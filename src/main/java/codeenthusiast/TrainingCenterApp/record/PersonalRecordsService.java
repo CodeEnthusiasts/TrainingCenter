@@ -2,7 +2,7 @@ package codeenthusiast.TrainingCenterApp.record;
 
 public interface PersonalRecordsService {
 
-    PersonalRecords getPersonalRecordsById(Long id);
+    PersonalRecords getPersonalRecordsByUserId(Long userId);
 
     PersonalRecords savePersonalRecords(PersonalRecords personalRecords);
 

@@ -19,18 +19,23 @@ public class UDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetailsDTO findByUserId(long id) {
-        return mapToDTO(repository.findByUserId(id));
+    public UserDetails saveUserDetails(UserDetails userDetails) {
+        return save(userDetails);
+    }
+
+    @Override
+    public UserDetailsDTO getUserDetailsByUserId(long userId) {
+        return mapToDTO(repository.findByUserId(userId));
     }
 
     @Override
     public UserDetailsDTO updateUserDetails(long id, UserDetailsDTO dto) {
-        UserDetails userDetails = repository.findById(id);
+        UserDetails userDetails = getUserDetailsByIdFromRepo(id);
         if(!hasAccess(userDetails)) {
             throw new AccessDeniedException("Access denied");
         }
         updateUserDetailsAttributes(dto, userDetails);
-        return mapToDTO(repository.save(userDetails));
+        return mapToDTO(save(userDetails));
     }
 
     private boolean hasAccess(UserDetails userDetails) {
@@ -42,8 +47,12 @@ public class UDetailsServiceImpl implements UserDetailsService {
             return false;
     }
 
-    private UserDetailsDTO mapToDTO(UserDetails userDetails) {
-        return mapper.mapToDTO(userDetails);
+    private UserDetails getUserDetailsByIdFromRepo(long id) {
+        return repository.findById(id);
+    }
+
+    private UserDetails save(UserDetails userDetails) {
+        return repository.save(userDetails);
     }
 
     private void updateUserDetailsAttributes(UserDetailsDTO dto, UserDetails userDetails) {
@@ -53,5 +62,9 @@ public class UDetailsServiceImpl implements UserDetailsService {
         userDetails.setHeightUnit(dto.getHeightUnit());
         userDetails.setHeight(dto.getHeight());
         userDetails.setSex(dto.getSex());
+    }
+
+    private UserDetailsDTO mapToDTO(UserDetails userDetails) {
+        return mapper.mapToDTO(userDetails);
     }
 }

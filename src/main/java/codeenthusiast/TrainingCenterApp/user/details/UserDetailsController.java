@@ -15,14 +15,14 @@ public class UserDetailsController {
     }
 
     @PreAuthorize("authentication.principal.id == #userId")
-    @GetMapping(value = "/users/{user_id}/user_details")
-    public UserDetailsDTO getByUserId(@PathVariable("user_id") Long userId) {
-        return userDetailsService.findByUserId(userId);
+    @GetMapping(value = "/users/{user_id}/user-details")
+    public UserDetailsDTO getUserDetailsByUserId(@PathVariable("user_id") Long userId) {
+        return userDetailsService.getUserDetailsByUserId(userId);
     }
 
-    @PatchMapping(value = "/user_details/{user_details_id}")
-    public UserDetailsDTO update(@PathVariable("user_details_id") Long userDetailsId,
-                                 @RequestBody @Valid UserDetailsDTO dto) {
+    @PatchMapping(value = "/user-details/{user_details_id}")
+    public UserDetailsDTO updateUserDetails(@PathVariable("user_details_id") Long userDetailsId,
+                                            @RequestBody @Valid UserDetailsDTO dto) {
         return userDetailsService.updateUserDetails(userDetailsId, dto);
     }
 }

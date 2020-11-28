@@ -6,6 +6,7 @@ import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.user.details.UserDetails;
 import codeenthusiast.TrainingCenterApp.user.role.Role;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -32,6 +33,7 @@ public class User extends AbstractEntity {
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "user")
     private Image image;
 
+    @JsonIgnore
     @OneToOne(mappedBy = "user")
     private UserDetails userDetails;
 

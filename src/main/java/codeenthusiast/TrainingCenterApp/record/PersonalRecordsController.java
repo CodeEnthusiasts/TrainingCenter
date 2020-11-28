@@ -16,7 +16,7 @@ public class PersonalRecordsController {
         this.service = service;
     }
 
-    @GetMapping(value = "/users/{user_id}")
+    @GetMapping(value = "/users/{user_id}/personal-records")
     public ResponseEntity<PersonalRecords> getPersonalRecords(@PathVariable("user_id") Long id) {
         return ResponseEntity.ok(service.getPersonalRecordsById(id));
     }

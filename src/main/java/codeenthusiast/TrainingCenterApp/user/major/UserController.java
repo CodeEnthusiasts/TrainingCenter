@@ -1,11 +1,9 @@
 package codeenthusiast.TrainingCenterApp.user.major;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
 import codeenthusiast.TrainingCenterApp.image.ImageDTO;
 import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
-import codeenthusiast.TrainingCenterApp.user.details.UserDetailsDTO;
-import codeenthusiast.TrainingCenterApp.user.role.User;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,6 +12,7 @@ import javax.validation.Valid;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/users")
+@PreAuthorize("authentication.principal.id == #userId")
 public class UserController {
 
     private final UserServiceImpl userService;
@@ -25,27 +24,28 @@ public class UserController {
         this.imageServiceImpl = imageServiceImpl;
     }
 
-    @GetMapping(value = "/{id}")
-    public UserDTO getById(@PathVariable("id") Long id) {
-        return userService.findById(id);
+    @GetMapping(value = "/{user_id}")
+    public UserDTO getById(@PathVariable("user_id") Long userId) {
+        return userService.findById(userId);
     }
 
-    @PatchMapping(value = "/{id}")
-    public UserDTO update(@PathVariable("id") Long id,
+    // this endpoint need to be fixed - make detached endpoints
+    // for updating user's username, email, password and details
+    @PatchMapping(value = "/{user_id}")
+    public UserDTO update(@PathVariable("user_id") Long userId,
                                  @RequestBody @Valid UserDTO dto) {
-        return userService.update(id, dto);
+        return userService.update(userId, dto);
     }
 
-
-    @PostMapping("{id}/image")
-    public ResponseEntity<UserDTO> addImage(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) {
+    @PostMapping("{user_id}/image")
+    public ResponseEntity<UserDTO> addImage(@PathVariable("user_id") Long userId, @RequestParam("file") MultipartFile file) {
         ImageDTO image = imageServiceImpl.createNewImage(file);
-        return ResponseEntity.ok(userService.addImage(id, image));
+        return ResponseEntity.ok(userService.addImage(userId, image));
     }
 
-    @DeleteMapping("{id}/image")
-    public ResponseEntity<String> removeImage(@PathVariable("id") Long id) {
-        userService.removeImage(id);
+    @DeleteMapping("{user_id}/image")
+    public ResponseEntity<String> removeImage(@PathVariable("user_id") Long userId) {
+        userService.removeImage(userId);
         return ResponseEntity.ok("Image was successfully removed.");
     }
 

@@ -121,8 +121,8 @@ public class AuthService {
 
     public User createNewUserAccount(SignUpRequest signUpRequest) {
         short s = 0;
-        return new User(signUpRequest.getUsername(), signUpRequest.getPassword(),
-                signUpRequest.getPassword());
+        return new User(signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()),
+                signUpRequest.getEmail());
     }
 
 //     User generator //

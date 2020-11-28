@@ -12,6 +12,12 @@ public interface UserMapper {
     @Mapping(target = "userDetailsDTO", source = "userDetails")
     UserDTO mapToDTO(User entity);
 
+    @Mapping(target = "password", ignore = true)
+    @Mapping(target = "roles", ignore = true)
+    @Mapping(target = "image", ignore = true)
+    @Mapping(target = "userDetails", ignore = true)
+    @Mapping(target = "trainingPlans", ignore = true)
+    @Mapping(target = "personalRecords", ignore = true)
     User mapToEntity(UserDTO userDTO);
 
 }

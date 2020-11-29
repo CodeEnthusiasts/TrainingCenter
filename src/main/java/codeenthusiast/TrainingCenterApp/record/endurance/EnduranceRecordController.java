@@ -15,19 +15,19 @@ public class EnduranceRecordController {
         this.enduranceRecordService = enduranceRecordService;
     }
 
-    @GetMapping(value = "/personal_records/{personal_record_id}/endurance-records/all")
+    @GetMapping(value = "/personal_records/{personal_records_id}/endurance-records/all")
     public ResponseEntity<List<EnduranceRecordDTO>> getEnduranceRecords(@PathVariable("personal_records_id") Long id) {
         return ResponseEntity.ok(enduranceRecordService.getAllEnduranceRecordsByPersonalRecordsId(id));
     }
 
-    @GetMapping(value = "/personal_records/{personal_record_id}/endurance-records/three")
+    @GetMapping(value = "/personal_records/{personal_records_id}/endurance-records/three")
     public ResponseEntity<List<EnduranceRecordDTO>> getThreeLatestEnduranceRecords(@PathVariable("personal_records_id")
                                                                                          Long id) {
         return ResponseEntity.ok(enduranceRecordService.getThreeLatestEnduranceRecordsByPersonalRecordsId(id));
     }
 
 
-    @PostMapping(value = "/personal_records/{personal_record_id}/endurance-records")
+    @PostMapping(value = "/personal_records/{personal_records_id}/endurance-records")
     public ResponseEntity<EnduranceRecordDTO> createEnduranceRecord(@PathVariable("personal_records_id") Long id,
                                                                     @RequestBody EnduranceRecordDTO enduranceRecordDTO) {
         return ResponseEntity.ok(enduranceRecordService.createEnduranceRecord(id, enduranceRecordDTO));

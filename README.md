@@ -114,11 +114,11 @@ git clone https://github.com/CodeEnthusiasts/TrainingCenter.git
 #### FAQ
  
 ## Contributors
-1. [Damian Naglak](mailto:damiannaglak1@gmail.com) as [naslakboss](https://github.com/naslakboss) - concept, minor backend backend, project management, group formation
+1. [Damian Naglak](mailto:damiannaglak1@gmail.com) as [naslakboss](https://github.com/naslakboss) - concept, major backend backend, project management, group formation
 2. [Agnieszka Dzierzkowska](mailto:aga.dzierzkowska21@gmail.com) - ui/ux
-3. [Przemysław Saja](mailto:przemyslawsaja@gmail.com) as [przemyslawsaja](https://github.com/przemyslawsaja) - minor frontend contributor, concept
-3. [Paweł Karpiel](mailto:pawel21599@gmail.com) - minor backend contributor
-4. [Karol Kaczorowski](mailto:KarolKaczorowskiC.dev@gmail.com) as [KarolKaczorowski78](https://github.com/KarolKaczorowski78) - minor frontend contributor
+3. [Przemysław Saja](mailto:przemyslawsaja@gmail.com) as [przemyslawsaja](https://github.com/przemyslawsaja) - major frontend contributor, concept
+3. [Paweł Karpiel](mailto:pawel21599@gmail.com) - major backend contributor, project overview advices
+4. [Karol Kaczorowski](mailto:KarolKaczorowskiC.dev@gmail.com) as [KarolKaczorowski78](https://github.com/KarolKaczorowski78) - major frontend contributor
 5. [Igor Chmielewski](mailto:igorchmielewski@gmail.com) - advices, abstraction foundation
 6. [Kamil Cecherz](mailto:cecherz@outlook.com) as [pangeon](https://github.com/pangeon) - update read.me
 

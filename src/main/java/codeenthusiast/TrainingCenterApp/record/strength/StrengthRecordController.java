@@ -16,19 +16,19 @@ public class StrengthRecordController {
     }
 
     @GetMapping(value = "/personal_records/{personal_record_id}/strength-records/all")
-    public ResponseEntity<List<StrengthRecordDTO>> getStrengthRecords(@PathVariable("personal_records_id") Long id) {
+    public ResponseEntity<List<StrengthRecordDTO>> getStrengthRecords(@PathVariable("personal_record_id") Long id) {
         return ResponseEntity.ok(strengthRecordServiceImpl.getAllStrengthRecordsByPersonalRecordsId(id));
     }
 
     @GetMapping(value = "/personal_records/{personal_record_id}/strength-records/three")
-    public ResponseEntity<List<StrengthRecordDTO>> getThreeLatestStrengthRecords(@PathVariable("personal_records_id")
+    public ResponseEntity<List<StrengthRecordDTO>> getThreeLatestStrengthRecords(@PathVariable("personal_record_id")
                                                                                          Long id) {
         return ResponseEntity.ok(strengthRecordServiceImpl.getThreeLatestStrengthRecordsByPersonalRecordsId(id));
     }
 
 
     @PostMapping(value = "/personal_records/{personal_record_id}/strength-records")
-    public ResponseEntity<StrengthRecordDTO> createStrengthRecord(@PathVariable("personal_records_id") Long id,
+    public ResponseEntity<StrengthRecordDTO> createStrengthRecord(@PathVariable("personal_record_id") Long id,
                                                                   @RequestBody StrengthRecordDTO strengthRecordDTO) {
         return ResponseEntity.ok(strengthRecordServiceImpl.createStrengthRecord(id, strengthRecordDTO));
     }

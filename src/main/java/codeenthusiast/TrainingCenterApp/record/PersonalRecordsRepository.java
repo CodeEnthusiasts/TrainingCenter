@@ -8,4 +8,6 @@ public interface PersonalRecordsRepository extends AbstractRepository<PersonalRe
 
     PersonalRecords findByUserId(long id);
 
+    PersonalRecords findById(long id);
+
 }

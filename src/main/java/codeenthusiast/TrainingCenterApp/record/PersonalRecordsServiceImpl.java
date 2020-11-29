@@ -19,12 +19,16 @@ public class PersonalRecordsServiceImpl implements PersonalRecordsService {
         return getPersonalRecordsByUserIdFromRepo(userId);
     }
 
+    public PersonalRecords getPersonalRecordsById(Long personalRecordsId) {
+        return getPersonalRecordsByIdFromRepo(personalRecordsId);
+    }
+
     @Override
     public PersonalRecords savePersonalRecords(PersonalRecords personalRecords) {
         return save(personalRecords);
     }
 
-    private boolean hasAccess(PersonalRecords personalRecords) {
+    public boolean hasAccess(PersonalRecords personalRecords) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
         if(personalRecords.getUser().getId().equals(userDetailsImpl.getId()))
@@ -36,8 +40,12 @@ public class PersonalRecordsServiceImpl implements PersonalRecordsService {
     private PersonalRecords save(PersonalRecords personalRecords) {
         return repository.save(personalRecords);
     }
+
     private PersonalRecords getPersonalRecordsByUserIdFromRepo(long id) {
         return repository.findByUserId(id);
     }
 
+    private PersonalRecords getPersonalRecordsByIdFromRepo(long id) {
+        return repository.findById(id);
+    }
 }

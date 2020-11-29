@@ -34,7 +34,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
             return false;
     }
 
-    UserDetailsImpl getPrincipal() {
+    private UserDetailsImpl getPrincipal() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (UserDetailsImpl) authentication.getPrincipal();
     }

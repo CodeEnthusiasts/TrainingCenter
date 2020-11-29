@@ -10,7 +10,7 @@ public interface TrainingPlanService {
 
     List<TrainingPlanDTO> getAllTrainingPlansByUserId(Long id);
 
-    TrainingPlanDTO getTrainingPlanById(long id);
+    TrainingPlanDTO getTrainingPlanById(Long id);
 
     String deleteTrainingPlan(Long id);
 }

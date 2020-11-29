@@ -37,7 +37,7 @@ public class User extends AbstractEntity {
     @OneToOne(mappedBy = "user")
     private UserDetails userDetails;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<TrainingPlan> trainingPlans = new ArrayList<>();
 
     @OneToOne(mappedBy = "user")

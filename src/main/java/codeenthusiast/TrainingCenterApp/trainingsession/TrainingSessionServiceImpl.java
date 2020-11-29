@@ -38,7 +38,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
     @Override
     public TrainingSessionDTO save(TrainingSession trainingSession, Long trainingPlanId) {
 
-        TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanById(trainingPlanId);
+        TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
         trainingSession.setTrainingPlan(trainingPlan);
         TrainingSession newSession = trainingSessionRepository.save(trainingSession);
 

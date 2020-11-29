@@ -21,7 +21,7 @@ public class TrainingPlan extends AbstractEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "trainingPlan")
+    @OneToMany(mappedBy = "trainingPlan", orphanRemoval = true)
     private List<TrainingSession> trainingSessions;
 
     private short numberOfExecutedTrainings;

@@ -50,7 +50,7 @@ public class PriorityServiceImpl implements PriorityService {
 
     @Override
     public PriorityDTO create(Long id, PriorityDTO dto) {
-        TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanById(id);
+        TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(id);
         Priority priority = priorityMapper.mapToEntity(dto);
 
         priority.setTrainingPlan(trainingPlan);

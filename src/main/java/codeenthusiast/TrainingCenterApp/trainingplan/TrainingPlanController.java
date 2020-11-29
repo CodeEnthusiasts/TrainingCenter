@@ -1,6 +1,7 @@
 package codeenthusiast.TrainingCenterApp.trainingplan;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,7 +40,7 @@ public class TrainingPlanController {
     }
 
     @DeleteMapping(value = "/training-plans/{training_plan_id}")
-    public ResponseEntity<String> deleteTrainingPLan(@PathVariable("id") Long id) {
+    public ResponseEntity<String> deleteTrainingPLan(@PathVariable("training_plan_id") Long id) {
         return ResponseEntity.ok(trainingPlanService.deleteTrainingPlan(id));
     }
 }

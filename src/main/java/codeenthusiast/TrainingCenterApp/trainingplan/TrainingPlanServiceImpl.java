@@ -26,7 +26,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
         this.userService = userService;
     }
 
-    private boolean hasAccess(TrainingPlan trainingPLan) {
+    public boolean hasAccess(TrainingPlan trainingPLan) {
         UserDetailsImpl userDetailsImpl = getPrincipal();
         if(trainingPLan.getUser().getId().equals(userDetailsImpl.getId()))
             return true;

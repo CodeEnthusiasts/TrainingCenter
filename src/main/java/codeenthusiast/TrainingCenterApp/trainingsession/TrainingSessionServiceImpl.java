@@ -59,20 +59,19 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
 
     @Override
     public List<TrainingSessionDTO> getAllByTrainingPlanId(Long trainingPlanId) {
-        List<TrainingSession> trainingSessions = trainingSessionRepository.findAllByTrainingPlanId(trainingPlanId);
-        if(trainingSessions.size() >= 1){
-            TrainingSession trainingSession = trainingSessions.get(0);
-            if(!hasAccess(trainingSession)){
-                throw new AccessDeniedException("Access Denied");
-            }
+        TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
+        if(!trainingPlanService.hasAccess(trainingPlan)){
+            throw  new AccessDeniedException("Access denied");
         }
+        List<TrainingSession> trainingSessions = trainingSessionRepository.findAllByTrainingPlanId(trainingPlanId);
         return trainingSessionMapper.mapToDTOs(trainingSessions);
     }
 
     @Override
     public TrainingSessionDTO create(TrainingSessionDTO dto, Long trainingPlanId) {
-        if(!getPrincipal().getId().equals(trainingPlanId)){
-            throw new AccessDeniedException("Access denied");
+        TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
+        if(!trainingPlanService.hasAccess(trainingPlan)){
+            throw  new AccessDeniedException("Access denied");
         }
         TrainingSession trainingSession = new TrainingSession(dto);
         return save(trainingSession, trainingPlanId);
@@ -104,7 +103,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
         trainingSessionRepository.deleteById(id);
     }
 
-    private boolean hasAccess(TrainingSession trainingSession) {
+    public boolean hasAccess(TrainingSession trainingSession) {
         UserDetailsImpl userDetailsImpl = getPrincipal();
         return trainingSession.getTrainingPlan().getUser().getId().equals(userDetailsImpl.getId());
     }

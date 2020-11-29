@@ -29,12 +29,16 @@ public class PersonalRecordsServiceImpl implements PersonalRecordsService {
     }
 
     public boolean hasAccess(PersonalRecords personalRecords) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
+        UserDetailsImpl userDetailsImpl = getPrincipal();
         if(personalRecords.getUser().getId().equals(userDetailsImpl.getId()))
             return true;
         else
             return false;
+    }
+
+    private UserDetailsImpl getPrincipal() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (UserDetailsImpl) authentication.getPrincipal();
     }
 
     private PersonalRecords save(PersonalRecords personalRecords) {

@@ -39,12 +39,16 @@ public class UDetailsServiceImpl implements UserDetailsService {
     }
 
     private boolean hasAccess(UserDetails userDetails) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
+        UserDetailsImpl userDetailsImpl = getPrincipal();
         if(userDetails.getUser().getId().equals(userDetailsImpl.getId()))
             return true;
         else
             return false;
+    }
+
+    private UserDetailsImpl getPrincipal() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (UserDetailsImpl) authentication.getPrincipal();
     }
 
     private UserDetails getUserDetailsByIdFromRepo(long id) {

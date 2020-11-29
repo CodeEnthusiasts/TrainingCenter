@@ -72,12 +72,16 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
     }
 
     private boolean hasAccess(StrengthRecord strengthRecord) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
+        UserDetailsImpl userDetailsImpl = getPrincipal();
         if(strengthRecord.getPersonalRecords().getUser().getId().equals(userDetailsImpl.getId()))
             return true;
         else
             return false;
+    }
+
+    private UserDetailsImpl getPrincipal() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (UserDetailsImpl) authentication.getPrincipal();
     }
 
     private StrengthRecord save(StrengthRecord strengthRecord) {

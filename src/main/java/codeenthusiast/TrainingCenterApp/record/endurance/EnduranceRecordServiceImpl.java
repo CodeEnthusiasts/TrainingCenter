@@ -31,8 +31,6 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
     @Override
     public EnduranceRecordDTO createEnduranceRecord(Long personalRecordsId, EnduranceRecordDTO enduranceRecordDTO) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(isNull(personalRecords))
-            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         EnduranceRecord enduranceRecord = mapToEntity(enduranceRecordDTO);
@@ -54,8 +52,6 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
     @Override
     public List<EnduranceRecordDTO> getAllEnduranceRecordsByPersonalRecordsId(Long personalRecordsId) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(isNull(personalRecords))
-            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         return mapToDTOs(repository.findAllByPersonalRecordsId(personalRecordsId));
@@ -64,8 +60,6 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
     @Override
     public List<EnduranceRecordDTO> getThreeLatestEnduranceRecordsByPersonalRecordsId(Long personalRecordsId) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(isNull(personalRecords))
-            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         return mapToDTOs(repository.findThreeLatestByPersonalRecordsId(personalRecordsId));
@@ -88,8 +82,8 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
         return enduranceRecord.getPersonalRecords().getUser().getId().equals(userDetailsImpl.getId());
     }
 
-    private boolean isNull(Object object) {
-        return object == null;
+    private boolean isNull(EnduranceRecord enduranceRecord) {
+        return enduranceRecord == null;
     }
 
     private EnduranceRecord save(EnduranceRecord enduranceRecord) {

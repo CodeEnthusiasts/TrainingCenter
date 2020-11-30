@@ -31,8 +31,6 @@ public class CustomRecordServiceImpl implements CustomRecordService {
     @Override
     public CustomRecordDTO createCustomRecord(Long personalRecordsId, CustomRecordDTO customRecordDTO) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(isNull(personalRecords))
-            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         CustomRecord customRecord = mapToEntity(customRecordDTO);
@@ -54,8 +52,6 @@ public class CustomRecordServiceImpl implements CustomRecordService {
     @Override
     public List<CustomRecordDTO> getAllCustomRecordsByPersonalRecordsId(Long personalRecordsId) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(isNull(personalRecords))
-            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         return mapToDTOs(repository.findAllByPersonalRecordsId(personalRecordsId));
@@ -64,8 +60,6 @@ public class CustomRecordServiceImpl implements CustomRecordService {
     @Override
     public List<CustomRecordDTO> getThreeLatestCustomRecordsByPersonalRecordsId(Long personalRecordsId) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(isNull(personalRecords))
-            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         return mapToDTOs(repository.findThreeLatestByPersonalRecordsId(personalRecordsId));
@@ -88,8 +82,8 @@ public class CustomRecordServiceImpl implements CustomRecordService {
         return customRecord.getPersonalRecords().getUser().getId().equals(userDetailsImpl.getId());
     }
 
-    private boolean isNull(Object object) {
-        return object == null;
+    private boolean isNull(CustomRecord customRecord) {
+        return customRecord == null;
     }
 
     private CustomRecord save(CustomRecord customRecord) {

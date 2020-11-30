@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.record;
 
+import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,6 +21,9 @@ public class PersonalRecordsServiceImpl implements PersonalRecordsService {
     }
 
     public PersonalRecords getPersonalRecordsById(Long personalRecordsId) {
+        PersonalRecords personalRecords = getPersonalRecordsByIdFromRepo(personalRecordsId);
+        if(isNull(personalRecords))
+            throw new EntityNotFoundException("Resource not available");
         return getPersonalRecordsByIdFromRepo(personalRecordsId);
     }
 
@@ -36,6 +40,10 @@ public class PersonalRecordsServiceImpl implements PersonalRecordsService {
     private UserDetailsImpl getPrincipal() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (UserDetailsImpl) authentication.getPrincipal();
+    }
+
+    private boolean isNull(PersonalRecords personalRecords) {
+        return personalRecords == null;
     }
 
     private PersonalRecords save(PersonalRecords personalRecords) {

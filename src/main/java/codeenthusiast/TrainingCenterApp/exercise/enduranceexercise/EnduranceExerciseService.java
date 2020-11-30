@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface EnduranceExerciseService {
 
-    EnduranceExerciseDTO findById(Long id);
+    EnduranceExercise getEnduranceExerciseEntityById(Long id);
 
-    EnduranceExerciseDTO save(EnduranceExercise enduranceExercise, Long trainingSessionId, Long movementId);
+    EnduranceExerciseDTO createEnduranceExercise(EnduranceExerciseDTO dto, Long trainingSessionId, Long movementId);
 
-    List<EnduranceExerciseDTO> getAllByTrainingSessionId(Long id);
+    EnduranceExerciseDTO updateEnduranceExercise(Long id, EnduranceExerciseDTO dto);
 
-    EnduranceExerciseDTO create(EnduranceExerciseDTO dto, Long trainingSessionId, Long movementId);
+    EnduranceExerciseDTO getEnduranceExerciseById(Long id);
 
-    EnduranceExerciseDTO update(Long id, EnduranceExerciseDTO dto);
+    List<EnduranceExerciseDTO> getAllEnduranceExercisesByTrainingSessionId(Long id);
 
-    void deleteById(Long id);
+    String deleteEnduranceExercise(Long id);
 }

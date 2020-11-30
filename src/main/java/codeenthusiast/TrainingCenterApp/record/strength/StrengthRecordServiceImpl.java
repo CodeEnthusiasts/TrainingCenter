@@ -31,8 +31,6 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
     @Override
     public StrengthRecordDTO createStrengthRecord(Long personalRecordsId, StrengthRecordDTO strengthRecordDTO) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsByUserId(personalRecordsId);
-        if(isNull(personalRecords))
-            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         StrengthRecord strengthRecord = mapToEntity(strengthRecordDTO);
@@ -54,8 +52,6 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
     @Override
     public List<StrengthRecordDTO> getAllStrengthRecordsByPersonalRecordsId(Long personalRecordsId) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(isNull(personalRecords))
-            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         return mapToDTOs(repository.findAllByPersonalRecordsId(personalRecordsId));
@@ -64,8 +60,6 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
     @Override
     public List<StrengthRecordDTO> getThreeLatestStrengthRecordsByPersonalRecordsId(Long personalRecordsId) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(isNull(personalRecords))
-            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         return mapToDTOs(repository.findThreeLatestByPersonalRecordsId(personalRecordsId));
@@ -92,8 +86,8 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
         return (UserDetailsImpl) authentication.getPrincipal();
     }
 
-    private boolean isNull(Object object) {
-        return object == null;
+    private boolean isNull(StrengthRecord strengthRecord) {
+        return strengthRecord == null;
     }
 
     private StrengthRecord save(StrengthRecord strengthRecord) {

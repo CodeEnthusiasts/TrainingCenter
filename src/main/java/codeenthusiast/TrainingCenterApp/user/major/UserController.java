@@ -25,16 +25,16 @@ public class UserController {
     }
 
     @GetMapping(value = "/{user_id}")
-    public UserDTO getById(@PathVariable("user_id") Long userId) {
-        return userService.findById(userId);
+    public ResponseEntity<UserDTO> getById(@PathVariable("user_id") Long userId) {
+        return ResponseEntity.ok(userService.findById(userId));
     }
 
     // this endpoint need to be fixed - make detached endpoints
     // for updating user's username, email, password and details
     @PatchMapping(value = "/{user_id}")
-    public UserDTO update(@PathVariable("user_id") Long userId,
+    public ResponseEntity<UserDTO> update(@PathVariable("user_id") Long userId,
                                  @RequestBody @Valid UserDTO dto) {
-        return userService.update(userId, dto);
+        return ResponseEntity.ok(userService.update(userId, dto));
     }
 
     @PostMapping("{user_id}/image")

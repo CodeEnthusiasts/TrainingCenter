@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.record.endurance;
 
+import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
 import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
@@ -30,6 +31,8 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
     @Override
     public EnduranceRecordDTO createEnduranceRecord(Long personalRecordsId, EnduranceRecordDTO enduranceRecordDTO) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
+        if(isNull(personalRecords))
+            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         EnduranceRecord enduranceRecord = mapToEntity(enduranceRecordDTO);
@@ -40,6 +43,8 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
     @Override
     public EnduranceRecordDTO updateEnduranceRecord(Long enduranceRecordId, EnduranceRecordDTO enduranceRecordDTO) {
         EnduranceRecord enduranceRecord = getEnduranceRecordByIdFromRepo(enduranceRecordId);
+        if(isNull(enduranceRecord))
+            throw new EntityNotFoundException("Resource not available");
         if(!hasAccess(enduranceRecord))
             throw new AccessDeniedException("Access denied");
         updateEnduranceRecord(enduranceRecord, enduranceRecordDTO);
@@ -49,6 +54,8 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
     @Override
     public List<EnduranceRecordDTO> getAllEnduranceRecordsByPersonalRecordsId(Long personalRecordsId) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
+        if(isNull(personalRecords))
+            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         return mapToDTOs(repository.findAllByPersonalRecordsId(personalRecordsId));
@@ -57,6 +64,8 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
     @Override
     public List<EnduranceRecordDTO> getThreeLatestEnduranceRecordsByPersonalRecordsId(Long personalRecordsId) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
+        if(isNull(personalRecords))
+            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         return mapToDTOs(repository.findThreeLatestByPersonalRecordsId(personalRecordsId));
@@ -65,6 +74,8 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
     @Override
     public String deleteEnduranceRecord(Long enduranceRecordId) {
         EnduranceRecord enduranceRecord = getEnduranceRecordByIdFromRepo(enduranceRecordId);
+        if(isNull(enduranceRecord))
+            throw new EntityNotFoundException("Resource not available");
         if(!hasAccess(enduranceRecord))
             throw new AccessDeniedException("Access denied");
         deleteById(enduranceRecordId);
@@ -74,10 +85,11 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
     private boolean hasAccess(EnduranceRecord enduranceRecord) {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
-        if(enduranceRecord.getPersonalRecords().getUser().getId().equals(userDetailsImpl.getId()))
-            return true;
-        else
-            return false;
+        return enduranceRecord.getPersonalRecords().getUser().getId().equals(userDetailsImpl.getId());
+    }
+
+    private boolean isNull(Object object) {
+        return object == null;
     }
 
     private EnduranceRecord save(EnduranceRecord enduranceRecord) {

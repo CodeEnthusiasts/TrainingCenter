@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.record.strength;
 
+import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
 import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
@@ -30,6 +31,8 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
     @Override
     public StrengthRecordDTO createStrengthRecord(Long personalRecordsId, StrengthRecordDTO strengthRecordDTO) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsByUserId(personalRecordsId);
+        if(isNull(personalRecords))
+            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         StrengthRecord strengthRecord = mapToEntity(strengthRecordDTO);
@@ -40,6 +43,8 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
     @Override
     public StrengthRecordDTO updateStrengthRecord(Long strengthRecordId, StrengthRecordDTO strengthRecordDTO) {
         StrengthRecord strengthRecord = getStrengthRecordByIdFromRepo(strengthRecordId);
+        if(isNull(strengthRecord))
+            throw new EntityNotFoundException("Resource not available");
         if(!hasAccess(strengthRecord))
             throw new AccessDeniedException("Access denied");
         updateStrengthRecord(strengthRecord, strengthRecordDTO);
@@ -49,6 +54,8 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
     @Override
     public List<StrengthRecordDTO> getAllStrengthRecordsByPersonalRecordsId(Long personalRecordsId) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
+        if(isNull(personalRecords))
+            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         return mapToDTOs(repository.findAllByPersonalRecordsId(personalRecordsId));
@@ -57,6 +64,8 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
     @Override
     public List<StrengthRecordDTO> getThreeLatestStrengthRecordsByPersonalRecordsId(Long personalRecordsId) {
         PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
+        if(isNull(personalRecords))
+            throw new EntityNotFoundException("Resource not available");
         if(!personalRecordsServiceImpl.hasAccess(personalRecords))
             throw new AccessDeniedException("Access denied");
         return mapToDTOs(repository.findThreeLatestByPersonalRecordsId(personalRecordsId));
@@ -65,6 +74,8 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
     @Override
     public String deleteStrengthRecord(Long strengthRecordId) {
         StrengthRecord strengthRecord = getStrengthRecordByIdFromRepo(strengthRecordId);
+        if(isNull(strengthRecord))
+            throw new EntityNotFoundException("Resource not available");
         if(!hasAccess(strengthRecord))
             throw new AccessDeniedException("Access denied");
         deleteById(strengthRecordId);
@@ -73,15 +84,16 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
 
     private boolean hasAccess(StrengthRecord strengthRecord) {
         UserDetailsImpl userDetailsImpl = getPrincipal();
-        if(strengthRecord.getPersonalRecords().getUser().getId().equals(userDetailsImpl.getId()))
-            return true;
-        else
-            return false;
+        return strengthRecord.getPersonalRecords().getUser().getId().equals(userDetailsImpl.getId());
     }
 
     private UserDetailsImpl getPrincipal() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         return (UserDetailsImpl) authentication.getPrincipal();
+    }
+
+    private boolean isNull(Object object) {
+        return object == null;
     }
 
     private StrengthRecord save(StrengthRecord strengthRecord) {
@@ -116,6 +128,5 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
     private List<StrengthRecordDTO> mapToDTOs(List<StrengthRecord> list) {
         return mapper.mapToDTOs(list);
     }
-
 }
 

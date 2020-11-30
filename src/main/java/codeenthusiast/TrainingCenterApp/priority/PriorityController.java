@@ -1,6 +1,10 @@
 package codeenthusiast.TrainingCenterApp.priority;
 
 import codeenthusiast.TrainingCenterApp.movement.keytechniqueelement.KeyTechniqueElementDTO;
+import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
+import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -23,11 +27,11 @@ public class PriorityController {
     }
 
     @GetMapping(value = "/training-plan/{training_plan_id}")
-    public List<PriorityDTO> getAllByTrainingPlanId(@PathVariable("/training_plan_id") Long id){
+    public List<PriorityDTO> getAllByTrainingPlanId(@PathVariable("training_plan_id") Long id){
         return priorityService.getAllByTrainingPlanId(id);
     }
 
-    @PostMapping(value = "/training-plan/{id}")
+    @PostMapping(value = "/training-plan/{training_plan_id}")
     public PriorityDTO create(@PathVariable("training_plan_id") Long id,
                                          @RequestBody @Valid PriorityDTO dto) {
         return priorityService.create(id, dto);

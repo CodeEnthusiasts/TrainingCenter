@@ -32,7 +32,7 @@ INSERT INTO user_details(id, age, body_weight_unit, height, height_unit, sex, we
       (1, 20, 'KILOGRAMS', 183, 'METERS', 'MALE', 93.0, 1);
 
 -- ROLES FOR USERS
-INSERT INTO users_roles(users_id, roles_id) VALUES (1,1), (2,1);
+INSERT INTO users_roles(users_id, roles_id) VALUES (1,2), (2,1);
 
 -- TRAINING PLANS
 INSERT INTO training_plan(id, description, difficulty, end_date, name, number_of_executed_trainings, number_of_planned_trainings, start_date, user_id) VALUES
@@ -51,14 +51,13 @@ INSERT INTO training_session(id, date, day_of_week, difficulty, end_time, name, 
       (5, '2021-09-06', 'THURSDAY', 'EASY', '19:00', 'Nth + 1 strength training', 'Light squats for regeneration purposes', '17:30', '1:30',5);
 
 -- PRIORITIES
-INSERT INTO priority(id, details, name) VALUES
-        (1, 'Lower chest is the weakest part - need to work on it', 'Lower chest growth'),
-        (2, 'Quad is very irresistible to higher reps - needs to get better before strength phase', 'Develop quad endurance'),
-        (3, 'Right scapulae is unstable and destroy whole movement trajectory', 'Improve bench stability'),
-        (4, 'In order to beat 200kg barrier, need to be on 180 in strength phase at least', 'Gain 10kg + in squat'),
-        (5, 'This will improve power generation ability for sure', 'Beat the record in clean and jerk - + 132.5kg'),
-        (6, 'Rest them to heal tendinitis', 'Heal injured elbow');
-
+INSERT INTO priority(id, details, name, training_plan_id) VALUES
+        (1, 'Lower chest is the weakest part - need to work on it', 'Lower chest growth', 1),
+        (2, 'Quad is very irresistible to higher reps - needs to get better before strength phase', 'Develop quad endurance', 2),
+        (3, 'Right scapulae is unstable and destroy whole movement trajectory', 'Improve bench stability', 2),
+        (4, 'In order to beat 200kg barrier, need to be on 180 in strength phase at least', 'Gain 10kg + in squat', 3),
+        (5, 'This will improve power generation ability for sure', 'Beat the record in clean and jerk - + 132.5kg', 5),
+        (6, 'Rest them to heal tendinitis', 'Heal injured elbow', 5);
 -- PRIORITIES IN TRAINING PLANS
 INSERT INTO training_plan_priorities(training_plan_id, priorities_id) VALUES
         (1,1), (1,2), (2,3), (2,4), (3,5), (3,6);

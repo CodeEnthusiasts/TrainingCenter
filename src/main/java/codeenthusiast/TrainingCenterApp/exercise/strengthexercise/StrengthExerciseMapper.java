@@ -13,6 +13,7 @@ public interface StrengthExerciseMapper {
 
     @Mapping(target = "movement", ignore = true)
     @Mapping(target = "trainingSession", ignore = true)
+    @Mapping(target = "strengthExerciseDetails", ignore = true)
     StrengthExercise mapToEntity(StrengthExerciseDTO strengthExerciseDTO);
 
     List<StrengthExercise> mapToEntities(List<StrengthExerciseDTO> strengthExerciseDTOS);

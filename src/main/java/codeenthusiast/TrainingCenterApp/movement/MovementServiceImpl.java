@@ -59,15 +59,14 @@ public class MovementServiceImpl implements MovementService {
     @Override
     public MovementDTO create(MovementDTO dto) {
         checkExistenceByName(dto.getName());
-        save(dto);
-        return dto;
+        return save(dto);
     }
 
     @Override
     public MovementDTO save(MovementDTO dto) {
-        Movement Movement = movementMapper.mapToEntity(dto);
-        movementRepository.save(Movement);
-        return dto;
+        Movement movement = movementMapper.mapToEntity(dto);
+
+        return movementMapper.mapToDTO(movementRepository.save(movement));
     }
 
     @Override

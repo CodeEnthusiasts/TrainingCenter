@@ -24,4 +24,9 @@ public class Priority extends AbstractEntity {
     @JoinColumn(name = "training_plan_id")
     private TrainingPlan trainingPlan;
 
+    Priority(PriorityDTO dto){
+        this.name = dto.getName();
+        this.details = dto.getDetails();
+    }
+
 }

@@ -58,9 +58,6 @@ INSERT INTO priority(id, details, name, training_plan_id) VALUES
         (4, 'In order to beat 200kg barrier, need to be on 180 in strength phase at least', 'Gain 10kg + in squat', 3),
         (5, 'This will improve power generation ability for sure', 'Beat the record in clean and jerk - + 132.5kg', 5),
         (6, 'Rest them to heal tendinitis', 'Heal injured elbow', 5);
--- PRIORITIES IN TRAINING PLANS
-INSERT INTO training_plan_priorities(training_plan_id, priorities_id) VALUES
-        (1,1), (1,2), (2,3), (2,4), (3,5), (3,6);
 
 -- MOVEMENT
 INSERT INTO movement(id, name) VALUES
@@ -94,10 +91,6 @@ INSERT INTO key_technique_element(id, content) VALUES
         (5, 'Kepp air pressure in diapragma'),
         (6, 'Push legs to the floow');
 
--- KEY TECHNIQUE ELEMENTS FOR MOVEMENT
-INSERT INTO movement_key_technique_elements(movement_id, key_technique_elements_id) VALUES
-        (1, 1), (1, 2), (2,3), (2,4), (3,5), (3,6);
-
 -- ADD MUSCLE_ID's TO IMAGES
 UPDATE image SET movement_id = 1 WHERE id = 4;
 UPDATE image SET movement_id = 2 WHERE id = 5;
@@ -110,11 +103,6 @@ INSERT INTO strength_exercise(id, repetition_unit, reps, weight,  weight_unit, m
         (7, 'MOTION', 5, 120,  'KILOGRAMS', 3, 1), (8, 'MOTION', 5, 120,  'KILOGRAMS', 3, 1), (9, 'MOTION', 5, 120,  'KILOGRAMS', 3, 1),
         (10, 'MOTION', 8, 60,  'KILOGRAMS', 3, 4), (11, 'MOTION', 8, 60,  'KILOGRAMS', 3, 4), (12, 'MOTION', 8, 60,  'KILOGRAMS', 4, 4),
         (13, 'MOTION', 3, 75,  'KILOGRAMS', 3, 5), (14, 'MOTION', 4, 70,  'KILOGRAMS', 3, 5), (15, 'MOTION', 5, 65,  'KILOGRAMS', 4, 5);
-
--- STRENGTH EXERCISES FOR TRAINING SESSIONS
-INSERT INTO training_session_strength_exercises(training_session_id, strength_exercises_id) VALUES
-          (1, 1), (1, 2), (1, 3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9),
-          (4,10),(4,11),(4,12),(5,13),(5,14),(5,15);
 
 -- STRENGTH EXERCISE DETAILS
 INSERT INTO strength_exercise_details(id, lowering, holding_down, raising, holding_up, note, reps_in_reserve, strength_exercise_id)
@@ -129,10 +117,6 @@ INSERT INTO endurance_exercise(id, distance, distance_unit, heart_rate, vo2max_p
         (2, 2.0, 'KILOMETERS', 150, 80, '00:10', 'MINUTES', 6, 2),
         (3, 1.0, 'KILOMETERS', 170, 90, '00:05', 'MINUTES', 6, 2);
 
--- ENDURANCE EXERCISES FOR TRAINING SESSIONS
-INSERT INTO training_session_endurance_exercises(training_session_id, endurance_exercises_id) VALUES
-          (2, 1), (2, 2), (2, 3);
-
 -- STRENGTH RECORDS
 INSERT INTO strength_record(id, movement_name, reps, repetition_unit, date, weight, weight_unit, personal_records_id) VALUES
         (1, 'Squat', 1, 'MOTION', '2020-09-09', 190, 'KILOGRAMS', 1),
@@ -141,7 +125,6 @@ INSERT INTO strength_record(id, movement_name, reps, repetition_unit, date, weig
 
 
 -- ENDURANCE RECORDS
-
 INSERT INTO endurance_record(id, distance, distance_unit, date, movement_name, duration, time_unit, personal_records_id) VALUES
         (1, 1.0, 'KILOMETERS', '2020-05-09','Running',  '00:03','HOURS', 1),
         (2, 5.0, 'KILOMETERS', '2020-07-09','Running',  '00:28','HOURS', 1),
@@ -149,7 +132,6 @@ INSERT INTO endurance_record(id, distance, distance_unit, date, movement_name, d
 
 
 -- CUSTOM RECORDS
-
 INSERT INTO custom_record(id, description, date, value, personal_records_id) VALUES
         (1, 'Vertical jump', '2020-10-10', 0.8, 1),
         (2, 'Drive 100km on bike', '2020-03-03', 100, 1);

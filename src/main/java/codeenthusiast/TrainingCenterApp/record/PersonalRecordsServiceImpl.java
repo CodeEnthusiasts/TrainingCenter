@@ -30,10 +30,7 @@ public class PersonalRecordsServiceImpl implements PersonalRecordsService {
 
     public boolean hasAccess(PersonalRecords personalRecords) {
         UserDetailsImpl userDetailsImpl = getPrincipal();
-        if(personalRecords.getUser().getId().equals(userDetailsImpl.getId()))
-            return true;
-        else
-            return false;
+        return personalRecords.getUser().getId().equals(userDetailsImpl.getId());
     }
 
     private UserDetailsImpl getPrincipal() {

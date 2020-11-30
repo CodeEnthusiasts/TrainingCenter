@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.user.details;
 
+import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
@@ -25,25 +26,27 @@ public class UDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetailsDTO getUserDetailsByUserId(long userId) {
-        return mapToDTO(repository.findByUserId(userId));
+        UserDetails userDetails = getUserDetailsByUserIdFromRepo(userId);
+        if(isNull(userDetails)) {
+            throw new EntityNotFoundException("Resource not available");
+        }
+        return mapToDTO(userDetails);
     }
 
     @Override
     public UserDetailsDTO updateUserDetails(long id, UserDetailsDTO dto) {
         UserDetails userDetails = getUserDetailsByIdFromRepo(id);
-        if(!hasAccess(userDetails)) {
+        if(isNull(userDetails))
+            throw new EntityNotFoundException("Resource not available");
+        if(!hasAccess(userDetails))
             throw new AccessDeniedException("Access denied");
-        }
         updateUserDetailsAttributes(dto, userDetails);
         return mapToDTO(save(userDetails));
     }
 
     private boolean hasAccess(UserDetails userDetails) {
         UserDetailsImpl userDetailsImpl = getPrincipal();
-        if(userDetails.getUser().getId().equals(userDetailsImpl.getId()))
-            return true;
-        else
-            return false;
+        return userDetails.getUser().getId().equals(userDetailsImpl.getId());
     }
 
     private UserDetailsImpl getPrincipal() {
@@ -51,8 +54,16 @@ public class UDetailsServiceImpl implements UserDetailsService {
         return (UserDetailsImpl) authentication.getPrincipal();
     }
 
+    private boolean isNull(Object object) {
+        return object == null;
+    }
+
     private UserDetails getUserDetailsByIdFromRepo(long id) {
         return repository.findById(id);
+    }
+
+    private UserDetails getUserDetailsByUserIdFromRepo(long id) {
+        return repository.findByUserId(id);
     }
 
     private UserDetails save(UserDetails userDetails) {

@@ -94,6 +94,8 @@ public class AuthService {
         validateRequest(signUpRequest);
 
         User user = createNewUserAccount(signUpRequest);
+        user.getPersonalRecords().setUser(user);
+        user.getUserDetails().setUser(user);
 
         assignUserRole(user);
 

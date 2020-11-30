@@ -34,13 +34,13 @@ public class User extends AbstractEntity {
     private Image image;
 
     @JsonIgnore
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade=CascadeType.ALL)
     private UserDetails userDetails;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
     private List<TrainingPlan> trainingPlans = new ArrayList<>();
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade=CascadeType.ALL)
     private PersonalRecords personalRecords;
 
 
@@ -48,6 +48,8 @@ public class User extends AbstractEntity {
         this.password = password;
         this.username = username;
         this.email = email;
+        this.userDetails = new UserDetails();
+        this.personalRecords = new PersonalRecords();
     }
 
     public User(String username, String password, String email, UserDetails userDetails) {

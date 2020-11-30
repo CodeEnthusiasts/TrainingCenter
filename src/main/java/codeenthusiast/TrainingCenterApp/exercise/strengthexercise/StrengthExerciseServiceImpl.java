@@ -68,6 +68,7 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
         return strengthExerciseMapper.mapToDTO(result);
     }
 
+
     private StrengthExerciseDTO save(StrengthExerciseDTO oldExercise) {
         StrengthExercise entity = strengthExerciseMapper.mapToEntity(oldExercise);
 
@@ -91,7 +92,6 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
         }
         oldExercise.setRepetitionUnit(dto.getRepetitionUnit());
         oldExercise.setReps(dto.getReps());
-        oldExercise.setStrengthExerciseDetails(dto.getStrengthExerciseDetails());
         oldExercise.setWeight(dto.getWeight());
         oldExercise.setWeightUnit(dto.getWeightUnit());
         return save(strengthExerciseMapper.mapToDTO(oldExercise));

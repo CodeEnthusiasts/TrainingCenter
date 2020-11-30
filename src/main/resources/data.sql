@@ -106,19 +106,16 @@ UPDATE image SET movement_id = 3 WHERE id = 6;
 
 -- STRENGTH EXERCISES
 INSERT INTO strength_exercise(id, repetition_unit, reps, weight,  weight_unit, movement_id, training_session_id) VALUES
-        (1, 'MOTION', 8, 100,  'KILOGRAMS', 1, 1),
-        (2, 'MOTION', 8, 100,  'KILOGRAMS', 1, 1),
-        (3, 'MOTION', 8, 100,  'KILOGRAMS', 1, 1),
-        (4, 'MOTION', 10, 70,  'KILOGRAMS', 2, 1),
-        (5, 'MOTION', 10, 70,  'KILOGRAMS', 2, 1),
-        (6, 'MOTION', 10, 70,  'KILOGRAMS', 2, 1),
-        (7, 'MOTION', 5, 120,  'KILOGRAMS', 3, 1),
-        (8, 'MOTION', 5, 120,  'KILOGRAMS', 3, 1),
-        (9, 'MOTION', 5, 120,  'KILOGRAMS', 3, 1);
+        (1, 'MOTION', 8, 100,  'KILOGRAMS', 1, 1), (2, 'MOTION', 8, 100,  'KILOGRAMS', 1, 1), (3, 'MOTION', 8, 100,  'KILOGRAMS', 1, 1),
+        (4, 'MOTION', 10, 70,  'KILOGRAMS', 2, 1), (5, 'MOTION', 10, 70,  'KILOGRAMS', 2, 1), (6, 'MOTION', 10, 70,  'KILOGRAMS', 2, 1),
+        (7, 'MOTION', 5, 120,  'KILOGRAMS', 3, 1), (8, 'MOTION', 5, 120,  'KILOGRAMS', 3, 1), (9, 'MOTION', 5, 120,  'KILOGRAMS', 3, 1),
+        (10, 'MOTION', 8, 60,  'KILOGRAMS', 3, 4), (11, 'MOTION', 8, 60,  'KILOGRAMS', 3, 4), (12, 'MOTION', 8, 60,  'KILOGRAMS', 4, 4),
+        (13, 'MOTION', 3, 75,  'KILOGRAMS', 3, 5), (14, 'MOTION', 4, 70,  'KILOGRAMS', 3, 5), (15, 'MOTION', 5, 65,  'KILOGRAMS', 4, 5);
 
 -- STRENGTH EXERCISES FOR TRAINING SESSIONS
 INSERT INTO training_session_strength_exercises(training_session_id, strength_exercises_id) VALUES
-          (1, 1), (1, 2), (1, 3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9);
+          (1, 1), (1, 2), (1, 3), (1,4), (1,5), (1,6), (1,7), (1,8), (1,9),
+          (4,10),(4,11),(4,12),(5,13),(5,14),(5,15);
 
 --ENDURANCE EXERCISES
 INSERT INTO endurance_exercise(id, distance, distance_unit, heart_rate, vo2max_percentage, duration, time_unit, movement_id, training_session_id) VALUES

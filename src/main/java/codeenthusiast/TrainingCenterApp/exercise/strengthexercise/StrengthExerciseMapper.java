@@ -1,13 +1,12 @@
 package codeenthusiast.TrainingCenterApp.exercise.strengthexercise;
 
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExerciseDTO;
+import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.details.StrengthExerciseDetailsMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper(componentModel = "spring", uses = {StrengthExerciseDetailsMapper.class})
 public interface StrengthExerciseMapper {
 
     StrengthExerciseDTO mapToDTO(StrengthExercise strengthExercise);

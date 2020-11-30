@@ -2,6 +2,7 @@ package codeenthusiast.TrainingCenterApp.exercise.strengthexercise.details;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -32,6 +33,7 @@ public class StrengthExerciseDetails extends AbstractEntity {
 
     @OneToOne
     @JoinColumn(name = "strength_exercise_id")
+    @JsonIgnore
     private StrengthExercise strengthExercise;
 
 }

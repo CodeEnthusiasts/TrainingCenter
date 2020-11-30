@@ -26,10 +26,10 @@ public class TrainingSession extends AbstractEntity {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true, mappedBy = "trainingSession")
     private List<StrengthExercise> strengthExercises;
 
-    @OneToMany
+    @OneToMany(orphanRemoval = true, mappedBy = "trainingSession")
     private List<EnduranceExercise> enduranceExercises;
 
     @Enumerated(EnumType.STRING)

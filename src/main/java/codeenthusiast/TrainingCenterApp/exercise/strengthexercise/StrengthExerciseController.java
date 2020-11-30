@@ -21,7 +21,7 @@ public class StrengthExerciseController {
         return strengthExerciseService.findById(id);
     }
 
-    @GetMapping(value = "training-session/{id}")
+    @GetMapping(value = "/training-session/{id}")
     public List<StrengthExerciseDTO> getAllByTrainingPlanId(@PathVariable("id") Long id) {
         return strengthExerciseService.getAllByTrainingSessionId(id);
     }

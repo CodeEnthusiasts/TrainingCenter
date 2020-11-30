@@ -66,14 +66,14 @@ public class MuscleServiceImpl implements MuscleService {
     public MuscleDTO create(MuscleDTO dto) {
         checkExistenceByName(dto.getName());
         Muscle muscle = new Muscle(dto);
-        return muscleMapper.mapToDTO(muscle);
+        return save(muscleMapper.mapToDTO(muscle));
     }
 
     @Override
     public MuscleDTO save(MuscleDTO dto) {
         Muscle muscle = muscleMapper.mapToEntity(dto);
-        muscleRepository.save(muscle);
-        return dto;
+
+        return muscleMapper.mapToDTO(muscleRepository.save(muscle));
     }
 
     @Override

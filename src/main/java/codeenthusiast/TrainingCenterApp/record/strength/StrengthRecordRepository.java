@@ -17,7 +17,7 @@ public interface StrengthRecordRepository extends AbstractRepository<StrengthRec
     List<StrengthRecord> findAllByPersonalRecordsId(Long id);
 
     @Query(nativeQuery = true, value = "SELECT * FROM strength_record WHERE personal_records_id = ? " +
-            "ORDER BY set_date DESC LIMIT 3")
+            "ORDER BY date DESC LIMIT 3")
     List<StrengthRecord> findThreeLatestByPersonalRecordsId(Long id);
 
 }

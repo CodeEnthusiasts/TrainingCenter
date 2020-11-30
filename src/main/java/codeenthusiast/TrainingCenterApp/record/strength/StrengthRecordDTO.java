@@ -30,8 +30,8 @@ public class StrengthRecordDTO extends AbstractDTO {
     private RepetitionUnit repetitionUnit;
 
     @NotNull
-    private short repetition;
+    private short reps;
 
-    private LocalDate setDate;
+    private LocalDate date;
 
 }

@@ -4,6 +4,7 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
 import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
 import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.details.StrengthExerciseDetails;
+import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.details.StrengthExerciseDetailsDTO;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,5 +24,4 @@ public class StrengthExerciseDTO extends AbstractDTO {
 
     private double weight;
 
-    private StrengthExerciseDetails strengthExerciseDetails;
 }

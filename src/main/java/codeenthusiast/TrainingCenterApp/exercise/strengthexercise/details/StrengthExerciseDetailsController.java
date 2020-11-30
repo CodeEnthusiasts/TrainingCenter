@@ -28,7 +28,7 @@ public class StrengthExerciseDetailsController {
         return ResponseEntity.ok(service.createStrengthExerciseDetails(id, dto));
     }
 
-    @PostMapping(value = "/strength-exercise-details/{strength_exercise_details_id}")
+    @PatchMapping(value = "/strength-exercise-details/{strength_exercise_details_id}")
     public ResponseEntity<StrengthExerciseDetailsDTO> updateStrengthExerciseDetails(
             @PathVariable("strength_exercise_details_id") Long id,
             @RequestBody @Valid StrengthExerciseDetailsDTO dto) {

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface PersonalRecordsRepository extends AbstractRepository<PersonalRecords> {
 
+    PersonalRecords findByUserId(long id);
+
     PersonalRecords findById(long id);
 
 }

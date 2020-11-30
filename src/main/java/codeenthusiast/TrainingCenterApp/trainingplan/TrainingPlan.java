@@ -4,7 +4,7 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.Difficulty;
 import codeenthusiast.TrainingCenterApp.priority.Priority;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
-import codeenthusiast.TrainingCenterApp.user.role.User;
+import codeenthusiast.TrainingCenterApp.user.major.User;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,7 +21,7 @@ public class TrainingPlan extends AbstractEntity {
 
     private String name;
 
-    @OneToMany(mappedBy = "trainingPlan")
+    @OneToMany(mappedBy = "trainingPlan", orphanRemoval = true)
     private List<TrainingSession> trainingSessions;
 
     private short numberOfExecutedTrainings;

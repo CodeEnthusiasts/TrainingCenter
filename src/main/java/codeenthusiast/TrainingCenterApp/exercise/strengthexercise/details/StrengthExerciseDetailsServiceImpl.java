@@ -1,6 +1,11 @@
 package codeenthusiast.TrainingCenterApp.exercise.strengthexercise.details;
 
+import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExerciseServiceImpl;
+import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,21 +27,32 @@ public class StrengthExerciseDetailsServiceImpl implements StrengthExerciseDetai
 
     @Override
     public StrengthExerciseDetailsDTO getStrengthExerciseDetailsById(Long id) {
-        return mapToDTO(getStrengthExerciseDetailsByIdFromRepo(id));
+        StrengthExerciseDetails details = getStrengthExerciseDetailsByIdFromRepo(id);
+        if(!hasAccess(details)){
+            throw new AccessDeniedException("Access denied");
+        }
+        return mapper.mapToDTO(details);
     }
 
     @Override
     public StrengthExerciseDetailsDTO createStrengthExerciseDetails(Long id, StrengthExerciseDetailsDTO strengthExerciseDetailsDTO) {
-        StrengthExerciseDetails strengthExerciseDetails = mapToEntity(strengthExerciseDetailsDTO);
-        strengthExerciseDetails.setStrengthExercise(strengthExerciseService.getStrengthExerciseById(id));
-        return mapToDTO(save(strengthExerciseDetails));
+        StrengthExercise strengthExercise = strengthExerciseService.getStrengthExerciseById(id);
+        if (!strengthExerciseService.hasAccess(strengthExercise)) {
+            throw new AccessDeniedException("Access denied");
+        }
+        StrengthExerciseDetails strengthExerciseDetails = mapper.mapToEntity(strengthExerciseDetailsDTO);
+        strengthExerciseDetails.setStrengthExercise(strengthExercise);
+        return mapper.mapToDTO(save(strengthExerciseDetails));
     }
 
     @Override
     public StrengthExerciseDetailsDTO updateStrengthExerciseDetails(Long id, StrengthExerciseDetailsDTO strengthExerciseDetailsDTO) {
         StrengthExerciseDetails strengthExerciseDetails = getStrengthExerciseDetailsByIdFromRepo(id);
+        if(!hasAccess(strengthExerciseDetails)){
+            throw new AccessDeniedException("Access denied");
+        }
         updateStrengthExerciseDetails(strengthExerciseDetailsDTO, strengthExerciseDetails);
-        return mapToDTO(save(strengthExerciseDetails));
+        return mapper.mapToDTO(save(strengthExerciseDetails));
     }
 
     private StrengthExerciseDetails save(StrengthExerciseDetails strengthExerciseDetails) {
@@ -55,12 +71,15 @@ public class StrengthExerciseDetailsServiceImpl implements StrengthExerciseDetai
         return repository.findById(id);
     }
 
-    private StrengthExerciseDetails mapToEntity(StrengthExerciseDetailsDTO strengthExerciseDetailsDTO) {
-        return mapper.mapToEntity(strengthExerciseDetailsDTO);
+    private boolean hasAccess(StrengthExerciseDetails StrengthExerciseDetails) {
+        UserDetailsImpl userDetailsImpl = getPrincipal();
+        return StrengthExerciseDetails.getStrengthExercise().getTrainingSession()
+                .getTrainingPlan().getUser().getId().equals(userDetailsImpl.getId());
     }
 
-    private StrengthExerciseDetailsDTO mapToDTO(StrengthExerciseDetails strengthExerciseDetails) {
-        return mapper.mapToDTO(strengthExerciseDetails);
+    private UserDetailsImpl getPrincipal() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (UserDetailsImpl) authentication.getPrincipal();
     }
 
 }

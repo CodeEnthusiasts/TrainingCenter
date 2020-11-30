@@ -78,10 +78,10 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
     @Override
     public List<StrengthExerciseDTO> getAllByTrainingSessionId(Long trainingSessionId) {
         TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
-        if(trainingSessionService.hasAccess(trainingSession)){
+        if(!trainingSessionService.hasAccess(trainingSession)){
             throw new AccessDeniedException("Access denied");
         }
-        return strengthExerciseMapper.mapToDTOs(trainingSession.getStrengthExercises());
+        return strengthExerciseMapper.mapToDTOs(strengthExerciseRepository.findAllByTrainingSessionId(trainingSessionId));
     }
 
     @Override
@@ -103,7 +103,7 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
     @Override
     public StrengthExerciseDTO create(StrengthExerciseDTO dto, Long trainingSessionId, Long movementId) {
         TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
-        if(trainingSessionService.hasAccess(trainingSession)){
+        if(!trainingSessionService.hasAccess(trainingSession)){
             throw new AccessDeniedException("Access denied");
         }
         StrengthExercise strengthExercise = new StrengthExercise(dto);
@@ -118,7 +118,7 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
         strengthExerciseRepository.deleteById(id);
     }
 
-    private boolean hasAccess(StrengthExercise strengthExercise) {
+    public boolean hasAccess(StrengthExercise strengthExercise) {
         UserDetailsImpl userDetailsImpl = getPrincipal();
         return strengthExercise.getTrainingSession().getTrainingPlan().getUser().getId().equals(userDetailsImpl.getId());
     }

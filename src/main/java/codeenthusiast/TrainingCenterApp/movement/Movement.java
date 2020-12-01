@@ -28,7 +28,7 @@ public class Movement extends AbstractEntity {
     @OneToMany(mappedBy = "movement")
     private List<Image> images;
 
-    @OneToMany
+    @OneToMany(mappedBy = "movement")
     private List<KeyTechniqueElement> keyTechniqueElements;
 
     public Movement(String name, List<Muscle> musclesInvolved) {

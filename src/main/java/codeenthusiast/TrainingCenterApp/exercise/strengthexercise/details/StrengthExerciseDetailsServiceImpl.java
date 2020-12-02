@@ -28,7 +28,7 @@ public class StrengthExerciseDetailsServiceImpl implements StrengthExerciseDetai
     @Override
     public StrengthExerciseDetailsDTO getStrengthExerciseDetailsById(Long id) {
         StrengthExerciseDetails details = getStrengthExerciseDetailsByIdFromRepo(id);
-        if(!hasAccess(details)){
+        if (!hasAccess(details)) {
             throw new AccessDeniedException("Access denied");
         }
         return mapper.mapToDTO(details);
@@ -48,7 +48,7 @@ public class StrengthExerciseDetailsServiceImpl implements StrengthExerciseDetai
     @Override
     public StrengthExerciseDetailsDTO updateStrengthExerciseDetails(Long id, StrengthExerciseDetailsDTO strengthExerciseDetailsDTO) {
         StrengthExerciseDetails strengthExerciseDetails = getStrengthExerciseDetailsByIdFromRepo(id);
-        if(!hasAccess(strengthExerciseDetails)){
+        if (!hasAccess(strengthExerciseDetails)) {
             throw new AccessDeniedException("Access denied");
         }
         updateStrengthExerciseDetails(strengthExerciseDetailsDTO, strengthExerciseDetails);

@@ -1,37 +1,34 @@
 package codeenthusiast.TrainingCenterApp.movement;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.image.ImageDTO;
-import org.springframework.stereotype.Service;
+import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class MovementServiceImpl implements MovementService {
 
     private final MovementRepository movementRepository;
 
+    private final ImageServiceImpl imageService;
+
     private final MovementMapper movementMapper;
 
-    public MovementServiceImpl(MovementRepository movementRepository, MovementMapper movementMapper) {
+    public MovementServiceImpl(MovementRepository movementRepository, ImageServiceImpl imageService, MovementMapper movementMapper) {
         this.movementRepository = movementRepository;
+        this.imageService = imageService;
         this.movementMapper = movementMapper;
     }
 
-    @Override
-    public void deleteById(Long id) {
-        checkExistence(id);
-        movementRepository.deleteById(id);
-    }
 
     @Override
-    public void checkExistence(Long id) {
+    public boolean isExistsById(Long id) {
         if (!movementRepository.existsById(id)) {
             throw new EntityNotFoundException(id);
         }
+        return true;
     }
 
     @Override
@@ -42,60 +39,57 @@ public class MovementServiceImpl implements MovementService {
         }
     }
 
-    @Override
-    public MovementDTO findById(Long id) {
-        Movement Movement = movementRepository.findById(id).orElseThrow(
+    public Movement findEntityById(Long id) {
+        return movementRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(id));
-        return movementMapper.mapToDTO(Movement);
     }
 
     @Override
-    public MovementDTO update(Long id, MovementDTO dto) {
-        checkExistence(id);
-        dto.setId(id);
-        return save(dto);
+    public MovementDTO findById(Long id) {
+        Movement movement = findEntityById(id);
+        return movementMapper.mapToDTO(movement);
     }
 
     @Override
     public MovementDTO create(MovementDTO dto) {
         checkExistenceByName(dto.getName());
-        return save(dto);
-    }
-
-    @Override
-    public MovementDTO save(MovementDTO dto) {
         Movement movement = movementMapper.mapToEntity(dto);
-
-        return movementMapper.mapToDTO(movementRepository.save(movement));
+        return save(movement);
     }
 
     @Override
-    public MovementDTO addImage(Long id, ImageDTO image) {
-        MovementDTO Movement = findById(id);
-        Movement.getImages().add(image);
-        return save(Movement);
+    public MovementDTO update(Long id, MovementDTO dto) {
+        Movement movement = findEntityById(id);
+        movement.setName(dto.getName());
+        return save(movement);
     }
 
     @Override
-    public List<Long> removeAllImages(Long id) {
-        MovementDTO Movement = findById(id);
-        List<Long> idList = getIdOfDeletedImages(Movement.getImages());
-        Movement.getImages().clear();
-        save(Movement);
+    public MovementDTO save(Movement movement) {
+        Movement savedMovement = movementRepository.save(movement);
+        return movementMapper.mapToDTO(savedMovement);
+    }
 
-        return idList;
+
+    @Override
+    public void deleteById(Long id) {
+        isExistsById(id);
+        movementRepository.deleteById(id);
     }
 
     @Override
-    public List<Long> getIdOfDeletedImages(List<ImageDTO> images) {
-        return images.stream()
-                .map(AbstractDTO::getId)
-                .collect(Collectors.toList());
+    public MovementDTO addImage(Long id, MultipartFile file) {
+        Movement movement = findEntityById(id);
+        imageService.createNewMovementImage(file, movement);
+        return movementMapper.mapToDTO(movement);
     }
 
-    public Movement findEntityById(Long movementId) {
-        return movementRepository.findById(movementId).orElseThrow(
-                () -> new EntityNotFoundException(movementId));
+    @Override
+    public MovementDTO removeAllImages(Long id) {
+        imageService.deleteImagesByMovementId(id);
+        return findById(id);
+
     }
+
 
 }

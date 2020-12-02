@@ -1,52 +1,37 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.image.ImageDTO;
+import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class MuscleServiceImpl implements MuscleService {
 
     private final MuscleRepository muscleRepository;
 
+    private final ImageServiceImpl imageService;
+
     private final MuscleMapper muscleMapper;
 
-    public MuscleServiceImpl(MuscleRepository muscleRepository, MuscleMapper muscleMapper) {
+    public MuscleServiceImpl(MuscleRepository muscleRepository, ImageServiceImpl imageService, MuscleMapper muscleMapper) {
         this.muscleRepository = muscleRepository;
+        this.imageService = imageService;
         this.muscleMapper = muscleMapper;
     }
 
     @Override
-    public void deleteById(Long id) {
-        checkExistence(id);
-        muscleRepository.deleteById(id);
-    }
-
-    @Override
-    public void checkExistence(Long id) {
-        if (!muscleRepository.existsById(id)) {
-            throw new EntityNotFoundException(id);
-        }
-    }
-
-    @Override
-    public void checkExistenceByName(String name) {
-
-        if (muscleRepository.existsByName(name)) {
-            throw new EntityAlreadyExistsException(name);
-        }
-    }
-
-    @Override
     public MuscleDTO findById(Long id) {
-        Muscle muscle = muscleRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(id));
+        Muscle muscle = findEntityById(id);
         return muscleMapper.mapToDTO(muscle);
+    }
+
+    private Muscle findEntityById(Long id) {
+        return muscleRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(id));
     }
 
     @Override
@@ -57,7 +42,7 @@ public class MuscleServiceImpl implements MuscleService {
 
     @Override
     public MuscleDTO update(Long id, MuscleDTO dto) {
-        checkExistence(id);
+        this.isExistsById(id);
         dto.setId(id);
         return save(dto);
     }
@@ -77,27 +62,40 @@ public class MuscleServiceImpl implements MuscleService {
     }
 
     @Override
-    public MuscleDTO addImage(Long id, ImageDTO image) {
-        MuscleDTO muscle = findById(id);
-        muscle.getImages().add(image);
-        return save(muscle);
+    public void deleteById(Long id) {
+        if (isExistsById(id)) {
+            muscleRepository.deleteById(id);
+        }
     }
 
     @Override
-    public List<Long> removeAllImages(Long id) {
-        MuscleDTO muscle = findById(id);
-        List<Long> idList = getIdOfDeletedImages(muscle.getImages());
-        muscle.getImages().clear();
-        save(muscle);
-
-        return idList;
+    public boolean isExistsById(Long id) {
+        if (!muscleRepository.existsById(id)) {
+            throw new EntityNotFoundException(id);
+        }
+        return true;
     }
 
     @Override
-    public List<Long> getIdOfDeletedImages(List<ImageDTO> images) {
-        return images.stream()
-                .map(AbstractDTO::getId)
-                .collect(Collectors.toList());
+    public void checkExistenceByName(String name) {
+
+        if (muscleRepository.existsByName(name)) {
+            throw new EntityAlreadyExistsException(name);
+        }
+    }
+
+    @Override
+    public MuscleDTO addImage(Long id, MultipartFile file) {
+        Muscle muscle = findEntityById(id);
+        imageService.createNewMuscleImage(file, muscle);
+        return muscleMapper.mapToDTO(muscle);
+    }
+
+    @Override
+    public MuscleDTO removeAllImages(Long id) {
+        imageService.deleteImagesByMuscleId(id);
+        return findById(id);
+
     }
 
 }

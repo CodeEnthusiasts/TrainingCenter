@@ -5,36 +5,45 @@ import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.movement.MovementService;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class KeyTechniqueElementServiceImpl implements KeyTechniqueElementService {
 
-    private final KeyTechniqueElementsRepository repository;
+    private final KeyTechniqueElementsRepository keyTechniqueElementsRepository;
     private final MovementService movementService;
-    private final KeyTechniqueElementMapper mapper;
+    private final KeyTechniqueElementMapper keyTechniqueElementMapper;
 
     public KeyTechniqueElementServiceImpl(KeyTechniqueElementsRepository repository,
                                           MovementService movementService, KeyTechniqueElementMapper mapper) {
-        this.repository = repository;
+        this.keyTechniqueElementsRepository = repository;
         this.movementService = movementService;
-        this.mapper = mapper;
+        this.keyTechniqueElementMapper = mapper;
     }
 
     @Override
-    public void deleteById(Long id) {
-        repository.deleteById(id);
+    public KeyTechniqueElement findEntityById(Long id){
+        return keyTechniqueElementsRepository.findById(id).orElseThrow(
+                ()-> new EntityNotFoundException(id));
     }
 
     @Override
     public KeyTechniqueElementDTO findById(Long id) {
-        KeyTechniqueElement kte = repository.findById(id).orElseThrow(
-                ()-> new EntityNotFoundException(id));
-        return mapper.mapToDTO(kte);
+        KeyTechniqueElement kte = findEntityById(id);
+        return keyTechniqueElementMapper.mapToDTO(kte);
+    }
+
+    public List<KeyTechniqueElementDTO> findAllByMovementId(Long movementId) {
+        List<KeyTechniqueElement> keyTechniqueElementList =
+                keyTechniqueElementsRepository.findAllByMovementId(movementId);
+        return keyTechniqueElementMapper.mapToEntities(keyTechniqueElementList);
     }
 
     @Override
     public KeyTechniqueElementDTO update(Long id, KeyTechniqueElementDTO dto) {
-        dto.setId(id);
-        return save(dto);
+        KeyTechniqueElement keyTechniqueElement = findEntityById(id);
+        keyTechniqueElement.setContent(dto.getContent());
+        return save(keyTechniqueElement);
     }
 
     @Override
@@ -42,14 +51,18 @@ public class KeyTechniqueElementServiceImpl implements KeyTechniqueElementServic
        KeyTechniqueElement kte = new KeyTechniqueElement(dto);
        Movement movement = movementService.findEntityById(id);
        kte.setMovement(movement);
-       return save(mapper.mapToDTO(kte));
+       return save(kte);
     }
 
     @Override
-    public KeyTechniqueElementDTO save(KeyTechniqueElementDTO dto) {
-        KeyTechniqueElement kte = mapper.mapToEntity(dto);
-        repository.save(kte);
-        return dto;
+    public KeyTechniqueElementDTO save(KeyTechniqueElement kte) {
+        KeyTechniqueElement savedElement = keyTechniqueElementsRepository.save(kte);
+        return keyTechniqueElementMapper.mapToDTO(savedElement);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        keyTechniqueElementsRepository.deleteById(id);
     }
 
 }

@@ -10,7 +10,7 @@ public interface ImageService {
 
     String uploadImageOnHosting(MultipartFile file);
 
-    ImageDTO save(ImageDTO dto);
+    ImageDTO save(Image dto);
 
     void deleteImagesById(List<Long> images);
 }

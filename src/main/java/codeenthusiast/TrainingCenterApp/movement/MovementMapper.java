@@ -1,8 +1,6 @@
 package codeenthusiast.TrainingCenterApp.movement;
 
 import codeenthusiast.TrainingCenterApp.image.ImageMapper;
-import codeenthusiast.TrainingCenterApp.movement.Movement;
-import codeenthusiast.TrainingCenterApp.movement.MovementDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

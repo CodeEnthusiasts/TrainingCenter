@@ -83,13 +83,13 @@ UPDATE image SET muscle_id = 2 WHERE id = 8;
 UPDATE image SET muscle_id = 3 WHERE id = 9;
 
 -- KEY TECHNIQUE ELEMENTS
-INSERT INTO key_technique_element(id, content) VALUES
-        (1, 'Keep chest up'),
-        (2, 'Plain foot, weight on the middle'),
-        (3, 'Pull shoulder blades together'),
-        (4, 'Elbow under the bar'),
-        (5, 'Kepp air pressure in diapragma'),
-        (6, 'Push legs to the floow');
+INSERT INTO key_technique_element(id, content, movement_id) VALUES
+        (1, 'Keep chest up', 1),
+        (2, 'Plain foot, weight on the middle', 1),
+        (3, 'Pull shoulder blades together', 2),
+        (4, 'Elbow under the bar', 2),
+        (5, 'Kepp air pressure in diapragma', 3),
+        (6, 'Push legs to the floow', 3);
 
 -- ADD MUSCLE_ID's TO IMAGES
 UPDATE image SET movement_id = 1 WHERE id = 4;

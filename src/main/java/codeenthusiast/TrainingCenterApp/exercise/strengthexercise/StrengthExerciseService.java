@@ -16,5 +16,5 @@ public interface StrengthExerciseService {
 
     void deleteById(Long id);
 
-
+    boolean hasAccess(StrengthExercise strengthExercise);
 }

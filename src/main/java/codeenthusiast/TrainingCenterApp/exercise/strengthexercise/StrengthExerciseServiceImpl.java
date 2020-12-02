@@ -37,18 +37,14 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
 
     @Override
     public StrengthExerciseDTO findById(Long id) {
-        StrengthExercise strengthExercise = strengthExerciseRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(id));
-        if(!hasAccess(strengthExercise)){
-            throw new AccessDeniedException("Access denied");
-        }
+        StrengthExercise strengthExercise = findByEntityId(id);
         return strengthExerciseMapper.mapToDTO(strengthExercise);
     }
 
     private StrengthExercise findByEntityId(Long id) {
         StrengthExercise strengthExercise = strengthExerciseRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(id));
-        if(!hasAccess(strengthExercise)){
+        if (!hasAccess(strengthExercise)) {
             throw new AccessDeniedException("Access denied");
         }
         return strengthExercise;
@@ -69,55 +65,64 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
     }
 
 
-    private StrengthExerciseDTO save(StrengthExerciseDTO oldExercise) {
-        StrengthExercise entity = strengthExerciseMapper.mapToEntity(oldExercise);
-
-        return strengthExerciseMapper.mapToDTO(strengthExerciseRepository.save(entity));
+    private StrengthExerciseDTO save(StrengthExercise oldExercise) {
+        StrengthExercise strengthExercise = strengthExerciseRepository.save(oldExercise);
+        return strengthExerciseMapper.mapToDTO(strengthExercise);
     }
 
     @Override
     public List<StrengthExerciseDTO> getAllByTrainingSessionId(Long trainingSessionId) {
         TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
-        if(!trainingSessionService.hasAccess(trainingSession)){
+
+        if (!trainingSessionService.hasAccess(trainingSession)) {
             throw new AccessDeniedException("Access denied");
         }
-        return strengthExerciseMapper.mapToDTOs(strengthExerciseRepository.findAllByTrainingSessionId(trainingSessionId));
+
+        List<StrengthExercise> strengthExercises = strengthExerciseRepository.findAllByTrainingSessionId(trainingSessionId);
+
+        return strengthExerciseMapper.mapToDTOs(strengthExercises);
     }
 
     @Override
     public StrengthExerciseDTO update(Long id, StrengthExerciseDTO dto) {
         StrengthExercise oldExercise = findByEntityId(id);
-        if(!hasAccess(oldExercise)){
+        if (!hasAccess(oldExercise)) {
             throw new AccessDeniedException("Access denied");
         }
+
+        updateData(dto, oldExercise);
+
+        return save(oldExercise);
+    }
+
+    public void updateData(StrengthExerciseDTO dto, StrengthExercise oldExercise) {
         oldExercise.setRepetitionUnit(dto.getRepetitionUnit());
         oldExercise.setReps(dto.getReps());
         oldExercise.setWeight(dto.getWeight());
         oldExercise.setWeightUnit(dto.getWeightUnit());
-        return save(strengthExerciseMapper.mapToDTO(oldExercise));
     }
-
-
 
 
     @Override
     public StrengthExerciseDTO create(StrengthExerciseDTO dto, Long trainingSessionId, Long movementId) {
         TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
-        if(!trainingSessionService.hasAccess(trainingSession)){
+        if (!trainingSessionService.hasAccess(trainingSession)) {
             throw new AccessDeniedException("Access denied");
         }
+
         StrengthExercise strengthExercise = new StrengthExercise(dto);
-        save(strengthExercise, trainingSessionId, movementId);
-        return strengthExerciseMapper.mapToDTO(strengthExercise);
+
+        return save(strengthExercise, trainingSessionId, movementId);
     }
 
 
     @Override
     public void deleteById(Long id) {
-        findById(id);
+        findByEntityId(id);
         strengthExerciseRepository.deleteById(id);
     }
 
+    @Override
     public boolean hasAccess(StrengthExercise strengthExercise) {
         UserDetailsImpl userDetailsImpl = getPrincipal();
         return strengthExercise.getTrainingSession().getTrainingPlan().getUser().getId().equals(userDetailsImpl.getId());

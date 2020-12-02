@@ -2,17 +2,22 @@ package codeenthusiast.TrainingCenterApp.user.major;
 
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.image.ImageDTO;
+import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final ImageServiceImpl imageService;
+    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository) {
+
+    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository, ImageServiceImpl imageService) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
+        this.imageService = imageService;
     }
 
     public UserDTO findById(Long id) {
@@ -49,17 +54,15 @@ public class UserServiceImpl implements UserService {
         return userRepository.existsByEmailAndPassword(email, password);
     }
 
-    public UserDTO addImage(Long id, ImageDTO image) {
-        UserDTO user = findById(id);
-        user.setImageUrl(image.getFileUrl());
-        return save(user);
+    public UserDTO addImage(Long id, MultipartFile file) {
+        User user = findEntityById(id);
+        imageService.createNewUserImage(user, file);
+        return userMapper.mapToDTO(user);
     }
 
     @Override
     public void removeImage(Long id) {
-        UserDTO user = findById(id);
-        user.setImageUrl(null);
-        save(user);
+       imageService.deleteImagesByUserId(id);
     }
 
 }

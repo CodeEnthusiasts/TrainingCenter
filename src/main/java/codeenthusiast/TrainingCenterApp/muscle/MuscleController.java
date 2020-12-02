@@ -49,15 +49,13 @@ public class MuscleController {
     @PostMapping("{id}/image")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MODERATOR')")
     public ResponseEntity<MuscleDTO> addImage(@PathVariable("id") Long id, @RequestParam ("file") MultipartFile file) {
-        ImageDTO image = imageServiceImpl.createNewImage(file);
-        return ResponseEntity.ok(muscleServiceImpl.addImage(id, image));
+        return ResponseEntity.ok(muscleServiceImpl.addImage(id, file));
     }
 
     @DeleteMapping("{id}/image/")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MODERATOR')")
     public ResponseEntity<String> removeAllImages(@PathVariable("id") Long id){
-        List<Long> idImages = muscleServiceImpl.removeAllImages(id);
-        imageServiceImpl.deleteImagesById(idImages);
+        muscleServiceImpl.removeAllImages(id);
         return ResponseEntity.ok("Image was successfully removed.");
     }
 }

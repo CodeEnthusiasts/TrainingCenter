@@ -39,8 +39,7 @@ public class UserController {
 
     @PostMapping("/{user_id}/image")
     public ResponseEntity<UserDTO> addImage(@PathVariable("user_id") Long userId, @RequestParam("file") MultipartFile file) {
-        ImageDTO image = imageServiceImpl.createNewImage(file);
-        return ResponseEntity.ok(userService.addImage(userId, image));
+        return ResponseEntity.ok(userService.addImage(userId, file));
     }
 
     @DeleteMapping("/{user_id}/image")

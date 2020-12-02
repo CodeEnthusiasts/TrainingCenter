@@ -1,9 +1,9 @@
 package codeenthusiast.TrainingCenterApp.movement.keytechniqueelement;
 
-import codeenthusiast.TrainingCenterApp.movement.keytechniqueelement.KeyTechniqueElement;
-import codeenthusiast.TrainingCenterApp.movement.keytechniqueelement.KeyTechniqueElementDTO;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
+
+import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface KeyTechniqueElementMapper {
@@ -13,4 +13,5 @@ public interface KeyTechniqueElementMapper {
     @Mapping(target = "movement", ignore = true)
     KeyTechniqueElement mapToEntity(KeyTechniqueElementDTO dto);
 
+    List<KeyTechniqueElementDTO> mapToEntities(List<KeyTechniqueElement> keyTechniqueElementList);
 }

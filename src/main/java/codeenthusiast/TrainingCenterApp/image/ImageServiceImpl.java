@@ -1,5 +1,9 @@
 package codeenthusiast.TrainingCenterApp.image;
 
+import codeenthusiast.TrainingCenterApp.movement.Movement;
+import codeenthusiast.TrainingCenterApp.movement.MovementDTO;
+import codeenthusiast.TrainingCenterApp.muscle.Muscle;
+import codeenthusiast.TrainingCenterApp.user.major.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,14 +27,13 @@ public class ImageServiceImpl implements ImageService {
     @Override
     public ImageDTO createNewImage(MultipartFile file) {
         String fileUrl = uploadImageOnHosting(file);
-        ImageDTO image = new ImageDTO(fileUrl);
+        Image image = new Image(fileUrl);
         return save(image);
     }
 
-    public ImageDTO save(ImageDTO dto) {
-        Image image = imageMapper.mapToEntity(dto);
-        repository.save(image);
-        return dto;
+    public ImageDTO save(Image image) {
+        Image savedImaged = repository.save(image);
+        return imageMapper.mapToDTO(savedImaged);
     }
 
     @Override
@@ -45,4 +48,33 @@ public class ImageServiceImpl implements ImageService {
     }
 
 
+    public void createNewMovementImage(MultipartFile file, Movement movement) {
+        String fileUrl = uploadImageOnHosting(file);
+        Image image = new Image(fileUrl, movement);
+        save(image);
+    }
+
+    public void deleteImagesByMovementId(Long id) {
+        repository.deleteByMovementId(id);
+    }
+
+    public void createNewMuscleImage(MultipartFile file, Muscle muscle) {
+        String fileUrl = uploadImageOnHosting(file);
+        Image image = new Image(fileUrl, muscle);
+        save(image);
+    }
+
+    public void deleteImagesByMuscleId(Long id){
+        repository.deleteByMuscleId(id);
+    }
+
+    public void createNewUserImage(User user, MultipartFile file) {
+        String fileUrl = uploadImageOnHosting(file);
+        Image image = new Image(fileUrl, user);
+        save(image);
+    }
+
+    public void deleteImagesByUserId(Long id) {
+        repository.deleteByUserId(id);
+    }
 }

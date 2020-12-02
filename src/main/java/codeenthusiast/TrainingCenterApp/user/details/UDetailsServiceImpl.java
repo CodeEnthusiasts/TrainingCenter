@@ -27,7 +27,7 @@ public class UDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetailsDTO getUserDetailsByUserId(long userId) {
         UserDetails userDetails = getUserDetailsByUserIdFromRepo(userId);
-        if(isNull(userDetails)) {
+        if (isNull(userDetails)) {
             throw new EntityNotFoundException("Resource not available");
         }
         return mapToDTO(userDetails);
@@ -36,9 +36,9 @@ public class UDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetailsDTO updateUserDetails(long id, UserDetailsDTO dto) {
         UserDetails userDetails = getUserDetailsByIdFromRepo(id);
-        if(isNull(userDetails))
+        if (isNull(userDetails))
             throw new EntityNotFoundException("Resource not available");
-        if(!hasAccess(userDetails))
+        if (!hasAccess(userDetails))
             throw new AccessDeniedException("Access denied");
         updateUserDetailsAttributes(dto, userDetails);
         return mapToDTO(save(userDetails));

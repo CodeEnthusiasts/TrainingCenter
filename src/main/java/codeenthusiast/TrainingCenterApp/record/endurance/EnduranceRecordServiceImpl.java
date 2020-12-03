@@ -40,9 +40,7 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
 
     @Override
     public EnduranceRecordDTO updateEnduranceRecord(Long enduranceRecordId, EnduranceRecordDTO enduranceRecordDTO) {
-        EnduranceRecord enduranceRecord = getEnduranceRecordByIdFromRepo(enduranceRecordId);
-        if(isNull(enduranceRecord))
-            throw new EntityNotFoundException("Resource not available");
+        EnduranceRecord enduranceRecord = getNotNullEnduranceRecordByIdFromRepo(enduranceRecordId);
         if(!hasAccess(enduranceRecord))
             throw new AccessDeniedException("Access denied");
         updateEnduranceRecord(enduranceRecord, enduranceRecordDTO);
@@ -67,9 +65,7 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
 
     @Override
     public String deleteEnduranceRecord(Long enduranceRecordId) {
-        EnduranceRecord enduranceRecord = getEnduranceRecordByIdFromRepo(enduranceRecordId);
-        if(isNull(enduranceRecord))
-            throw new EntityNotFoundException("Resource not available");
+        EnduranceRecord enduranceRecord = getNotNullEnduranceRecordByIdFromRepo(enduranceRecordId);;
         if(!hasAccess(enduranceRecord))
             throw new AccessDeniedException("Access denied");
         deleteById(enduranceRecordId);
@@ -82,16 +78,12 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
         return enduranceRecord.getPersonalRecords().getUser().getId().equals(userDetailsImpl.getId());
     }
 
-    private boolean isNull(EnduranceRecord enduranceRecord) {
-        return enduranceRecord == null;
-    }
-
     private EnduranceRecord save(EnduranceRecord enduranceRecord) {
         return repository.save(enduranceRecord);
     }
 
-    private EnduranceRecord getEnduranceRecordByIdFromRepo(long id) {
-        return repository.findById(id);
+    private EnduranceRecord getNotNullEnduranceRecordByIdFromRepo(long id) {
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     private void updateEnduranceRecord(EnduranceRecord enduranceRecord, EnduranceRecordDTO enduranceRecordDTO) {

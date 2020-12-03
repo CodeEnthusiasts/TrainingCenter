@@ -6,8 +6,8 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityNotFoundException;
 import javax.persistence.Transient;
 import java.util.List;
 
@@ -26,21 +26,8 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
         this.userService = userService;
     }
 
-    public boolean hasAccess(TrainingPlan trainingPLan) {
-        UserDetailsImpl userDetailsImpl = getPrincipal();
-        if(trainingPLan.getUser().getId().equals(userDetailsImpl.getId()))
-            return true;
-        else
-            return false;
-    }
-
-    private UserDetailsImpl getPrincipal() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (UserDetailsImpl) authentication.getPrincipal();
-    }
-
     public TrainingPlan getTrainingPlanEntityById(Long id) {
-        TrainingPlan trainingPlan =  getTrainingPlanByIdFromRepo(id);
+        TrainingPlan trainingPlan =  getNotNullTrainingPlanByIdFromRepo(id);
         if(!hasAccess(trainingPlan)){
             throw new AccessDeniedException("Access denied");
         }
@@ -79,18 +66,32 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
 
     @Override
     public String deleteTrainingPlan(Long id) {
-        getTrainingPlanEntityById(id);
+        TrainingPlan trainingPlan = getNotNullTrainingPlanByIdFromRepo(id);
+        if(!hasAccess(trainingPlan))
+            throw new AccessDeniedException("Access denied");
         deleteById(id);
         return "Training plan deleted successfully. ";
     }
 
+    public boolean hasAccess(TrainingPlan trainingPLan) {
+        UserDetailsImpl userDetailsImpl = getPrincipal();
+        if(trainingPLan.getUser().getId().equals(userDetailsImpl.getId()))
+            return true;
+        else
+            return false;
+    }
+
+    private UserDetailsImpl getPrincipal() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return (UserDetailsImpl) authentication.getPrincipal();
+    }
 
     private TrainingPlan save(TrainingPlan trainingPlan) {
         return repository.save(trainingPlan);
     }
 
-    private TrainingPlan getTrainingPlanByIdFromRepo(long id) {
-        return repository.findById(id);
+    private TrainingPlan getNotNullTrainingPlanByIdFromRepo(Long id) {
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     private void updateTrainingPlan(TrainingPlan trainingPlan, TrainingPlanDTO trainingPlanDTO) {

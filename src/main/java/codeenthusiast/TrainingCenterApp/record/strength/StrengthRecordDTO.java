@@ -32,6 +32,7 @@ public class StrengthRecordDTO extends AbstractDTO {
     @NotNull
     private short reps;
 
+    @NotNull
     private LocalDate date;
 
 }

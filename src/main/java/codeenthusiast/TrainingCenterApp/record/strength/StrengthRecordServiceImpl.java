@@ -45,22 +45,19 @@ public class StrengthRecordServiceImpl implements StrengthRecordService, Securit
 
     @Override
     public List<StrengthRecordDTO> getAllStrengthRecordsByPersonalRecordsId(Long personalRecordsId) {
-        PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsById(personalRecordsId);
-        authorize(personalRecordsService.hasAccess(personalRecords));
+        authorize(personalRecordsService.hasAccess(personalRecordsService.getPersonalRecordsById(personalRecordsId)));
         return mapToDTOs(repository.findAllByPersonalRecordsId(personalRecordsId));
     }
 
     @Override
     public List<StrengthRecordDTO> getThreeLatestStrengthRecordsByPersonalRecordsId(Long personalRecordsId) {
-        PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsById(personalRecordsId);
-        authorize(personalRecordsService.hasAccess(personalRecords));
+        authorize(personalRecordsService.hasAccess(personalRecordsService.getPersonalRecordsById(personalRecordsId)));
         return mapToDTOs(repository.findThreeLatestByPersonalRecordsId(personalRecordsId));
     }
 
     @Override
     public String deleteStrengthRecord(Long strengthRecordId) {
-        StrengthRecord strengthRecord = getNotNullStrengthRecordByIdFromRepo(strengthRecordId);
-        authorize(hasAccess(strengthRecord));
+        authorize(hasAccess(getNotNullStrengthRecordByIdFromRepo(strengthRecordId)));
         deleteById(strengthRecordId);
         return "Record deleted successfully. ";
     }

@@ -1,38 +1,35 @@
 package codeenthusiast.TrainingCenterApp.record.endurance;
 
+import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
 import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class EnduranceRecordServiceImpl implements EnduranceRecordService {
+public class EnduranceRecordServiceImpl implements EnduranceRecordService, SecurityService {
 
     private final EnduranceRecordRepository repository;
 
     private final EnduranceRecordMapper mapper;
 
-    private final PersonalRecordsServiceImpl personalRecordsServiceImpl;
+    private final PersonalRecordsServiceImpl personalRecordsService;
 
     public EnduranceRecordServiceImpl(EnduranceRecordRepository repository,
                                       EnduranceRecordMapper mapper,
-                                      PersonalRecordsServiceImpl personalRecordsServiceImpl) {
+                                      PersonalRecordsServiceImpl personalRecordsService) {
         this.repository = repository;
         this.mapper = mapper;
-        this.personalRecordsServiceImpl = personalRecordsServiceImpl;
+        this.personalRecordsService = personalRecordsService;
     }
 
     @Override
     public EnduranceRecordDTO createEnduranceRecord(Long personalRecordsId, EnduranceRecordDTO enduranceRecordDTO) {
-        PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(!personalRecordsServiceImpl.hasAccess(personalRecords))
-            throw new AccessDeniedException("Access denied");
+        PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsById(personalRecordsId);
+        authorize(personalRecordsService.hasAccess(personalRecords));
         EnduranceRecord enduranceRecord = mapToEntity(enduranceRecordDTO);
         enduranceRecord.setPersonalRecords(personalRecords);
         return mapToDTO(save(enduranceRecord));
@@ -41,40 +38,32 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService {
     @Override
     public EnduranceRecordDTO updateEnduranceRecord(Long enduranceRecordId, EnduranceRecordDTO enduranceRecordDTO) {
         EnduranceRecord enduranceRecord = getNotNullEnduranceRecordByIdFromRepo(enduranceRecordId);
-        if(!hasAccess(enduranceRecord))
-            throw new AccessDeniedException("Access denied");
+        authorize(hasAccess(enduranceRecord));
         updateEnduranceRecord(enduranceRecord, enduranceRecordDTO);
         return mapToDTO(save(enduranceRecord));
     }
 
     @Override
     public List<EnduranceRecordDTO> getAllEnduranceRecordsByPersonalRecordsId(Long personalRecordsId) {
-        PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(!personalRecordsServiceImpl.hasAccess(personalRecords))
-            throw new AccessDeniedException("Access denied");
+        authorize(personalRecordsService.hasAccess(personalRecordsService.getPersonalRecordsById(personalRecordsId)));
         return mapToDTOs(repository.findAllByPersonalRecordsId(personalRecordsId));
     }
 
     @Override
     public List<EnduranceRecordDTO> getThreeLatestEnduranceRecordsByPersonalRecordsId(Long personalRecordsId) {
-        PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(!personalRecordsServiceImpl.hasAccess(personalRecords))
-            throw new AccessDeniedException("Access denied");
+        authorize(personalRecordsService.hasAccess(personalRecordsService.getPersonalRecordsById(personalRecordsId)));
         return mapToDTOs(repository.findThreeLatestByPersonalRecordsId(personalRecordsId));
     }
 
     @Override
     public String deleteEnduranceRecord(Long enduranceRecordId) {
-        EnduranceRecord enduranceRecord = getNotNullEnduranceRecordByIdFromRepo(enduranceRecordId);;
-        if(!hasAccess(enduranceRecord))
-            throw new AccessDeniedException("Access denied");
+        authorize(hasAccess(getNotNullEnduranceRecordByIdFromRepo(enduranceRecordId)));
         deleteById(enduranceRecordId);
         return "Record deleted successfully. ";
     }
 
     private boolean hasAccess(EnduranceRecord enduranceRecord) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
+        UserDetailsImpl userDetailsImpl = getPrincipal();
         return enduranceRecord.getPersonalRecords().getUser().getId().equals(userDetailsImpl.getId());
     }
 

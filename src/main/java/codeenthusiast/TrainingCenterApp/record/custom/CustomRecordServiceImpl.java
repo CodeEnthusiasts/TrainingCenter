@@ -40,9 +40,7 @@ public class CustomRecordServiceImpl implements CustomRecordService {
 
     @Override
     public CustomRecordDTO updateCustomRecord(Long customRecordId, CustomRecordDTO customRecordDTO) {
-        CustomRecord customRecord = getCustomRecordByIdFromRepo(customRecordId);
-        if(isNull(customRecord))
-            throw new EntityNotFoundException("Resource not available");
+        CustomRecord customRecord = getNotNullCustomRecordByIdFromRepo(customRecordId);
         if(!hasAccess(customRecord))
             throw new AccessDeniedException("Access denied");
         updateCustomRecord(customRecord, customRecordDTO);
@@ -67,9 +65,7 @@ public class CustomRecordServiceImpl implements CustomRecordService {
 
     @Override
     public String deleteCustomRecord(Long customRecordId) {
-        CustomRecord customRecord = getCustomRecordByIdFromRepo(customRecordId);
-        if(isNull(customRecord))
-            throw new EntityNotFoundException("Resource not available");
+        CustomRecord customRecord = getNotNullCustomRecordByIdFromRepo(customRecordId);
         if(!hasAccess(customRecord))
             throw new AccessDeniedException("Access denied");
         deleteById(customRecordId);
@@ -82,16 +78,12 @@ public class CustomRecordServiceImpl implements CustomRecordService {
         return customRecord.getPersonalRecords().getUser().getId().equals(userDetailsImpl.getId());
     }
 
-    private boolean isNull(CustomRecord customRecord) {
-        return customRecord == null;
-    }
-
     private CustomRecord save(CustomRecord customRecord) {
         return repository.save(customRecord);
     }
 
-    private CustomRecord getCustomRecordByIdFromRepo(long id) {
-        return repository.findById(id);
+    private CustomRecord getNotNullCustomRecordByIdFromRepo(long id) {
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     private void updateCustomRecord(CustomRecord customRecord, CustomRecordDTO customRecordDTO) {

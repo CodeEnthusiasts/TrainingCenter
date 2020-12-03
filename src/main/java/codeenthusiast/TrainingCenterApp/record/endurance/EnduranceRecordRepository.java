@@ -9,8 +9,6 @@ import java.util.List;
 @Repository
 public interface EnduranceRecordRepository extends AbstractRepository<EnduranceRecord> {
 
-    EnduranceRecord findById(long id);
-
     void deleteById(Long id);
 
     List<EnduranceRecord> findAllByPersonalRecordsId(Long id);

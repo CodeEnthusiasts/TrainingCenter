@@ -3,6 +3,7 @@ package codeenthusiast.TrainingCenterApp.image;
 import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.muscle.Muscle;
 import codeenthusiast.TrainingCenterApp.user.major.User;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -20,51 +21,58 @@ public class ImageServiceImpl implements ImageService {
         this.imageUploader = imageUploader;
     }
 
+    @Override
     public boolean existsByUserId(Long userId) {
         return repository.existsByUserId(userId);
     }
 
+    @Override
     public ImageDTO save(Image image) {
         Image savedImaged = repository.save(image);
         return imageMapper.mapToDTO(savedImaged);
     }
 
+    @Override
     public String uploadImageOnHosting(MultipartFile file) {
         return imageUploader.uploadImage(file);
     }
 
-    public void createNewImage(MultipartFile file, Object object){
+    @Override
+    public void createNewImage(MultipartFile file, Object object) {
         String fileUrl = uploadImageOnHosting(file);
         Class<?> classType = object.getClass();
         Image image = null;
-        if(classType.equals(Movement.class)){
+        if (classType.equals(Movement.class)) {
             image = new Image(fileUrl, (Movement) object);
-        } else if(classType.equals(Muscle.class)){
+        } else if (classType.equals(Muscle.class)) {
             image = new Image(fileUrl, (Muscle) object);
-        } else if(classType.equals(User.class)){
+        } else if (classType.equals(User.class)) {
             image = new Image(fileUrl, (User) object);
         }
         save(image);
     }
 
-    public void replaceUserImage(Image image, MultipartFile file) {
+    @Override
+    public void replaceImage(Image image, MultipartFile file) {
         String fileUrl = uploadImageOnHosting(file);
         image.setFileUrl(fileUrl);
         save(image);
     }
 
+    @Override
     public void deleteImagesByMovementId(Long id) {
         repository.deleteByMovementId(id);
 
     }
 
+    @Override
     public void deleteImagesByMuscleId(Long id) {
         repository.deleteByMuscleId(id);
     }
 
+    @Override
     public void deleteImageByUserId(Long id) {
         repository.deleteByUserId(id);
     }
-
 
 }

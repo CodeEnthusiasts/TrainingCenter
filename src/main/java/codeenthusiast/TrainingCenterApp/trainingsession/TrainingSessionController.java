@@ -39,7 +39,7 @@ public class TrainingSessionController {
     }
 
     @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable("id") Long id) throws Exception {
+    public void delete(@PathVariable("id") Long id) {
         trainingSessionService.deleteById(id);
     }
 

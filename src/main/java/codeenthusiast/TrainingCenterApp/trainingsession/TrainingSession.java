@@ -2,7 +2,6 @@ package codeenthusiast.TrainingCenterApp.trainingsession;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.Difficulty;
-import codeenthusiast.TrainingCenterApp.exercise.Exercise;
 import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExercise;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
@@ -52,7 +51,7 @@ public class TrainingSession extends AbstractEntity {
     @JoinColumn(name = "training_plan_id")
     private TrainingPlan trainingPlan;
 
-    public TrainingSession(TrainingSessionDTO trainingSessionDTO){
+    public TrainingSession(TrainingSessionDTO trainingSessionDTO) {
         this.date = trainingSessionDTO.getDate();
         this.dayOfWeek = trainingSessionDTO.getDayOfWeek();
         this.difficulty = trainingSessionDTO.getDifficulty();

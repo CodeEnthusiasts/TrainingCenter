@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
             imageService.createNewImage(file, user);
         } else{
             Image image = user.getImage();
-            imageService.replaceUserImage(image, file);
+            imageService.replaceImage(image, file);
         }
 
         return "Image was successfully added";

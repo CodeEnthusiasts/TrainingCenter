@@ -7,5 +7,6 @@ import java.util.List;
 
 @Repository
 public interface TrainingSessionRepository extends AbstractRepository<TrainingSession> {
+
     List<TrainingSession> findAllByTrainingPlanId(Long id);
 }

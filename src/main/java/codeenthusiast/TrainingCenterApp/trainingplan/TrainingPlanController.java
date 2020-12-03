@@ -29,13 +29,13 @@ public class TrainingPlanController {
 
     @PostMapping(value = "/users/{user_id}/training-plans")
     public ResponseEntity<TrainingPlanDTO> createTrainingPlan(@PathVariable("user_id") Long id,
-                                              @RequestBody @Valid TrainingPlanDTO dto) {
+                                                              @RequestBody @Valid TrainingPlanDTO dto) {
         return ResponseEntity.ok(trainingPlanService.createTrainingPlan(id, dto));
     }
 
     @PatchMapping(value = "/training-plans/{training_plan_id}")
     public ResponseEntity<TrainingPlanDTO> updateTrainingPlan(@PathVariable("training_plan_id") Long id,
-                                              @RequestBody @Valid TrainingPlanDTO dto) {
+                                                              @RequestBody @Valid TrainingPlanDTO dto) {
         return ResponseEntity.ok(trainingPlanService.updateTrainingPlan(id, dto));
     }
 

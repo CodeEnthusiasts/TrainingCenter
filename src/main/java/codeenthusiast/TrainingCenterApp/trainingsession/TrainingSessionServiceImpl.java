@@ -1,18 +1,16 @@
 package codeenthusiast.TrainingCenterApp.trainingsession;
 
+import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanServiceImpl;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TrainingSessionServiceImpl implements TrainingSessionService {
+public class TrainingSessionServiceImpl implements TrainingSessionService, SecurityService {
 
     private final TrainingSessionRepository trainingSessionRepository;
 
@@ -30,9 +28,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
     public TrainingSession findEntityById(Long trainingPlanId) {
         TrainingSession trainingSession = trainingSessionRepository.findById(trainingPlanId).orElseThrow(
                 () -> new EntityNotFoundException(trainingPlanId));
-        if (!hasAccess(trainingSession)) {
-            throw new AccessDeniedException("Access Denied");
-        }
+        authorize(hasAccess(trainingSession));
         return trainingSession;
     }
 
@@ -60,9 +56,9 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
     @Override
     public List<TrainingSessionDTO> getAllByTrainingPlanId(Long trainingPlanId) {
         TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
-        if (!trainingPlanService.hasAccess(trainingPlan)) {
-            throw new AccessDeniedException("Access denied");
-        }
+
+        authorize(trainingPlanService.hasAccess(trainingPlan));
+
         List<TrainingSession> trainingSessionsList = trainingSessionRepository.findAllByTrainingPlanId(trainingPlanId);
 
         return trainingSessionMapper.mapToDTOs(trainingSessionsList);
@@ -71,9 +67,9 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
     @Override
     public TrainingSessionDTO create(TrainingSessionDTO dto, Long trainingPlanId) {
         TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
-        if (!trainingPlanService.hasAccess(trainingPlan)) {
-            throw new AccessDeniedException("Access denied");
-        }
+
+        authorize(trainingPlanService.hasAccess(trainingPlan));
+
         TrainingSession trainingSession = new TrainingSession(dto);
         return save(trainingSession, trainingPlanId);
     }
@@ -81,9 +77,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
     @Override
     public TrainingSessionDTO update(Long id, TrainingSessionDTO dto) {
         TrainingSession oldSession = findEntityById(id);
-        if (!hasAccess(oldSession)) {
-            throw new AccessDeniedException("Access denied");
-        }
+        authorize(hasAccess(oldSession));
         TrainingSession updatedSession = updateData(oldSession, dto);
 
         return save(updatedSession);
@@ -104,9 +98,9 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
     @Override
     public void deleteById(Long id) {
         TrainingSession oldSession = findEntityById(id);
-        if (!hasAccess(oldSession)) {
-            throw new AccessDeniedException("Access denied");
-        }
+
+        authorize(hasAccess(oldSession));
+
         trainingSessionRepository.deleteById(id);
     }
 
@@ -115,8 +109,4 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
         return trainingSession.getTrainingPlan().getUser().getId().equals(userDetailsImpl.getId());
     }
 
-    private UserDetailsImpl getPrincipal() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (UserDetailsImpl) authentication.getPrincipal();
-    }
 }

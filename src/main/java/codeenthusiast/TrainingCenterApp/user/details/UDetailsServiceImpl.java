@@ -1,14 +1,12 @@
 package codeenthusiast.TrainingCenterApp.user.details;
 
+import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UDetailsServiceImpl implements UserDetailsService {
+public class UDetailsServiceImpl implements UserDetailsService, SecurityService {
 
     private final UserDetailsRepository repository;
 
@@ -26,20 +24,14 @@ public class UDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetailsDTO getUserDetailsByUserId(long userId) {
-        UserDetails userDetails = getUserDetailsByUserIdFromRepo(userId);
-        if (isNull(userDetails)) {
-            throw new EntityNotFoundException("Resource not available");
-        }
+        UserDetails userDetails = getNotNullUserDetailsByUserIdFromRepo(userId);
         return mapToDTO(userDetails);
     }
 
     @Override
     public UserDetailsDTO updateUserDetails(long id, UserDetailsDTO dto) {
-        UserDetails userDetails = getUserDetailsByIdFromRepo(id);
-        if (isNull(userDetails))
-            throw new EntityNotFoundException("Resource not available");
-        if (!hasAccess(userDetails))
-            throw new AccessDeniedException("Access denied");
+        UserDetails userDetails = getNotNullUserDetailsByIdFromRepo(id);
+        authorize(hasAccess(userDetails));
         updateUserDetailsAttributes(dto, userDetails);
         return mapToDTO(save(userDetails));
     }
@@ -49,21 +41,12 @@ public class UDetailsServiceImpl implements UserDetailsService {
         return userDetails.getUser().getId().equals(userDetailsImpl.getId());
     }
 
-    private UserDetailsImpl getPrincipal() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (UserDetailsImpl) authentication.getPrincipal();
+    private UserDetails getNotNullUserDetailsByIdFromRepo(long id) {
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    private boolean isNull(Object object) {
-        return object == null;
-    }
-
-    private UserDetails getUserDetailsByIdFromRepo(long id) {
-        return repository.findById(id);
-    }
-
-    private UserDetails getUserDetailsByUserIdFromRepo(long id) {
-        return repository.findByUserId(id);
+    private UserDetails getNotNullUserDetailsByUserIdFromRepo(long id) {
+        return repository.findByUserId(id).orElseThrow(EntityNotFoundException::new);
     }
 
     private UserDetails save(UserDetails userDetails) {

@@ -8,8 +8,6 @@ import java.util.Optional;
 @Repository
 public interface UserDetailsRepository extends AbstractRepository<UserDetails> {
 
-    UserDetails findByUserId(Long id);
-
-    UserDetails findById(long id);
+    Optional<UserDetails> findByUserId(Long id);
 
 }

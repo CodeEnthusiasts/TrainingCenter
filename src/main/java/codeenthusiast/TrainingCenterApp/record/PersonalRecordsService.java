@@ -4,6 +4,7 @@ public interface PersonalRecordsService {
 
     PersonalRecords getPersonalRecordsByUserId(Long userId);
 
-    PersonalRecords savePersonalRecords(PersonalRecords personalRecords);
+    PersonalRecords getPersonalRecordsById(Long personalRecordsId);
 
+    boolean hasAccess(PersonalRecords personalRecords);
 }

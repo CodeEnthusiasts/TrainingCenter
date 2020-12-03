@@ -17,21 +17,15 @@ public class PersonalRecordsServiceImpl implements PersonalRecordsService {
 
     @Override
     public PersonalRecords getPersonalRecordsByUserId(Long userId) {
-        return getPersonalRecordsByUserIdFromRepo(userId);
-    }
-
-    public PersonalRecords getPersonalRecordsById(Long personalRecordsId) {
-        PersonalRecords personalRecords = getPersonalRecordsByIdFromRepo(personalRecordsId);
-        if(isNull(personalRecords))
-            throw new EntityNotFoundException("Resource not available");
-        return getPersonalRecordsByIdFromRepo(personalRecordsId);
+        return getNotNullPersonalRecordsByUserIdFromRepo(userId);
     }
 
     @Override
-    public PersonalRecords savePersonalRecords(PersonalRecords personalRecords) {
-        return save(personalRecords);
+    public PersonalRecords getPersonalRecordsById(Long personalRecordsId) {
+        return getNotNullPersonalRecordsByIdFromRepo(personalRecordsId);
     }
 
+    @Override
     public boolean hasAccess(PersonalRecords personalRecords) {
         UserDetailsImpl userDetailsImpl = getPrincipal();
         return personalRecords.getUser().getId().equals(userDetailsImpl.getId());
@@ -42,19 +36,11 @@ public class PersonalRecordsServiceImpl implements PersonalRecordsService {
         return (UserDetailsImpl) authentication.getPrincipal();
     }
 
-    private boolean isNull(PersonalRecords personalRecords) {
-        return personalRecords == null;
+    private PersonalRecords getNotNullPersonalRecordsByUserIdFromRepo(long id) {
+        return repository.findByUserId(id).orElseThrow(EntityNotFoundException::new);
     }
 
-    private PersonalRecords save(PersonalRecords personalRecords) {
-        return repository.save(personalRecords);
-    }
-
-    private PersonalRecords getPersonalRecordsByUserIdFromRepo(long id) {
-        return repository.findByUserId(id);
-    }
-
-    private PersonalRecords getPersonalRecordsByIdFromRepo(long id) {
-        return repository.findById(id);
+    private PersonalRecords getNotNullPersonalRecordsByIdFromRepo(Long id) {
+        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 }

@@ -6,8 +6,6 @@ import codeenthusiast.TrainingCenterApp.user.major.User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.List;
-
 @Service
 public class ImageServiceImpl implements ImageService {
 
@@ -26,59 +24,27 @@ public class ImageServiceImpl implements ImageService {
         return repository.existsByUserId(userId);
     }
 
-
-    @Override
-    public ImageDTO createNewImage(MultipartFile file) {
-        String fileUrl = uploadImageOnHosting(file);
-        Image image = new Image(fileUrl);
-        return save(image);
-    }
-
     public ImageDTO save(Image image) {
         Image savedImaged = repository.save(image);
         return imageMapper.mapToDTO(savedImaged);
     }
 
-    @Override
     public String uploadImageOnHosting(MultipartFile file) {
         return imageUploader.uploadImage(file);
     }
 
-    public void deleteImagesById(List<Long> idImages) {
-        for (Long idImage : idImages) {
-            repository.deleteById(idImage);
+    public void createNewImage(MultipartFile file, Object object){
+        String fileUrl = uploadImageOnHosting(file);
+        Class<?> classType = object.getClass();
+        Image image = null;
+        if(classType.equals(Movement.class)){
+            image = new Image(fileUrl, (Movement) object);
+        } else if(classType.equals(Muscle.class)){
+            image = new Image(fileUrl, (Muscle) object);
+        } else if(classType.equals(User.class)){
+            image = new Image(fileUrl, (User) object);
         }
-    }
-
-
-    public void createNewMovementImage(MultipartFile file, Movement movement) {
-        String fileUrl = uploadImageOnHosting(file);
-        Image image = new Image(fileUrl, movement);
         save(image);
-    }
-
-    public void deleteImagesByMovementId(Long id) {
-        repository.deleteByMovementId(id);
-    }
-
-    public void createNewMuscleImage(MultipartFile file, Muscle muscle) {
-        String fileUrl = uploadImageOnHosting(file);
-        Image image = new Image(fileUrl, muscle);
-        save(image);
-    }
-
-    public void deleteImagesByMuscleId(Long id) {
-        repository.deleteByMuscleId(id);
-    }
-
-    public void createNewUserImage(User user, MultipartFile file) {
-        String fileUrl = uploadImageOnHosting(file);
-        Image image = new Image(fileUrl, user);
-        save(image);
-    }
-
-    public void deleteImageByUserId(Long id) {
-        repository.deleteByUserId(id);
     }
 
     public void replaceUserImage(Image image, MultipartFile file) {
@@ -86,4 +52,19 @@ public class ImageServiceImpl implements ImageService {
         image.setFileUrl(fileUrl);
         save(image);
     }
+
+    public void deleteImagesByMovementId(Long id) {
+        repository.deleteByMovementId(id);
+
+    }
+
+    public void deleteImagesByMuscleId(Long id) {
+        repository.deleteByMuscleId(id);
+    }
+
+    public void deleteImageByUserId(Long id) {
+        repository.deleteByUserId(id);
+    }
+
+
 }

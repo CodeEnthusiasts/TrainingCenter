@@ -87,7 +87,7 @@ public class MuscleServiceImpl implements MuscleService {
     @Override
     public MuscleDTO addImage(Long id, MultipartFile file) {
         Muscle muscle = findEntityById(id);
-        imageService.createNewMuscleImage(file, muscle);
+        imageService.createNewImage(file, muscle);
         return muscleMapper.mapToDTO(muscle);
     }
 

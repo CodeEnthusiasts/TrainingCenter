@@ -6,7 +6,7 @@ public interface UserService {
 
     boolean existsByEmailAndPassword(String email, String password);
 
-    UserDTO addImage(Long id, MultipartFile file);
+    String addImage(Long id, MultipartFile file);
 
-    void removeImage(Long id);
+    String removeImage(Long id);
 }

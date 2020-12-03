@@ -80,7 +80,7 @@ public class MovementServiceImpl implements MovementService {
     @Override
     public MovementDTO addImage(Long id, MultipartFile file) {
         Movement movement = findEntityById(id);
-        imageService.createNewMovementImage(file, movement);
+        imageService.createNewImage(file, movement);
         return movementMapper.mapToDTO(movement);
     }
 

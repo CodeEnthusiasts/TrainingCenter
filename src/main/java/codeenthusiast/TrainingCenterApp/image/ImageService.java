@@ -1,9 +1,6 @@
 package codeenthusiast.TrainingCenterApp.image;
 
-import codeenthusiast.TrainingCenterApp.movement.Movement;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 public interface ImageService {
 
@@ -14,5 +11,15 @@ public interface ImageService {
     boolean existsByUserId(Long userId);
 
     ImageDTO save(Image dto);
+
+    void replaceImage(Image image, MultipartFile file);
+
+    void deleteImagesByMovementId(Long id);
+
+    void deleteImagesByMuscleId(Long id);
+
+    void deleteImageByUserId(Long id);
+
+
 
 }

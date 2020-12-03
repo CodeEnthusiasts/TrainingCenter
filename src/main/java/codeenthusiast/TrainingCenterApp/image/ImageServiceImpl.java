@@ -23,6 +23,10 @@ public class ImageServiceImpl implements ImageService {
         this.imageUploader = imageUploader;
     }
 
+    public boolean existsByUserId(Long userId){
+        return repository.existsByUserId(userId);
+    }
+
 
     @Override
     public ImageDTO createNewImage(MultipartFile file) {
@@ -76,5 +80,11 @@ public class ImageServiceImpl implements ImageService {
 
     public void deleteImagesByUserId(Long id) {
         repository.deleteByUserId(id);
+    }
+
+    public void replaceUserImage(Image image, MultipartFile file) {
+        String fileUrl = uploadImageOnHosting(file);
+        image.setFileUrl(fileUrl);
+        save(image);
     }
 }

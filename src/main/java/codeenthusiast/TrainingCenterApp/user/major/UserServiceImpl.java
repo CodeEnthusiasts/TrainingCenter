@@ -1,6 +1,7 @@
 package codeenthusiast.TrainingCenterApp.user.major;
 
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
+import codeenthusiast.TrainingCenterApp.image.Image;
 import codeenthusiast.TrainingCenterApp.image.ImageDTO;
 import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,13 @@ public class UserServiceImpl implements UserService {
 
     public UserDTO addImage(Long id, MultipartFile file) {
         User user = findEntityById(id);
-        imageService.createNewUserImage(user, file);
+        if (!imageService.existsByUserId(id)){
+            imageService.createNewUserImage(user, file);
+        } else{
+            Image image = user.getImage();
+            imageService.replaceUserImage(image, file);
+        }
+
         return userMapper.mapToDTO(user);
     }
 

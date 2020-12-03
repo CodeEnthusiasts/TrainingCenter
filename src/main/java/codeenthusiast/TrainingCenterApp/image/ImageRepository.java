@@ -10,4 +10,6 @@ public interface ImageRepository extends AbstractRepository<Image> {
     void deleteByMuscleId(Long id);
 
     void deleteByUserId(Long id);
+
+    boolean existsByUserId(Long userId);
 }

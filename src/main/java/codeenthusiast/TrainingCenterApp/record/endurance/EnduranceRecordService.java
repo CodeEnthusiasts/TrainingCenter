@@ -1,10 +1,10 @@
 package codeenthusiast.TrainingCenterApp.record.endurance;
 
-import codeenthusiast.TrainingCenterApp.record.strength.StrengthRecordDTO;
-
 import java.util.List;
 
 public interface EnduranceRecordService {
+
+    EnduranceRecord getEnduranceRecordEntityById(Long id);
 
     EnduranceRecordDTO createEnduranceRecord(Long personalRecordsId, EnduranceRecordDTO enduranceRecordDTO);
 

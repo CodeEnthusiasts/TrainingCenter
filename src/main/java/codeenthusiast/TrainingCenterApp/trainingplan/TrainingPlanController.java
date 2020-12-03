@@ -17,9 +17,10 @@ public class TrainingPlanController {
         this.trainingPlanService = trainingPlanService;
     }
 
+    @PreAuthorize("authentication.principal.id == #userId")
     @GetMapping(value = "/users/{user_id}/training-plans/all")
-    public ResponseEntity<List<TrainingPlanDTO>> getTrainingPlans(@PathVariable("user_id") Long id) {
-        return ResponseEntity.ok(trainingPlanService.getAllTrainingPlansByUserId(id));
+    public ResponseEntity<List<TrainingPlanDTO>> getTrainingPlans(@PathVariable("user_id") Long userId) {
+        return ResponseEntity.ok(trainingPlanService.getAllTrainingPlansByUserId(userId));
     }
 
     @GetMapping(value = "/training-plans/{training_plan_id}")
@@ -27,10 +28,11 @@ public class TrainingPlanController {
         return ResponseEntity.ok(trainingPlanService.getTrainingPlanById(id));
     }
 
+    @PreAuthorize("authentication.principal.id == #userId")
     @PostMapping(value = "/users/{user_id}/training-plans")
-    public ResponseEntity<TrainingPlanDTO> createTrainingPlan(@PathVariable("user_id") Long id,
+    public ResponseEntity<TrainingPlanDTO> createTrainingPlan(@PathVariable("user_id") Long userId,
                                                               @RequestBody @Valid TrainingPlanDTO dto) {
-        return ResponseEntity.ok(trainingPlanService.createTrainingPlan(id, dto));
+        return ResponseEntity.ok(trainingPlanService.createTrainingPlan(userId, dto));
     }
 
     @PatchMapping(value = "/training-plans/{training_plan_id}")

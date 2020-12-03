@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface StrengthRecordService {
 
+    StrengthRecord getStrengthRecordEntityById(Long id);
+
     StrengthRecordDTO createStrengthRecord(Long personalRecordsId, StrengthRecordDTO strengthRecordDTO);
 
     StrengthRecordDTO updateStrengthRecord(Long strengthRecordId, StrengthRecordDTO strengthRecordDTO);

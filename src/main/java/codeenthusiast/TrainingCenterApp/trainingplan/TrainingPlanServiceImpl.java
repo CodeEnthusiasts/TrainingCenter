@@ -1,10 +1,7 @@
 package codeenthusiast.TrainingCenterApp.trainingplan;
 
-import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
+import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.user.major.UserServiceImpl;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
@@ -12,7 +9,7 @@ import javax.persistence.Transient;
 import java.util.List;
 
 @Service
-public class TrainingPlanServiceImpl implements TrainingPlanService {
+public class TrainingPlanServiceImpl implements TrainingPlanService, SecurityService {
 
     private final TrainingPlanRepository repository;
 
@@ -26,72 +23,51 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
         this.userService = userService;
     }
 
+    @Override
     public TrainingPlan getTrainingPlanEntityById(Long id) {
-        TrainingPlan trainingPlan =  getNotNullTrainingPlanByIdFromRepo(id);
-        if(!hasAccess(trainingPlan)){
-            throw new AccessDeniedException("Access denied");
-        }
+        TrainingPlan trainingPlan = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        authorize(hasAccess(trainingPlan));
         return trainingPlan;
     }
 
     @Override
+    public TrainingPlanDTO getTrainingPlanById(Long id) {
+        return mapToDTO(getTrainingPlanEntityById(id));
+    }
+
+    @Override
     public TrainingPlanDTO createTrainingPlan(Long userId, TrainingPlanDTO trainingPlanDTO) {
-        if(!getPrincipal().getId().equals(userId)){
-            throw new AccessDeniedException("Access denied");
-        }
         TrainingPlan trainingPlan = mapper.mapToEntity(trainingPlanDTO);
         trainingPlan.setUser(userService.findEntityById(userId));
-        return mapper.mapToDTO(save(trainingPlan));
+        return mapToDTO(save(trainingPlan));
     }
 
     @Override
     public TrainingPlanDTO updateTrainingPlan(Long trainingPlanId, TrainingPlanDTO trainingPlanDTO) {
         TrainingPlan trainingPlan = getTrainingPlanEntityById(trainingPlanId);
         updateTrainingPlan(trainingPlan, trainingPlanDTO);
-        return mapper.mapToDTO(save(trainingPlan));
+        return mapToDTO(save(trainingPlan));
     }
 
     @Override
     public List<TrainingPlanDTO> getAllTrainingPlansByUserId(Long userId) {
-        if(!getPrincipal().getId().equals(userId)){
-            throw new AccessDeniedException("Access denied");
-        }
-        return mapper.mapToDTOs(repository.findAllByUserId(userId));
+        return mapToDTOs(repository.findAllByUserId(userId));
     }
 
-    @Override
-    public TrainingPlanDTO getTrainingPlanById(Long id) {
-        return mapper.mapToDTO(getTrainingPlanEntityById(id));
-    }
-
+    @Transient
     @Override
     public String deleteTrainingPlan(Long id) {
-        TrainingPlan trainingPlan = getNotNullTrainingPlanByIdFromRepo(id);
-        if(!hasAccess(trainingPlan))
-            throw new AccessDeniedException("Access denied");
-        deleteById(id);
+        TrainingPlan trainingPlan = getTrainingPlanEntityById(id);
+        repository.delete(trainingPlan);
         return "Training plan deleted successfully. ";
     }
 
     public boolean hasAccess(TrainingPlan trainingPLan) {
-        UserDetailsImpl userDetailsImpl = getPrincipal();
-        if(trainingPLan.getUser().getId().equals(userDetailsImpl.getId()))
-            return true;
-        else
-            return false;
-    }
-
-    private UserDetailsImpl getPrincipal() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (UserDetailsImpl) authentication.getPrincipal();
+        return trainingPLan.getUser().getId().equals(getPrincipal().getId());
     }
 
     private TrainingPlan save(TrainingPlan trainingPlan) {
         return repository.save(trainingPlan);
-    }
-
-    private TrainingPlan getNotNullTrainingPlanByIdFromRepo(Long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
     }
 
     private void updateTrainingPlan(TrainingPlan trainingPlan, TrainingPlanDTO trainingPlanDTO) {
@@ -104,9 +80,12 @@ public class TrainingPlanServiceImpl implements TrainingPlanService {
         trainingPlan.setNumberOfExecutedTrainings(trainingPlanDTO.getNumberOfExecutedTrainings());
     }
 
-    @Transient
-    private void deleteById(Long id) {
-        repository.deleteById(id);
+    private List<TrainingPlanDTO> mapToDTOs(List<TrainingPlan> list) {
+        return mapper.mapToDTOs(list);
+    }
+
+    private TrainingPlanDTO mapToDTO(TrainingPlan trainingPlan) {
+        return mapper.mapToDTO(trainingPlan);
     }
 
 }

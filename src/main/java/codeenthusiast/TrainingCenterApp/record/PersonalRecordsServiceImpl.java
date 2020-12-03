@@ -2,7 +2,6 @@ package codeenthusiast.TrainingCenterApp.record;
 
 import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,25 +15,17 @@ public class PersonalRecordsServiceImpl implements PersonalRecordsService, Secur
 
     @Override
     public PersonalRecords getPersonalRecordsByUserId(Long userId) {
-        return getNotNullPersonalRecordsByUserIdFromRepo(userId);
+        return repository.findByUserId(userId).orElseThrow(EntityNotFoundException::new);
     }
 
     @Override
-    public PersonalRecords getPersonalRecordsById(Long personalRecordsId) {
-        return getNotNullPersonalRecordsByIdFromRepo(personalRecordsId);
+    public PersonalRecords getPersonalRecordsEntityById(Long id) {
+        PersonalRecords personalRecords = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        authorize(hasAccess(personalRecords));
+        return personalRecords;
     }
 
-    @Override
-    public boolean hasAccess(PersonalRecords personalRecords) {
-        UserDetailsImpl userDetailsImpl = getPrincipal();
-        return personalRecords.getUser().getId().equals(userDetailsImpl.getId());
-    }
-
-    private PersonalRecords getNotNullPersonalRecordsByUserIdFromRepo(long id) {
-        return repository.findByUserId(id).orElseThrow(EntityNotFoundException::new);
-    }
-
-    private PersonalRecords getNotNullPersonalRecordsByIdFromRepo(Long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
+    private boolean hasAccess(PersonalRecords personalRecords) {
+        return personalRecords.getUser().getId().equals(getPrincipal().getId());
     }
 }

@@ -4,7 +4,6 @@ import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
-import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -27,9 +26,15 @@ public class CustomRecordServiceImpl implements CustomRecordService, SecuritySer
     }
 
     @Override
+    public CustomRecord getCustomRecordEntityById(Long id) {
+        CustomRecord customRecord = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        authorize(hasAccess(customRecord));
+        return customRecord;
+    }
+
+    @Override
     public CustomRecordDTO createCustomRecord(Long personalRecordsId, CustomRecordDTO customRecordDTO) {
-        PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsById(personalRecordsId);
-        authorize(personalRecordsService.hasAccess(personalRecords));
+        PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsEntityById(personalRecordsId);
         CustomRecord customRecord = mapToEntity(customRecordDTO);
         customRecord.setPersonalRecords(personalRecords);
         return mapToDTO(save(customRecord));
@@ -37,52 +42,42 @@ public class CustomRecordServiceImpl implements CustomRecordService, SecuritySer
 
     @Override
     public CustomRecordDTO updateCustomRecord(Long customRecordId, CustomRecordDTO customRecordDTO) {
-        CustomRecord customRecord = getNotNullCustomRecordByIdFromRepo(customRecordId);
-        authorize(hasAccess(customRecord));
+        CustomRecord customRecord = getCustomRecordEntityById(customRecordId);
         updateCustomRecord(customRecord, customRecordDTO);
         return mapToDTO(save(customRecord));
     }
 
     @Override
     public List<CustomRecordDTO> getAllCustomRecordsByPersonalRecordsId(Long personalRecordsId) {
-        authorize(personalRecordsService.hasAccess(personalRecordsService.getPersonalRecordsById(personalRecordsId)));
-        return mapToDTOs(repository.findAllByPersonalRecordsId(personalRecordsId));
+        PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsEntityById(personalRecordsId);
+        return mapToDTOs(personalRecords.getCustomRecords());
     }
 
     @Override
     public List<CustomRecordDTO> getThreeLatestCustomRecordsByPersonalRecordsId(Long personalRecordsId) {
-        authorize(personalRecordsService.hasAccess(personalRecordsService.getPersonalRecordsById(personalRecordsId)));
+        personalRecordsService.getPersonalRecordsEntityById(personalRecordsId);
         return mapToDTOs(repository.findThreeLatestByPersonalRecordsId(personalRecordsId));
     }
 
     @Override
     public String deleteCustomRecord(Long customRecordId) {
-        authorize(hasAccess(getNotNullCustomRecordByIdFromRepo(customRecordId)));
-        deleteById(customRecordId);
+        CustomRecord customRecord = getCustomRecordEntityById(customRecordId);
+        repository.delete(customRecord);
         return "Record deleted successfully. ";
     }
 
     private boolean hasAccess(CustomRecord customRecord) {
-        UserDetailsImpl userDetailsImpl = getPrincipal();
-        return customRecord.getPersonalRecords().getUser().getId().equals(userDetailsImpl.getId());
+        return customRecord.getPersonalRecords().getUser().getId().equals(getPrincipal().getId());
     }
 
     private CustomRecord save(CustomRecord customRecord) {
         return repository.save(customRecord);
     }
 
-    private CustomRecord getNotNullCustomRecordByIdFromRepo(long id) {
-        return repository.findById(id).orElseThrow(EntityNotFoundException::new);
-    }
-
     private void updateCustomRecord(CustomRecord customRecord, CustomRecordDTO customRecordDTO) {
         customRecord.setDescription(customRecordDTO.getDescription());
         customRecord.setValue(customRecordDTO.getValue());
         customRecord.setDate(customRecordDTO.getDate());
-    }
-
-    private void deleteById(Long id) {
-        repository.deleteById(id);
     }
 
     private CustomRecord mapToEntity(CustomRecordDTO customRecordDTO) {

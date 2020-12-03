@@ -5,6 +5,7 @@ import codeenthusiast.TrainingCenterApp.image.Image;
 import codeenthusiast.TrainingCenterApp.image.ImageDTO;
 import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -27,10 +28,9 @@ public class UserServiceImpl implements UserService {
         return userMapper.mapToDTO(user);
     }
 
-    public UserDTO save(UserDTO dto) {
-        User user = userMapper.mapToEntity(dto);
-        userRepository.save(user);
-        return dto;
+    public UserDTO save(User user) {
+        User savedUser = userRepository.save(user);
+        return userMapper.mapToDTO(savedUser);
     }
 
     public UserDTO update(Long id, UserDTO dto) {
@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
             user.setUsername(dto.getUsername());
         }
 
-        return save(userMapper.mapToDTO(user));
+        return save(user);
     }
 
     public User findEntityById(Long id) {
@@ -68,8 +68,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void removeImage(Long id) {
-       imageService.deleteImagesByUserId(id);
+        User user = findEntityById(id);
+        user.setImage(null);
+        imageService.deleteImageByUserId(id);
     }
 
 }

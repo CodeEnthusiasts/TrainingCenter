@@ -1,7 +1,6 @@
 package codeenthusiast.TrainingCenterApp.image;
 
 import codeenthusiast.TrainingCenterApp.movement.Movement;
-import codeenthusiast.TrainingCenterApp.movement.MovementDTO;
 import codeenthusiast.TrainingCenterApp.muscle.Muscle;
 import codeenthusiast.TrainingCenterApp.user.major.User;
 import org.springframework.stereotype.Service;
@@ -23,7 +22,7 @@ public class ImageServiceImpl implements ImageService {
         this.imageUploader = imageUploader;
     }
 
-    public boolean existsByUserId(Long userId){
+    public boolean existsByUserId(Long userId) {
         return repository.existsByUserId(userId);
     }
 
@@ -68,7 +67,7 @@ public class ImageServiceImpl implements ImageService {
         save(image);
     }
 
-    public void deleteImagesByMuscleId(Long id){
+    public void deleteImagesByMuscleId(Long id) {
         repository.deleteByMuscleId(id);
     }
 
@@ -78,7 +77,7 @@ public class ImageServiceImpl implements ImageService {
         save(image);
     }
 
-    public void deleteImagesByUserId(Long id) {
+    public void deleteImageByUserId(Long id) {
         repository.deleteByUserId(id);
     }
 

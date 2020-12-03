@@ -12,4 +12,6 @@ public interface ImageRepository extends AbstractRepository<Image> {
     void deleteByUserId(Long id);
 
     boolean existsByUserId(Long userId);
+
+    Image findByUserId(Long id);
 }

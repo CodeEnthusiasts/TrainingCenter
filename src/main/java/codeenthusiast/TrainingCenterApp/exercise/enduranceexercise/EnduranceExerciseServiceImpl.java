@@ -1,49 +1,53 @@
 package codeenthusiast.TrainingCenterApp.exercise.enduranceexercise;
 
+import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.movement.MovementServiceImpl;
-import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSessionServiceImpl;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class EnduranceExerciseServiceImpl implements EnduranceExerciseService {
+public class EnduranceExerciseServiceImpl implements EnduranceExerciseService, SecurityService {
 
     private final EnduranceExerciseRepository repository;
+
+    private final EnduranceExerciseMapper mapper;
 
     private final TrainingSessionServiceImpl trainingSessionService;
 
     private final MovementServiceImpl movementService;
 
-    private final EnduranceExerciseMapper mapper;
-
     public EnduranceExerciseServiceImpl(EnduranceExerciseRepository repository,
+                                        EnduranceExerciseMapper mapper,
                                         TrainingSessionServiceImpl trainingSessionService,
-                                        MovementServiceImpl movementService,
-                                        EnduranceExerciseMapper mapper) {
+                                        MovementServiceImpl movementService) {
         this.repository = repository;
+        this.mapper = mapper;
         this.trainingSessionService = trainingSessionService;
         this.movementService = movementService;
-        this.mapper = mapper;
     }
 
     @Override
     public EnduranceExercise getEnduranceExerciseEntityById(Long id) {
-        return null;
+        EnduranceExercise enduranceExercise = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        authorize(hasAccess(enduranceExercise));
+        return enduranceExercise ;
     }
 
     @Override
-    public EnduranceExerciseDTO createEnduranceExercise(EnduranceExerciseDTO dto, Long trainingSessionId, Long movementId) {
+    public EnduranceExerciseDTO getEnduranceExerciseById(Long enduranceExerciseId) {
+        return mapToDTO(getEnduranceExerciseEntityById(enduranceExerciseId));
+    }
+
+    @Override
+    public EnduranceExerciseDTO createEnduranceExercise(EnduranceExerciseDTO dto,
+                                                        Long trainingSessionId,
+                                                        Long movementId) {
         TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
-        if(!trainingSessionService.hasAccess(trainingSession))
-            throw new AccessDeniedException("Access denied");
         Movement movement = movementService.findEntityById(movementId);
         EnduranceExercise enduranceExercise = mapToEntity(dto);
         enduranceExercise.setMovement(movement);
@@ -54,70 +58,33 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService {
     @Override
     public EnduranceExerciseDTO updateEnduranceExercise(Long enduranceExerciseId,
                                                         EnduranceExerciseDTO dto) {
-        EnduranceExercise enduranceExercise = getEnduranceExerciseByIdFromRepo(enduranceExerciseId);
-        if(isNull(enduranceExercise))
-            throw new EntityNotFoundException("Resource not available");
-        if(!hasAccess(enduranceExercise))
-            throw new AccessDeniedException("Access denied");
+        EnduranceExercise enduranceExercise = getEnduranceExerciseEntityById(enduranceExerciseId);
         updateEnduranceExercise(enduranceExercise, dto);
         return mapToDTO(save(enduranceExercise));
     }
 
     @Override
-    public EnduranceExerciseDTO getEnduranceExerciseById(Long enduranceExerciseId) {
-        EnduranceExercise enduranceExercise = getEnduranceExerciseByIdFromRepo(enduranceExerciseId);
-        if(isNull(enduranceExercise))
-            throw new EntityNotFoundException("Resource not available");
-        if(!hasAccess(enduranceExercise))
-            throw new AccessDeniedException("Access denied");
-        return mapToDTO(enduranceExercise);
-    }
-
-    @Override
-    public List<EnduranceExerciseDTO> getAllEnduranceExercisesByTrainingSessionId(
-            Long trainingSessionId) {
-
+    public List<EnduranceExerciseDTO> getAllEnduranceExercisesByTrainingSessionId(Long trainingSessionId) {
         TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
-        if(!trainingSessionService.hasAccess(trainingSession))
-            throw new AccessDeniedException("Access denied");
-        return mapToDTOs(repository.findAllByTrainingSessionId(trainingSessionId));
+        return mapToDTOs(trainingSession.getEnduranceExercises());
     }
 
     @Override
     public String deleteEnduranceExercise(Long enduranceExerciseId) {
-        EnduranceExercise enduranceExercise = getEnduranceExerciseByIdFromRepo(enduranceExerciseId);
-        if(isNull(enduranceExercise))
-            throw new EntityNotFoundException("Resource not available");
-        if(!hasAccess(enduranceExercise))
-            throw new AccessDeniedException("Access denied");
-        deleteById(enduranceExerciseId);
+        repository.delete(getEnduranceExerciseEntityById(enduranceExerciseId));
         return "Exercise deleted successfully. ";
     }
 
     private boolean hasAccess(EnduranceExercise enduranceExercise) {
-        UserDetailsImpl userDetailsImpl = getPrincipal();
         return enduranceExercise.getTrainingSession()
                                 .getTrainingPlan()
                                 .getUser()
                                 .getId()
-                                .equals(userDetailsImpl.getId());
-    }
-
-    private UserDetailsImpl getPrincipal() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (UserDetailsImpl) authentication.getPrincipal();
-    }
-
-    private boolean isNull(EnduranceExercise enduranceExercise) {
-        return enduranceExercise == null;
+                                .equals(getPrincipal().getId());
     }
 
     private EnduranceExercise save(EnduranceExercise enduranceExercise) {
         return repository.save(enduranceExercise);
-    }
-
-    private EnduranceExercise getEnduranceExerciseByIdFromRepo(long id) {
-        return repository.findById(id);
     }
 
     private void updateEnduranceExercise(EnduranceExercise enduranceExercise,
@@ -127,10 +94,6 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService {
         enduranceExercise.setTimeUnit(enduranceExerciseDTO.getTimeUnit());
         enduranceExercise.setDuration(enduranceExerciseDTO.getDuration());
         enduranceExercise.setEnduranceExerciseDetails(enduranceExerciseDTO.getEnduranceExerciseDetails());
-    }
-
-    private void deleteById(Long id) {
-        repository.deleteById(id);
     }
 
     private EnduranceExercise mapToEntity(EnduranceExerciseDTO enduranceExerciseDTO) {

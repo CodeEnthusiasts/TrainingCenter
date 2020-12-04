@@ -4,21 +4,15 @@ import java.util.List;
 
 public interface TrainingSessionService {
 
-    TrainingSession findEntityById(Long trainingPlanId);
+    TrainingSession getTrainingSessionEntityById(Long trainingPlanId);
 
-    TrainingSessionDTO findById(Long id);
+    TrainingSessionDTO getTrainingSessionById(Long id);
 
-    TrainingSessionDTO save(TrainingSession trainingSession, Long trainingPlanId);
+    List<TrainingSessionDTO> getAllTrainingSessionsByTrainingPlanId(Long id);
 
-    TrainingSessionDTO save(TrainingSession trainingSession);
+    TrainingSessionDTO createTrainingSession(TrainingSessionDTO dto, Long trainingPlanId);
 
-    List<TrainingSessionDTO> getAllByTrainingPlanId(Long id);
+    TrainingSessionDTO updateTrainingSession(Long id, TrainingSessionDTO dto);
 
-    TrainingSessionDTO update(Long id, TrainingSessionDTO dto);
-
-    TrainingSession updateData(TrainingSession oldSession, TrainingSessionDTO dto);
-
-    TrainingSessionDTO create(TrainingSessionDTO dto, Long trainingPlanId);
-
-    void deleteById(Long id);
+    String deleteTrainingSession(Long id);
 }

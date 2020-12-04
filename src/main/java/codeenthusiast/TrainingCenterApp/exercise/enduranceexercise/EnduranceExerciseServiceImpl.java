@@ -41,7 +41,7 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService {
 
     @Override
     public EnduranceExerciseDTO createEnduranceExercise(EnduranceExerciseDTO dto, Long trainingSessionId, Long movementId) {
-        TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
+        TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
         if(!trainingSessionService.hasAccess(trainingSession))
             throw new AccessDeniedException("Access denied");
         Movement movement = movementService.findEntityById(movementId);
@@ -77,7 +77,7 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService {
     public List<EnduranceExerciseDTO> getAllEnduranceExercisesByTrainingSessionId(
             Long trainingSessionId) {
 
-        TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
+        TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
         if(!trainingSessionService.hasAccess(trainingSession))
             throw new AccessDeniedException("Access denied");
         return mapToDTOs(repository.findAllByTrainingSessionId(trainingSessionId));

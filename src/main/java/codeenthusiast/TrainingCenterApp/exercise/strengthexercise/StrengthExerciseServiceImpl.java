@@ -53,7 +53,7 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
     @Override
     public StrengthExerciseDTO save(StrengthExercise strengthExercise, Long trainingSessionId, Long movementId) {
 
-        TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
+        TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
         Movement movement = movementService.findEntityById(movementId);
 
         strengthExercise.setMovement(movement);
@@ -72,7 +72,7 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
 
     @Override
     public List<StrengthExerciseDTO> getAllByTrainingSessionId(Long trainingSessionId) {
-        TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
+        TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
 
         if (!trainingSessionService.hasAccess(trainingSession)) {
             throw new AccessDeniedException("Access denied");
@@ -105,7 +105,7 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
 
     @Override
     public StrengthExerciseDTO create(StrengthExerciseDTO dto, Long trainingSessionId, Long movementId) {
-        TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
+        TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
         if (!trainingSessionService.hasAccess(trainingSession)) {
             throw new AccessDeniedException("Access denied");
         }

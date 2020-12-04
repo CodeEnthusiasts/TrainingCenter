@@ -61,8 +61,7 @@ public class CustomRecordServiceImpl implements CustomRecordService, SecuritySer
 
     @Override
     public String deleteCustomRecord(Long customRecordId) {
-        CustomRecord customRecord = getCustomRecordEntityById(customRecordId);
-        repository.delete(customRecord);
+        repository.delete(getCustomRecordEntityById(customRecordId));
         return "Record deleted successfully. ";
     }
 

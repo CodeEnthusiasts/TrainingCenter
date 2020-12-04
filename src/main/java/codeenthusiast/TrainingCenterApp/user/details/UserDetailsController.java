@@ -23,7 +23,7 @@ public class UserDetailsController {
 
     @PatchMapping(value = "/user-details/{user_details_id}")
     public ResponseEntity<UserDetailsDTO> updateUserDetails(@PathVariable("user_details_id") Long userDetailsId,
-                                            @RequestBody @Valid UserDetailsDTO dto) {
+                                                            @RequestBody @Valid UserDetailsDTO dto) {
         return ResponseEntity.ok(userDetailsService.updateUserDetails(userDetailsId, dto));
     }
 }

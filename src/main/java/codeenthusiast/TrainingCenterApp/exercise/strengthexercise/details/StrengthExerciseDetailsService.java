@@ -2,11 +2,15 @@ package codeenthusiast.TrainingCenterApp.exercise.strengthexercise.details;
 
 public interface StrengthExerciseDetailsService {
 
-    StrengthExerciseDetailsDTO getStrengthExerciseDetailsById(Long id);
+    StrengthExerciseDetails getEntityById(Long id);
 
-    StrengthExerciseDetailsDTO createStrengthExerciseDetails(Long id,
-                                                             StrengthExerciseDetailsDTO strengthExerciseDetailsDTO);
+    StrengthExerciseDetailsDTO getById(Long id);
 
-    StrengthExerciseDetailsDTO updateStrengthExerciseDetails(Long id,
-                                                             StrengthExerciseDetailsDTO strengthExerciseDetailsDTO);
+    StrengthExerciseDetailsDTO create(Long id, StrengthExerciseDetailsDTO strengthExerciseDetailsDTO);
+
+    StrengthExerciseDetailsDTO update(Long id, StrengthExerciseDetailsDTO strengthExerciseDetailsDTO);
+
+
+
+
 }

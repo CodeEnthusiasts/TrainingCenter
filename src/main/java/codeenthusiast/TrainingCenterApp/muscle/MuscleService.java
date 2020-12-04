@@ -6,23 +6,25 @@ import java.util.List;
 
 public interface MuscleService {
 
-    void deleteById(Long id);
+    Muscle findEntityById(Long id);
 
-    boolean isExistsById(Long id);
-
-    void checkExistenceByName(String name);
+    MuscleDTO findById(Long id);
 
     List<MuscleDTO> findByMovementId(Long id);
 
-    MuscleDTO findById(Long id);
+    boolean existsById(Long id);
+
+    void checkExistenceByName(String name);
 
     MuscleDTO update(Long id, MuscleDTO dto);
 
     MuscleDTO create(MuscleDTO dto);
 
-    MuscleDTO save(MuscleDTO dto);
+    MuscleDTO save(Muscle muscle);
 
     MuscleDTO addImage(Long id, MultipartFile file);
 
     MuscleDTO removeAllImages(Long id);
+
+    void deleteById(Long id);
 }

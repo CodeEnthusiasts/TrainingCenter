@@ -18,21 +18,21 @@ public class StrengthExerciseDetailsController {
     @GetMapping(value = "/strength-exercise-details/{strength_exercise_details_id}")
     public ResponseEntity<StrengthExerciseDetailsDTO> getStrengthExerciseDetails(
             @PathVariable("strength_exercise_details_id") Long id) {
-        return ResponseEntity.ok(service.getStrengthExerciseDetailsById(id));
+        return ResponseEntity.ok(service.getById(id));
     }
 
     @PostMapping(value = "/strength-exercise/{strength_exercise_id}")
     public ResponseEntity<StrengthExerciseDetailsDTO> createStrengthExerciseDetails(
             @PathVariable("strength_exercise_id") Long id,
             @RequestBody @Valid StrengthExerciseDetailsDTO dto) {
-        return ResponseEntity.ok(service.createStrengthExerciseDetails(id, dto));
+        return ResponseEntity.ok(service.create(id, dto));
     }
 
     @PatchMapping(value = "/strength-exercise-details/{strength_exercise_details_id}")
     public ResponseEntity<StrengthExerciseDetailsDTO> updateStrengthExerciseDetails(
             @PathVariable("strength_exercise_details_id") Long id,
             @RequestBody @Valid StrengthExerciseDetailsDTO dto) {
-        return ResponseEntity.ok(service.updateStrengthExerciseDetails(id, dto));
+        return ResponseEntity.ok(service.update(id, dto));
     }
 
 

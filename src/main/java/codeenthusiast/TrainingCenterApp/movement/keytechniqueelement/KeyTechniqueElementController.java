@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.movement.keytechniqueelement;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,26 +18,26 @@ public class KeyTechniqueElementController {
     }
 
     @GetMapping(value = "/{id}")
-    public KeyTechniqueElementDTO getById(@PathVariable("id") Long id) {
-        return keyTechniqueElementService.findById(id);
+    public ResponseEntity<KeyTechniqueElementDTO> getById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(keyTechniqueElementService.findById(id));
     }
 
     @GetMapping(value = "/movement/{movement-id}/all")
-    public List<KeyTechniqueElementDTO> getAllByMovementId(@PathVariable("movement-id") Long id){
-        return keyTechniqueElementService.findAllByMovementId(id);
+    public ResponseEntity<List<KeyTechniqueElementDTO>> getAllByMovementId(@PathVariable("movement-id") Long id) {
+        return ResponseEntity.ok(keyTechniqueElementService.findAllByMovementId(id));
     }
 
     @PostMapping(value = "/movement/{movement-id}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MODERATOR')")
-    public KeyTechniqueElementDTO create(@PathVariable("movement-id") Long id,
+    public ResponseEntity<KeyTechniqueElementDTO> create(@PathVariable("movement-id") Long id,
                                          @RequestBody @Valid KeyTechniqueElementDTO dto) {
-        return keyTechniqueElementService.create(id, dto);
+        return ResponseEntity.ok(keyTechniqueElementService.create(id, dto));
     }
 
     @PatchMapping(value = "/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MODERATOR')")
-    public KeyTechniqueElementDTO update(@PathVariable("id") Long id, @RequestBody @Valid KeyTechniqueElementDTO dto) {
-        return keyTechniqueElementService.update(id, dto);
+    public ResponseEntity<KeyTechniqueElementDTO> update(@PathVariable("id") Long id, @RequestBody @Valid KeyTechniqueElementDTO dto) {
+        return ResponseEntity.ok(keyTechniqueElementService.update(id, dto));
     }
 
     @DeleteMapping(value = "/{id}")

@@ -3,6 +3,7 @@ package codeenthusiast.TrainingCenterApp.muscle;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -29,7 +30,8 @@ public class MuscleServiceImpl implements MuscleService {
         return muscleMapper.mapToDTO(muscle);
     }
 
-    private Muscle findEntityById(Long id) {
+    @Override
+    public Muscle findEntityById(Long id) {
         return muscleRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(id));
     }
@@ -42,34 +44,34 @@ public class MuscleServiceImpl implements MuscleService {
 
     @Override
     public MuscleDTO update(Long id, MuscleDTO dto) {
-        this.isExistsById(id);
+        this.existsById(id);
         dto.setId(id);
-        return save(dto);
+        Muscle updatedMuscle = muscleMapper.mapToEntity(dto);
+        return save(updatedMuscle);
     }
 
     @Override
     public MuscleDTO create(MuscleDTO dto) {
         checkExistenceByName(dto.getName());
         Muscle muscle = new Muscle(dto);
-        return save(muscleMapper.mapToDTO(muscle));
+        return save(muscle);
     }
 
     @Override
-    public MuscleDTO save(MuscleDTO dto) {
-        Muscle muscle = muscleMapper.mapToEntity(dto);
-
-        return muscleMapper.mapToDTO(muscleRepository.save(muscle));
+    public MuscleDTO save(Muscle muscle) {
+        Muscle savedMuscle = muscleRepository.save(muscle);
+        return muscleMapper.mapToDTO(savedMuscle);
     }
 
     @Override
     public void deleteById(Long id) {
-        if (isExistsById(id)) {
+        if (existsById(id)) {
             muscleRepository.deleteById(id);
         }
     }
 
     @Override
-    public boolean isExistsById(Long id) {
+    public boolean existsById(Long id) {
         if (!muscleRepository.existsById(id)) {
             throw new EntityNotFoundException(id);
         }

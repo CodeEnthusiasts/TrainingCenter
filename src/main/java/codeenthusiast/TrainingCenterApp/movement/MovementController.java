@@ -19,20 +19,20 @@ public class MovementController {
     }
 
     @GetMapping(value = "/{id}")
-    public MovementDTO getById(@PathVariable("id") Long id) {
-        return movementService.findById(id);
+    public ResponseEntity<MovementDTO> getById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(movementService.findById(id));
     }
 
     @PostMapping
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MODERATOR')")
-    public MovementDTO create(@RequestBody @Valid MovementDTO dto) {
-        return movementService.create(dto);
+    public ResponseEntity<MovementDTO> create(@RequestBody @Valid MovementDTO dto) {
+        return ResponseEntity.ok(movementService.create(dto));
     }
 
     @PatchMapping(value = "/{id}")
     @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MODERATOR')")
-    public MovementDTO update(@PathVariable("id") Long id, @RequestBody @Valid MovementDTO dto) {
-        return movementService.update(id, dto);
+    public ResponseEntity<MovementDTO> update(@PathVariable("id") Long id, @RequestBody @Valid MovementDTO dto) {
+        return ResponseEntity.ok(movementService.update(id, dto));
     }
 
     @DeleteMapping(value = "/{id}")

@@ -1,30 +1,27 @@
 package codeenthusiast.TrainingCenterApp.movement;
 
-import codeenthusiast.TrainingCenterApp.image.ImageDTO;
-
-import java.util.List;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface MovementService {
 
-    void deleteById(Long id);
-
-    void checkExistence(Long id);
+    boolean isExistsById(Long id);
 
     void checkExistenceByName(String name);
 
-    MovementDTO findById(Long id);
+    Movement findEntityById(Long id);
 
-    MovementDTO update(Long id, MovementDTO dto);
+    MovementDTO findById(Long id);
 
     MovementDTO create(MovementDTO dto);
 
-    MovementDTO save(MovementDTO dto);
+    MovementDTO save(Movement movement);
 
-    MovementDTO addImage(Long id, ImageDTO image);
+    MovementDTO update(Long id, MovementDTO dto);
 
-    List<Long> removeAllImages(Long id);
+    void deleteById(Long id);
 
-    List<Long> getIdOfDeletedImages(List<ImageDTO> images);
+    MovementDTO addImage(Long id, MultipartFile file);
 
-    Movement findEntityById(Long id);
+    MovementDTO removeAllImages(Long id);
+
 }

@@ -7,5 +7,4 @@ import org.springframework.stereotype.Repository;
 public interface StrengthExerciseDetailsRepository extends AbstractRepository<StrengthExerciseDetails> {
 
     StrengthExerciseDetails findById(long id);
-
 }

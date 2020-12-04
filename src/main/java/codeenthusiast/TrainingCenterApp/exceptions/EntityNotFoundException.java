@@ -12,4 +12,8 @@ public class EntityNotFoundException extends RuntimeException{
     public EntityNotFoundException(String name){
         super("Entity with ID: " + name + "does not exist.");
     }
+
+    public EntityNotFoundException() {
+        super("Resource not available. ");
+    }
 }

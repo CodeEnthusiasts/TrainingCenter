@@ -3,12 +3,13 @@ package codeenthusiast.TrainingCenterApp.exercise.strengthexercise;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
 import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
 import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.details.StrengthExerciseDetails;
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.details.StrengthExerciseDetailsDTO;
+
 import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.Size;
 
 @Getter
 @Setter
@@ -18,10 +19,12 @@ public class StrengthExerciseDTO extends AbstractDTO {
 
     private RepetitionUnit repetitionUnit;
 
+    @Size(min = 1, max = 100)
     private short reps;
 
     private WeightUnit weightUnit;
 
+    @Size(min = 0, max = 300)
     private double weight;
 
 }

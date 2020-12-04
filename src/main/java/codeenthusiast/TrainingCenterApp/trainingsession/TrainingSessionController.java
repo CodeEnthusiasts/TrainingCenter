@@ -1,5 +1,6 @@
 package codeenthusiast.TrainingCenterApp.trainingsession;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -17,30 +18,30 @@ public class TrainingSessionController {
     }
 
     @GetMapping(value = "/{id}")
-    public TrainingSessionDTO getById(@PathVariable("id") Long id) {
-        return trainingSessionService.findById(id);
+    public ResponseEntity<TrainingSessionDTO> getById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(trainingSessionService.getTrainingSessionById(id));
     }
 
-    @GetMapping(value = "training-plan/{id}")
-    public List<TrainingSessionDTO> getAllByTrainingPlanId(@PathVariable("id") Long id) {
-        return trainingSessionService.getAllByTrainingPlanId(id);
+    @GetMapping(value = "/training-plans/{id}")
+    public ResponseEntity<List<TrainingSessionDTO>> getAllByTrainingPlanId(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(trainingSessionService.getAllTrainingSessionsByTrainingPlanId(id));
     }
 
-
-    @PostMapping(value = "/training-plan/{training_session_id}")
-    public TrainingSessionDTO create(@RequestBody @Valid TrainingSessionDTO dto
-            , @PathVariable("training_session_id") Long trainingPlanId) {
-        return trainingSessionService.create(dto, trainingPlanId);
+    @PostMapping(value = "/training-plans/{training_session_id}")
+    public ResponseEntity<TrainingSessionDTO> create(@RequestBody @Valid TrainingSessionDTO dto,
+                                                     @PathVariable("training_session_id") Long trainingPlanId) {
+        return ResponseEntity.ok(trainingSessionService.createTrainingSession(dto, trainingPlanId));
     }
 
     @PatchMapping(value = "/{id}")
-    public TrainingSessionDTO update(@PathVariable("id") Long id, @RequestBody @Valid TrainingSessionDTO dto) {
-        return trainingSessionService.update(id, dto);
+    public ResponseEntity<TrainingSessionDTO> update(@PathVariable("id") Long id,
+                                                     @RequestBody @Valid TrainingSessionDTO dto) {
+        return ResponseEntity.ok(trainingSessionService.updateTrainingSession(id, dto));
     }
 
     @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable("id") Long id) throws Exception {
-        trainingSessionService.deleteById(id);
+    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(trainingSessionService.deleteTrainingSession(id));
     }
 
 }

@@ -1,10 +1,10 @@
 package codeenthusiast.TrainingCenterApp.record.custom;
 
-import codeenthusiast.TrainingCenterApp.record.endurance.EnduranceRecordDTO;
-
 import java.util.List;
 
 public interface CustomRecordService {
+
+    CustomRecord getCustomRecordEntityById(Long id);
 
     CustomRecordDTO createCustomRecord(Long personalRecordsId, CustomRecordDTO customRecordDTO);
 

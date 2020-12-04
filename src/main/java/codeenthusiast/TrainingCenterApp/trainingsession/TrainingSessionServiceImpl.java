@@ -1,88 +1,79 @@
 package codeenthusiast.TrainingCenterApp.trainingsession;
 
+import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanServiceImpl;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class TrainingSessionServiceImpl implements TrainingSessionService {
+public class TrainingSessionServiceImpl implements TrainingSessionService, SecurityService {
 
-    private final TrainingSessionRepository trainingSessionRepository;
+    private final TrainingSessionRepository repository;
+
+    private final TrainingSessionMapper mapper;
 
     private final TrainingPlanServiceImpl trainingPlanService;
 
-    private final TrainingSessionMapper trainingSessionMapper;
-
-    public TrainingSessionServiceImpl(TrainingSessionRepository trainingSessionRepository, TrainingPlanServiceImpl trainingPlanService, TrainingSessionMapper trainingSessionMapper) {
-        this.trainingSessionRepository = trainingSessionRepository;
+    public TrainingSessionServiceImpl(TrainingSessionRepository repository,
+                                      TrainingSessionMapper mapper,
+                                      TrainingPlanServiceImpl trainingPlanService) {
+        this.repository = repository;
+        this.mapper = mapper;
         this.trainingPlanService = trainingPlanService;
-        this.trainingSessionMapper = trainingSessionMapper;
-    }
-
-
-    public TrainingSession findEntityById(Long trainingPlanId) {
-        return trainingSessionRepository.findById(trainingPlanId).orElseThrow(
-                () -> new EntityNotFoundException(trainingPlanId));
     }
 
     @Override
-    public TrainingSessionDTO findById(Long id) {
-            TrainingSession trainingSession = trainingSessionRepository.findById(id).orElseThrow(
-                    () -> new EntityNotFoundException(id));
-            if(!hasAccess(trainingSession)){
-                throw new AccessDeniedException("Access Denied");
-            }
-            return trainingSessionMapper.mapToDTO(trainingSession);
+    public TrainingSession getTrainingSessionEntityById(Long trainingPlanId) {
+        TrainingSession trainingSession = repository.findById(trainingPlanId)
+                                                    .orElseThrow(EntityNotFoundException::new);
+        authorize(hasAccess(trainingSession));
+        return trainingSession;
     }
 
     @Override
-    public TrainingSessionDTO save(TrainingSession trainingSession, Long trainingPlanId) {
+    public TrainingSessionDTO getTrainingSessionById(Long id) {
+        return mapToDTO(getTrainingSessionEntityById(id));
+    }
+
+    @Override
+    public List<TrainingSessionDTO> getAllTrainingSessionsByTrainingPlanId(Long trainingPlanId) {
         TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
-        trainingSession.setTrainingPlan(trainingPlan);
-        TrainingSession newSession = trainingSessionRepository.save(trainingSession);
-
-        return trainingSessionMapper.mapToDTO(newSession);
-    }
-
-    public TrainingSessionDTO save(TrainingSessionDTO oldSession) {
-        TrainingSession entity = trainingSessionMapper.mapToEntity(oldSession);
-
-        return trainingSessionMapper.mapToDTO(trainingSessionRepository.save(entity));
+        return mapToDTOs(trainingPlan.getTrainingSessions());
     }
 
     @Override
-    public List<TrainingSessionDTO> getAllByTrainingPlanId(Long trainingPlanId) {
+    public TrainingSessionDTO createTrainingSession(TrainingSessionDTO dto, Long trainingPlanId) {
         TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
-        if(!trainingPlanService.hasAccess(trainingPlan)){
-            throw  new AccessDeniedException("Access denied");
-        }
-        List<TrainingSession> trainingSessions = trainingSessionRepository.findAllByTrainingPlanId(trainingPlanId);
-        return trainingSessionMapper.mapToDTOs(trainingSessions);
-    }
-
-    @Override
-    public TrainingSessionDTO create(TrainingSessionDTO dto, Long trainingPlanId) {
-        TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
-        if(!trainingPlanService.hasAccess(trainingPlan)){
-            throw  new AccessDeniedException("Access denied");
-        }
         TrainingSession trainingSession = new TrainingSession(dto);
-        return save(trainingSession, trainingPlanId);
+        trainingSession.setTrainingPlan(trainingPlan);
+        return mapToDTO(save(trainingSession));
     }
 
     @Override
-    public TrainingSessionDTO update(Long id, TrainingSessionDTO dto) {
-        TrainingSession oldSession = findEntityById(id);
-        if(!hasAccess(oldSession)){
-            throw new AccessDeniedException("Access denied");
-        }
+    public TrainingSessionDTO updateTrainingSession(Long id, TrainingSessionDTO dto) {
+        TrainingSession trainingSession = getTrainingSessionEntityById(id);
+        updateData(trainingSession, dto);
+        return mapToDTO(save(trainingSession));
+    }
+
+    @Override
+    public String deleteTrainingSession(Long id) {
+        repository.delete(getTrainingSessionEntityById(id));
+        return "Training session deleted successfully. ";
+    }
+
+    private boolean hasAccess(TrainingSession trainingSession) {
+        return trainingSession.getTrainingPlan().getUser().getId().equals(getPrincipal().getId());
+    }
+
+    private TrainingSession save(TrainingSession trainingSession) {
+        return repository.save(trainingSession);
+    }
+
+    private void updateData(TrainingSession oldSession, TrainingSessionDTO dto) {
         oldSession.setDate(dto.getDate());
         oldSession.setDayOfWeek(dto.getDayOfWeek());
         oldSession.setDifficulty(dto.getDifficulty());
@@ -90,26 +81,14 @@ public class TrainingSessionServiceImpl implements TrainingSessionService {
         oldSession.setStartTime(dto.getStartTime());
         oldSession.setName(dto.getName());
         oldSession.setNotes(dto.getNotes());
-
-        return trainingSessionMapper.mapToDTO(trainingSessionRepository.save(oldSession));
     }
 
-    @Override
-    public void deleteById(Long id) {
-        TrainingSession oldSession = findEntityById(id);
-        if(!hasAccess(oldSession)){
-            throw new AccessDeniedException("Access denied");
-        }
-        trainingSessionRepository.deleteById(id);
+    private TrainingSessionDTO mapToDTO(TrainingSession trainingSession) {
+        return mapper.mapToDTO(trainingSession);
     }
 
-    public boolean hasAccess(TrainingSession trainingSession) {
-        UserDetailsImpl userDetailsImpl = getPrincipal();
-        return trainingSession.getTrainingPlan().getUser().getId().equals(userDetailsImpl.getId());
+    private List<TrainingSessionDTO> mapToDTOs(List<TrainingSession> list) {
+        return mapper.mapToDTOs(list);
     }
 
-    private UserDetailsImpl getPrincipal() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (UserDetailsImpl) authentication.getPrincipal();
-    }
 }

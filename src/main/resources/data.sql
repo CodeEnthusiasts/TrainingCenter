@@ -26,10 +26,13 @@ UPDATE image SET user_id = 1 WHERE id = 1;
 
 -- PERSONAL RECORDS
 INSERT INTO personal_records(id, user_id) VALUES (1,1);
+INSERT INTO personal_records(id, user_id) VALUES (2,2);
 
 --USER DETAILS
 INSERT INTO user_details(id, age, body_weight_unit, height, height_unit, sex, weight, user_id) values
-      (1, 20, 'KILOGRAMS', 183, 'METERS', 'MALE', 93.0, 1);
+      (1, 20, 'KILOGRAMS', 1.83, 'METERS', 'MALE', 93.0, 1);
+INSERT INTO user_details(id, age, body_weight_unit, height, height_unit, sex, weight, user_id) values
+      (2, 30, 'KILOGRAMS', 1.85, 'METERS', 'FEMALE', 95.0, 2);
 
 -- ROLES FOR USERS
 INSERT INTO users_roles(users_id, roles_id) VALUES (1,2), (2,1);
@@ -83,13 +86,13 @@ UPDATE image SET muscle_id = 2 WHERE id = 8;
 UPDATE image SET muscle_id = 3 WHERE id = 9;
 
 -- KEY TECHNIQUE ELEMENTS
-INSERT INTO key_technique_element(id, content) VALUES
-        (1, 'Keep chest up'),
-        (2, 'Plain foot, weight on the middle'),
-        (3, 'Pull shoulder blades together'),
-        (4, 'Elbow under the bar'),
-        (5, 'Kepp air pressure in diapragma'),
-        (6, 'Push legs to the floow');
+INSERT INTO key_technique_element(id, content, movement_id) VALUES
+        (1, 'Keep chest up', 1),
+        (2, 'Plain foot, weight on the middle', 1),
+        (3, 'Pull shoulder blades together', 2),
+        (4, 'Elbow under the bar', 2),
+        (5, 'Kepp air pressure in diapragma', 3),
+        (6, 'Push legs to the floow', 3);
 
 -- ADD MUSCLE_ID's TO IMAGES
 UPDATE image SET movement_id = 1 WHERE id = 4;
@@ -121,20 +124,23 @@ INSERT INTO endurance_exercise(id, distance, distance_unit, heart_rate, vo2max_p
 INSERT INTO strength_record(id, movement_name, reps, repetition_unit, date, weight, weight_unit, personal_records_id) VALUES
         (1, 'Squat', 1, 'MOTION', '2020-09-09', 190, 'KILOGRAMS', 1),
         (2, 'Squat', 5, 'MOTION', '2020-07-09', 140, 'KILOGRAMS', 1),
-        (3, 'Bench press', 1, 'MOTION', '2020-05-09', 150, 'KILOGRAMS', 1);
+        (3, 'Bench press', 1, 'MOTION', '2020-05-09', 150, 'KILOGRAMS', 1),
+        (4, 'Bench press', 1, 'MOTION', '2020-06-09', 155, 'KILOGRAMS', 2);
 
 
 -- ENDURANCE RECORDS
 INSERT INTO endurance_record(id, distance, distance_unit, date, movement_name, duration, time_unit, personal_records_id) VALUES
-        (1, 1.0, 'KILOMETERS', '2020-05-09','Running',  '00:03','HOURS', 1),
-        (2, 5.0, 'KILOMETERS', '2020-07-09','Running',  '00:28','HOURS', 1),
-        (3, 100, 'METERS', '2021-05-09','Swimming',  '00:10','HOURS', 1);
+        (1, 1.0, 'KILOMETERS', '2020-05-09','Running', '00:03', 'HOURS', 1),
+        (2, 5.0, 'KILOMETERS', '2020-07-09','Running', '00:28', 'HOURS', 1),
+        (3, 100, 'METERS', '2021-05-09', 'Swimming', '00:10', 'HOURS', 1),
+        (4, 100, 'METERS', '2021-05-09', 'Swimming', '00:10', 'HOURS', 2);
 
 
 -- CUSTOM RECORDS
 INSERT INTO custom_record(id, description, date, value, personal_records_id) VALUES
         (1, 'Vertical jump', '2020-10-10', 0.8, 1),
-        (2, 'Drive 100km on bike', '2020-03-03', 100, 1);
+        (2, 'Drive 100km on bike', '2020-03-03', 100, 1),
+        (3, 'Drive 105km on bike', '2020-03-04', 100, 2);
 
 
 

@@ -1,12 +1,18 @@
 package codeenthusiast.TrainingCenterApp.user.major;
 
-import codeenthusiast.TrainingCenterApp.image.ImageDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 public interface UserService {
 
+    User findEntityById(Long id);
+
+    UserDTO findById(Long id);
+
+    UserDTO update(Long id, UserDTO dto);
+
     boolean existsByEmailAndPassword(String email, String password);
 
-    UserDTO addImage(Long id, ImageDTO image);
+    String addImage(Long id, MultipartFile file);
 
-    void removeImage(Long id);
+    String removeImage(Long id);
 }

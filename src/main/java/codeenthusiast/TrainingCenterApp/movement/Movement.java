@@ -4,11 +4,9 @@ import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.image.Image;
 import codeenthusiast.TrainingCenterApp.movement.keytechniqueelement.KeyTechniqueElement;
 import codeenthusiast.TrainingCenterApp.muscle.Muscle;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.Default;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;

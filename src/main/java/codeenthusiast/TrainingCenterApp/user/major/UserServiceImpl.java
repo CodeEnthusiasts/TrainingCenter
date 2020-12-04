@@ -1,32 +1,38 @@
 package codeenthusiast.TrainingCenterApp.user.major;
 
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.image.ImageDTO;
+import codeenthusiast.TrainingCenterApp.image.Image;
+import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
 @Service
 public class UserServiceImpl implements UserService {
 
-    private final UserMapper userMapper;
     private final UserRepository userRepository;
+    private final ImageServiceImpl imageService;
+    private final UserMapper userMapper;
 
-    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository) {
+
+    public UserServiceImpl(UserMapper userMapper, UserRepository userRepository, ImageServiceImpl imageService) {
         this.userMapper = userMapper;
         this.userRepository = userRepository;
+        this.imageService = imageService;
     }
 
-    public UserDTO findById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(
+    @Override
+    public User findEntityById(Long id) {
+        return userRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(id));
-        return userMapper.mapToDTO(user);
     }
 
-    public UserDTO save(UserDTO dto) {
-        User user = userMapper.mapToEntity(dto);
-        userRepository.save(user);
-        return dto;
+    @Override
+    public UserDTO findById(Long id) {
+        return mapToDTO(findEntityById(id));
     }
 
+    @Override
     public UserDTO update(Long id, UserDTO dto) {
         User user = findEntityById(id);
         if (dto.getEmail() != null) {
@@ -37,29 +43,43 @@ public class UserServiceImpl implements UserService {
             user.setUsername(dto.getUsername());
         }
 
-        return save(userMapper.mapToDTO(user));
+        return mapToDTO(save(user));
     }
 
-    public User findEntityById(Long id) {
-        return userRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(id));
-    }
-
+    @Override
     public boolean existsByEmailAndPassword(String email, String password) {
         return userRepository.existsByEmailAndPassword(email, password);
     }
 
-    public UserDTO addImage(Long id, ImageDTO image) {
-        UserDTO user = findById(id);
-        user.setImageUrl(image.getFileUrl());
-        return save(user);
+    @Override
+    public String addImage(Long id, MultipartFile file) {
+        User user = findEntityById(id);
+        if (!imageService.existsByUserId(id)){
+            imageService.createNewImage(file, user);
+        } else{
+            Image image = user.getImage();
+            imageService.replaceImage(image, file);
+        }
+
+        return "Image was successfully added";
     }
 
     @Override
-    public void removeImage(Long id) {
-        UserDTO user = findById(id);
-        user.setImageUrl(null);
-        save(user);
+    @Transactional
+    public String removeImage(Long id) {
+        User user = findEntityById(id);
+        user.setImage(null);
+        imageService.deleteImageByUserId(id);
+
+        return "Image was deleted successfully";
+    }
+
+    private User save(User user) {
+        return userRepository.save(user);
+    }
+
+    private UserDTO mapToDTO(User user) {
+        return userMapper.mapToDTO(user);
     }
 
 }

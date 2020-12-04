@@ -9,8 +9,6 @@ import java.util.List;
 @Repository
 public interface CustomRecordRepository extends JpaRepository<CustomRecord, Long> {
 
-    CustomRecord findById(long id);
-
     void deleteById(Long id);
 
     List<CustomRecord> findAllByPersonalRecordsId(Long id);

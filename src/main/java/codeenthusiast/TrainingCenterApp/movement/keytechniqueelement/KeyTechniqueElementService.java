@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 @Service
 public interface KeyTechniqueElementService {
 
-    void deleteById(Long id);
+    KeyTechniqueElement findEntityById(Long id);
 
     KeyTechniqueElementDTO findById(Long id);
 
@@ -13,6 +13,8 @@ public interface KeyTechniqueElementService {
 
     KeyTechniqueElementDTO create(Long id, KeyTechniqueElementDTO dto);
 
-    KeyTechniqueElementDTO save(KeyTechniqueElementDTO dto);
+    KeyTechniqueElementDTO save(KeyTechniqueElement kte);
+
+    void deleteById(Long id);
 
 }

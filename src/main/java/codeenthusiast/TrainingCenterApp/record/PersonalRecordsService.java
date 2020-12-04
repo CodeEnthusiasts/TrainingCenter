@@ -4,6 +4,6 @@ public interface PersonalRecordsService {
 
     PersonalRecords getPersonalRecordsByUserId(Long userId);
 
-    PersonalRecords savePersonalRecords(PersonalRecords personalRecords);
+    PersonalRecords getPersonalRecordsEntityById(Long personalRecordsId);
 
 }

@@ -38,4 +38,23 @@ public class Image extends AbstractEntity {
     @JoinColumn(name = "user_id")
     @JsonIgnore
     private User user;
+
+    public Image(String fileUrl) {
+        this.fileUrl = fileUrl;
+    }
+
+    public Image(String fileUrl, Movement movement) {
+        this.fileUrl = fileUrl;
+        this.movement = movement;
+    }
+
+    public Image(String fileUrl, Muscle muscle) {
+        this.fileUrl = fileUrl;
+        this.muscle = muscle;
+    }
+
+    public Image(String fileUrl, User user) {
+        this.fileUrl = fileUrl;
+        this.user = user;
+    }
 }

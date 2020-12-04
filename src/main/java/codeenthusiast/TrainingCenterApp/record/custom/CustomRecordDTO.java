@@ -20,5 +20,6 @@ public class CustomRecordDTO extends AbstractDTO {
 
     private double value;
 
+    @NotNull
     private LocalDate date;
 }

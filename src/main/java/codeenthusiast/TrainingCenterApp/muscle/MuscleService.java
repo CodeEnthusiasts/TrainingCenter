@@ -1,32 +1,30 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
-import codeenthusiast.TrainingCenterApp.image.ImageDTO;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface MuscleService {
 
-    void deleteById(Long id);
-
-    void checkExistence(Long id);
-
-    void checkExistenceByName(String name);
+    Muscle findEntityById(Long id);
 
     MuscleDTO findById(Long id);
 
     List<MuscleDTO> findByMovementId(Long id);
 
+    boolean existsById(Long id);
+
+    void checkExistenceByName(String name);
+
     MuscleDTO update(Long id, MuscleDTO dto);
 
     MuscleDTO create(MuscleDTO dto);
 
-    MuscleDTO save(MuscleDTO dto);
+    MuscleDTO save(Muscle muscle);
 
-    MuscleDTO addImage(Long id, ImageDTO image);
+    MuscleDTO addImage(Long id, MultipartFile file);
 
-    List<Long> removeAllImages(Long id);
+    MuscleDTO removeAllImages(Long id);
 
-    List<Long> getIdOfDeletedImages(List<ImageDTO> images);
-
-
+    void deleteById(Long id);
 }

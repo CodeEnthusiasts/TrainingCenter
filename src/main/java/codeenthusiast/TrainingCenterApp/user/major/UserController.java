@@ -37,13 +37,12 @@ public class UserController {
         return ResponseEntity.ok(userService.update(userId, dto));
     }
 
-    @PostMapping("{user_id}/image")
-    public ResponseEntity<UserDTO> addImage(@PathVariable("user_id") Long userId, @RequestParam("file") MultipartFile file) {
-        ImageDTO image = imageServiceImpl.createNewImage(file);
-        return ResponseEntity.ok(userService.addImage(userId, image));
+    @PostMapping("/{user_id}/image")
+    public ResponseEntity<String> addImage(@PathVariable("user_id") Long userId, @RequestParam("file") MultipartFile file) {
+        return ResponseEntity.ok(userService.addImage(userId, file));
     }
 
-    @DeleteMapping("{user_id}/image")
+    @DeleteMapping("/{user_id}/image")
     public ResponseEntity<String> removeImage(@PathVariable("user_id") Long userId) {
         userService.removeImage(userId);
         return ResponseEntity.ok("Image was successfully removed.");

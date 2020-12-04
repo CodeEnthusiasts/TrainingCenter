@@ -1,38 +1,40 @@
 package codeenthusiast.TrainingCenterApp.record.strength;
 
+import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
-import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class StrengthRecordServiceImpl implements StrengthRecordService {
+public class StrengthRecordServiceImpl implements StrengthRecordService, SecurityService {
 
     private final StrengthRecordRepository repository;
 
     private final StrengthRecordMapper mapper;
 
-    private final PersonalRecordsServiceImpl personalRecordsServiceImpl;
+    private final PersonalRecordsServiceImpl personalRecordsService;
 
     public StrengthRecordServiceImpl(StrengthRecordRepository repository,
                                      StrengthRecordMapper mapper,
-                                     PersonalRecordsServiceImpl personalRecordsServiceImpl) {
+                                     PersonalRecordsServiceImpl personalRecordsService) {
         this.repository = repository;
         this.mapper = mapper;
-        this.personalRecordsServiceImpl = personalRecordsServiceImpl;
+        this.personalRecordsService = personalRecordsService;
+    }
+
+    @Override
+    public StrengthRecord getStrengthRecordEntityById(Long id) {
+        StrengthRecord strengthRecord = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        authorize(hasAccess(strengthRecord));
+        return strengthRecord;
     }
 
     @Override
     public StrengthRecordDTO createStrengthRecord(Long personalRecordsId, StrengthRecordDTO strengthRecordDTO) {
-        PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsByUserId(personalRecordsId);
-        if(!personalRecordsServiceImpl.hasAccess(personalRecords))
-            throw new AccessDeniedException("Access denied");
+        PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsByUserId(personalRecordsId);
         StrengthRecord strengthRecord = mapToEntity(strengthRecordDTO);
         strengthRecord.setPersonalRecords(personalRecords);
         return mapToDTO(save(strengthRecord));
@@ -40,62 +42,35 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
 
     @Override
     public StrengthRecordDTO updateStrengthRecord(Long strengthRecordId, StrengthRecordDTO strengthRecordDTO) {
-        StrengthRecord strengthRecord = getStrengthRecordByIdFromRepo(strengthRecordId);
-        if(isNull(strengthRecord))
-            throw new EntityNotFoundException("Resource not available");
-        if(!hasAccess(strengthRecord))
-            throw new AccessDeniedException("Access denied");
+        StrengthRecord strengthRecord = getStrengthRecordEntityById(strengthRecordId);
         updateStrengthRecord(strengthRecord, strengthRecordDTO);
         return mapToDTO(save(strengthRecord));
     }
 
     @Override
     public List<StrengthRecordDTO> getAllStrengthRecordsByPersonalRecordsId(Long personalRecordsId) {
-        PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(!personalRecordsServiceImpl.hasAccess(personalRecords))
-            throw new AccessDeniedException("Access denied");
-        return mapToDTOs(repository.findAllByPersonalRecordsId(personalRecordsId));
+        PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsEntityById(personalRecordsId);
+        return mapToDTOs(personalRecords.getStrengthRecords());
     }
 
     @Override
     public List<StrengthRecordDTO> getThreeLatestStrengthRecordsByPersonalRecordsId(Long personalRecordsId) {
-        PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(!personalRecordsServiceImpl.hasAccess(personalRecords))
-            throw new AccessDeniedException("Access denied");
+        personalRecordsService.getPersonalRecordsEntityById(personalRecordsId);
         return mapToDTOs(repository.findThreeLatestByPersonalRecordsId(personalRecordsId));
     }
 
     @Override
     public String deleteStrengthRecord(Long strengthRecordId) {
-        StrengthRecord strengthRecord = getStrengthRecordByIdFromRepo(strengthRecordId);
-        if(isNull(strengthRecord))
-            throw new EntityNotFoundException("Resource not available");
-        if(!hasAccess(strengthRecord))
-            throw new AccessDeniedException("Access denied");
-        deleteById(strengthRecordId);
+        repository.delete(getStrengthRecordEntityById(strengthRecordId));
         return "Record deleted successfully. ";
     }
 
     private boolean hasAccess(StrengthRecord strengthRecord) {
-        UserDetailsImpl userDetailsImpl = getPrincipal();
-        return strengthRecord.getPersonalRecords().getUser().getId().equals(userDetailsImpl.getId());
-    }
-
-    private UserDetailsImpl getPrincipal() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (UserDetailsImpl) authentication.getPrincipal();
-    }
-
-    private boolean isNull(StrengthRecord strengthRecord) {
-        return strengthRecord == null;
+        return strengthRecord.getPersonalRecords().getUser().getId().equals(getPrincipal().getId());
     }
 
     private StrengthRecord save(StrengthRecord strengthRecord) {
         return repository.save(strengthRecord);
-    }
-
-    private StrengthRecord getStrengthRecordByIdFromRepo(long id) {
-        return repository.findById(id);
     }
 
     private void updateStrengthRecord(StrengthRecord strengthRecord, StrengthRecordDTO strengthRecordDTO) {
@@ -105,10 +80,6 @@ public class StrengthRecordServiceImpl implements StrengthRecordService {
         strengthRecord.setRepetitionUnit(strengthRecordDTO.getRepetitionUnit());
         strengthRecord.setReps(strengthRecordDTO.getReps());
         strengthRecord.setDate(strengthRecordDTO.getDate());
-    }
-
-    private void deleteById(Long id) {
-        repository.deleteById(id);
     }
 
     private StrengthRecord mapToEntity(StrengthRecordDTO strengthRecordDTO) {

@@ -1,38 +1,40 @@
 package codeenthusiast.TrainingCenterApp.record.custom;
 
+import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
-import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CustomRecordServiceImpl implements CustomRecordService {
+public class CustomRecordServiceImpl implements CustomRecordService, SecurityService {
 
     private final CustomRecordRepository repository;
 
     private final CustomRecordMapper mapper;
 
-    private final PersonalRecordsServiceImpl personalRecordsServiceImpl;
+    private final PersonalRecordsServiceImpl personalRecordsService;
 
     public CustomRecordServiceImpl(CustomRecordRepository repository,
                                    CustomRecordMapper mapper,
-                                   PersonalRecordsServiceImpl personalRecordsServiceImpl) {
+                                   PersonalRecordsServiceImpl personalRecordsService) {
         this.repository = repository;
         this.mapper = mapper;
-        this.personalRecordsServiceImpl = personalRecordsServiceImpl;
+        this.personalRecordsService = personalRecordsService;
+    }
+
+    @Override
+    public CustomRecord getCustomRecordEntityById(Long id) {
+        CustomRecord customRecord = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        authorize(hasAccess(customRecord));
+        return customRecord;
     }
 
     @Override
     public CustomRecordDTO createCustomRecord(Long personalRecordsId, CustomRecordDTO customRecordDTO) {
-        PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(!personalRecordsServiceImpl.hasAccess(personalRecords))
-            throw new AccessDeniedException("Access denied");
+        PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsEntityById(personalRecordsId);
         CustomRecord customRecord = mapToEntity(customRecordDTO);
         customRecord.setPersonalRecords(personalRecords);
         return mapToDTO(save(customRecord));
@@ -40,68 +42,41 @@ public class CustomRecordServiceImpl implements CustomRecordService {
 
     @Override
     public CustomRecordDTO updateCustomRecord(Long customRecordId, CustomRecordDTO customRecordDTO) {
-        CustomRecord customRecord = getCustomRecordByIdFromRepo(customRecordId);
-        if(isNull(customRecord))
-            throw new EntityNotFoundException("Resource not available");
-        if(!hasAccess(customRecord))
-            throw new AccessDeniedException("Access denied");
+        CustomRecord customRecord = getCustomRecordEntityById(customRecordId);
         updateCustomRecord(customRecord, customRecordDTO);
         return mapToDTO(save(customRecord));
     }
 
     @Override
     public List<CustomRecordDTO> getAllCustomRecordsByPersonalRecordsId(Long personalRecordsId) {
-        PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(!personalRecordsServiceImpl.hasAccess(personalRecords))
-            throw new AccessDeniedException("Access denied");
-        return mapToDTOs(repository.findAllByPersonalRecordsId(personalRecordsId));
+        PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsEntityById(personalRecordsId);
+        return mapToDTOs(personalRecords.getCustomRecords());
     }
 
     @Override
     public List<CustomRecordDTO> getThreeLatestCustomRecordsByPersonalRecordsId(Long personalRecordsId) {
-        PersonalRecords personalRecords = personalRecordsServiceImpl.getPersonalRecordsById(personalRecordsId);
-        if(!personalRecordsServiceImpl.hasAccess(personalRecords))
-            throw new AccessDeniedException("Access denied");
+        personalRecordsService.getPersonalRecordsEntityById(personalRecordsId);
         return mapToDTOs(repository.findThreeLatestByPersonalRecordsId(personalRecordsId));
     }
 
     @Override
     public String deleteCustomRecord(Long customRecordId) {
-        CustomRecord customRecord = getCustomRecordByIdFromRepo(customRecordId);
-        if(isNull(customRecord))
-            throw new EntityNotFoundException("Resource not available");
-        if(!hasAccess(customRecord))
-            throw new AccessDeniedException("Access denied");
-        deleteById(customRecordId);
+        repository.delete(getCustomRecordEntityById(customRecordId));
         return "Record deleted successfully. ";
     }
 
     private boolean hasAccess(CustomRecord customRecord) {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        UserDetailsImpl userDetailsImpl = (UserDetailsImpl) authentication.getPrincipal();
-        return customRecord.getPersonalRecords().getUser().getId().equals(userDetailsImpl.getId());
-    }
-
-    private boolean isNull(CustomRecord customRecord) {
-        return customRecord == null;
+        return customRecord.getPersonalRecords().getUser().getId().equals(getPrincipal().getId());
     }
 
     private CustomRecord save(CustomRecord customRecord) {
         return repository.save(customRecord);
     }
 
-    private CustomRecord getCustomRecordByIdFromRepo(long id) {
-        return repository.findById(id);
-    }
-
     private void updateCustomRecord(CustomRecord customRecord, CustomRecordDTO customRecordDTO) {
         customRecord.setDescription(customRecordDTO.getDescription());
         customRecord.setValue(customRecordDTO.getValue());
         customRecord.setDate(customRecordDTO.getDate());
-    }
-
-    private void deleteById(Long id) {
-        repository.deleteById(id);
     }
 
     private CustomRecord mapToEntity(CustomRecordDTO customRecordDTO) {

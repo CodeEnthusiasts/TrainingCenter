@@ -1,9 +1,11 @@
 package codeenthusiast.TrainingCenterApp.image;
 
+import codeenthusiast.TrainingCenterApp.movement.Movement;
+import codeenthusiast.TrainingCenterApp.muscle.Muscle;
+import codeenthusiast.TrainingCenterApp.user.major.User;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @Service
 public class ImageServiceImpl implements ImageService {
@@ -19,18 +21,15 @@ public class ImageServiceImpl implements ImageService {
         this.imageUploader = imageUploader;
     }
 
-
     @Override
-    public ImageDTO createNewImage(MultipartFile file) {
-        String fileUrl = uploadImageOnHosting(file);
-        ImageDTO image = new ImageDTO(fileUrl);
-        return save(image);
+    public boolean existsByUserId(Long userId) {
+        return repository.existsByUserId(userId);
     }
 
-    public ImageDTO save(ImageDTO dto) {
-        Image image = imageMapper.mapToEntity(dto);
-        repository.save(image);
-        return dto;
+    @Override
+    public ImageDTO save(Image image) {
+        Image savedImaged = repository.save(image);
+        return imageMapper.mapToDTO(savedImaged);
     }
 
     @Override
@@ -38,11 +37,42 @@ public class ImageServiceImpl implements ImageService {
         return imageUploader.uploadImage(file);
     }
 
-    public void deleteImagesById(List<Long> idImages) {
-        for (Long idImage : idImages) {
-            repository.deleteById(idImage);
+    @Override
+    public void createNewImage(MultipartFile file, Object object) {
+        String fileUrl = uploadImageOnHosting(file);
+        Class<?> classType = object.getClass();
+        Image image = null;
+        if (classType.equals(Movement.class)) {
+            image = new Image(fileUrl, (Movement) object);
+        } else if (classType.equals(Muscle.class)) {
+            image = new Image(fileUrl, (Muscle) object);
+        } else if (classType.equals(User.class)) {
+            image = new Image(fileUrl, (User) object);
         }
+        save(image);
     }
 
+    @Override
+    public void replaceImage(Image image, MultipartFile file) {
+        String fileUrl = uploadImageOnHosting(file);
+        image.setFileUrl(fileUrl);
+        save(image);
+    }
+
+    @Override
+    public void deleteImagesByMovementId(Long id) {
+        repository.deleteByMovementId(id);
+
+    }
+
+    @Override
+    public void deleteImagesByMuscleId(Long id) {
+        repository.deleteByMuscleId(id);
+    }
+
+    @Override
+    public void deleteImageByUserId(Long id) {
+        repository.deleteByUserId(id);
+    }
 
 }

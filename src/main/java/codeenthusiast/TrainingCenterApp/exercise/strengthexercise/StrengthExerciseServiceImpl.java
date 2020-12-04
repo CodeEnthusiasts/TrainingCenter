@@ -1,20 +1,17 @@
 package codeenthusiast.TrainingCenterApp.exercise.strengthexercise;
 
+import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.movement.MovementServiceImpl;
-import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSessionServiceImpl;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class StrengthExerciseServiceImpl implements StrengthExerciseService {
+public class StrengthExerciseServiceImpl implements StrengthExerciseService, SecurityService {
 
     private final StrengthExerciseRepository strengthExerciseRepository;
 
@@ -36,28 +33,23 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
     }
 
     @Override
-    public StrengthExerciseDTO findById(Long id) {
+    public StrengthExercise findEntityById(Long id) {
         StrengthExercise strengthExercise = strengthExerciseRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(id));
-        if(!hasAccess(strengthExercise)){
-            throw new AccessDeniedException("Access denied");
-        }
-        return strengthExerciseMapper.mapToDTO(strengthExercise);
+        authorize(hasAccess(strengthExercise));
+        return strengthExercise;
     }
 
-    private StrengthExercise findByEntityId(Long id) {
-        StrengthExercise strengthExercise = strengthExerciseRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(id));
-        if(!hasAccess(strengthExercise)){
-            throw new AccessDeniedException("Access denied");
-        }
-        return strengthExercise;
+    @Override
+    public StrengthExerciseDTO findById(Long id) {
+        StrengthExercise strengthExercise = findEntityById(id);
+        return strengthExerciseMapper.mapToDTO(strengthExercise);
     }
 
     @Override
     public StrengthExerciseDTO save(StrengthExercise strengthExercise, Long trainingSessionId, Long movementId) {
 
-        TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
+        TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
         Movement movement = movementService.findEntityById(movementId);
 
         strengthExercise.setMovement(movement);
@@ -69,62 +61,49 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService {
     }
 
 
-    private StrengthExerciseDTO save(StrengthExerciseDTO oldExercise) {
-        StrengthExercise entity = strengthExerciseMapper.mapToEntity(oldExercise);
-
-        return strengthExerciseMapper.mapToDTO(strengthExerciseRepository.save(entity));
+    private StrengthExerciseDTO save(StrengthExercise oldExercise) {
+        StrengthExercise strengthExercise = strengthExerciseRepository.save(oldExercise);
+        return strengthExerciseMapper.mapToDTO(strengthExercise);
     }
 
     @Override
     public List<StrengthExerciseDTO> getAllByTrainingSessionId(Long trainingSessionId) {
-        TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
-        if(!trainingSessionService.hasAccess(trainingSession)){
-            throw new AccessDeniedException("Access denied");
-        }
-        return strengthExerciseMapper.mapToDTOs(strengthExerciseRepository.findAllByTrainingSessionId(trainingSessionId));
+        TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
+        List<StrengthExercise> strengthExercises = strengthExerciseRepository.findAllByTrainingSessionId(trainingSessionId);
+        return strengthExerciseMapper.mapToDTOs(strengthExercises);
     }
 
     @Override
     public StrengthExerciseDTO update(Long id, StrengthExerciseDTO dto) {
-        StrengthExercise oldExercise = findByEntityId(id);
-        if(!hasAccess(oldExercise)){
-            throw new AccessDeniedException("Access denied");
-        }
+        StrengthExercise oldExercise = findEntityById(id);
+        updateData(dto, oldExercise);
+
+        return save(oldExercise);
+    }
+
+    public void updateData(StrengthExerciseDTO dto, StrengthExercise oldExercise) {
         oldExercise.setRepetitionUnit(dto.getRepetitionUnit());
         oldExercise.setReps(dto.getReps());
         oldExercise.setWeight(dto.getWeight());
         oldExercise.setWeightUnit(dto.getWeightUnit());
-        return save(strengthExerciseMapper.mapToDTO(oldExercise));
     }
-
-
 
 
     @Override
     public StrengthExerciseDTO create(StrengthExerciseDTO dto, Long trainingSessionId, Long movementId) {
-        TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
-        if(!trainingSessionService.hasAccess(trainingSession)){
-            throw new AccessDeniedException("Access denied");
-        }
         StrengthExercise strengthExercise = new StrengthExercise(dto);
-        save(strengthExercise, trainingSessionId, movementId);
-        return strengthExerciseMapper.mapToDTO(strengthExercise);
+        return save(strengthExercise, trainingSessionId, movementId);
     }
 
 
     @Override
     public void deleteById(Long id) {
-        findById(id);
+        findEntityById(id);
         strengthExerciseRepository.deleteById(id);
     }
 
-    public boolean hasAccess(StrengthExercise strengthExercise) {
-        UserDetailsImpl userDetailsImpl = getPrincipal();
-        return strengthExercise.getTrainingSession().getTrainingPlan().getUser().getId().equals(userDetailsImpl.getId());
+    private boolean hasAccess(StrengthExercise strengthExercise) {
+        return strengthExercise.getTrainingSession().getTrainingPlan().getUser().getId().equals(getPrincipal().getId());
     }
 
-    private UserDetailsImpl getPrincipal() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (UserDetailsImpl) authentication.getPrincipal();
-    }
 }

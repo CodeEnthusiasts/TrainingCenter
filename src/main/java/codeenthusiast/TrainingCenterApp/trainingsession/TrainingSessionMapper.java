@@ -2,7 +2,6 @@ package codeenthusiast.TrainingCenterApp.trainingsession;
 
 import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExerciseMapper;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExerciseMapper;
-import codeenthusiast.TrainingCenterApp.record.endurance.EnduranceRecordMapper;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 

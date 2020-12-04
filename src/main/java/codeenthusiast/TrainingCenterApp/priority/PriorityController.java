@@ -3,6 +3,7 @@ package codeenthusiast.TrainingCenterApp.priority;
 import codeenthusiast.TrainingCenterApp.movement.keytechniqueelement.KeyTechniqueElementDTO;
 import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -22,24 +23,24 @@ public class PriorityController {
     }
 
     @GetMapping(value = "/{id}")
-    public PriorityDTO getById(@PathVariable("id") Long id) {
-        return priorityService.findById(id);
+    public ResponseEntity<PriorityDTO> getById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(priorityService.findById(id));
     }
 
     @GetMapping(value = "/training-plan/{training_plan_id}")
-    public List<PriorityDTO> getAllByTrainingPlanId(@PathVariable("training_plan_id") Long id){
-        return priorityService.getAllByTrainingPlanId(id);
+    public ResponseEntity<List<PriorityDTO>> getAllByTrainingPlanId(@PathVariable("training_plan_id") Long id){
+        return ResponseEntity.ok(priorityService.getAllByTrainingPlanId(id));
     }
 
     @PostMapping(value = "/training-plan/{training_plan_id}")
-    public PriorityDTO create(@PathVariable("training_plan_id") Long id,
+    public ResponseEntity<PriorityDTO> create(@PathVariable("training_plan_id") Long id,
                                          @RequestBody @Valid PriorityDTO dto) {
-        return priorityService.create(id, dto);
+        return ResponseEntity.ok(priorityService.create(id, dto));
     }
 
     @PatchMapping(value = "/{id}")
-    public PriorityDTO update(@PathVariable("id") Long id, @RequestBody @Valid PriorityDTO dto) {
-        return priorityService.update(id, dto);
+    public ResponseEntity<PriorityDTO> update(@PathVariable("id") Long id, @RequestBody @Valid PriorityDTO dto) {
+        return ResponseEntity.ok(priorityService.update(id, dto));
     }
 
     @DeleteMapping(value = "/{id}")

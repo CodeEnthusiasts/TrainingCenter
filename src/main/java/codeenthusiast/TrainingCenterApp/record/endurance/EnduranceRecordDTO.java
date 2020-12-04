@@ -33,6 +33,7 @@ public class EnduranceRecordDTO extends AbstractDTO {
     @NotNull
     private LocalTime duration;
 
+    @NotNull
     private LocalDate date;
 
 }

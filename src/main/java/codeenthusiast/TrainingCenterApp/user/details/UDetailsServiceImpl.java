@@ -1,14 +1,11 @@
 package codeenthusiast.TrainingCenterApp.user.details;
 
+ import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
-import org.springframework.security.access.AccessDeniedException;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UDetailsServiceImpl implements UserDetailsService {
+public class UDetailsServiceImpl implements UserDetailsService, SecurityService {
 
     private final UserDetailsRepository repository;
 
@@ -20,50 +17,27 @@ public class UDetailsServiceImpl implements UserDetailsService {
     }
 
     @Override
-    public UserDetails saveUserDetails(UserDetails userDetails) {
-        return save(userDetails);
+    public UserDetails getUserDetailsEntityById(Long id) {
+        UserDetails userDetails = repository.findById(id).orElseThrow(EntityNotFoundException::new);
+        authorize(hasAccess(userDetails));
+        return userDetails;
     }
 
     @Override
     public UserDetailsDTO getUserDetailsByUserId(long userId) {
-        UserDetails userDetails = getUserDetailsByUserIdFromRepo(userId);
-        if(isNull(userDetails)) {
-            throw new EntityNotFoundException("Resource not available");
-        }
+        UserDetails userDetails = repository.findByUserId(userId).orElseThrow(EntityNotFoundException::new);
         return mapToDTO(userDetails);
     }
 
     @Override
     public UserDetailsDTO updateUserDetails(long id, UserDetailsDTO dto) {
-        UserDetails userDetails = getUserDetailsByIdFromRepo(id);
-        if(isNull(userDetails))
-            throw new EntityNotFoundException("Resource not available");
-        if(!hasAccess(userDetails))
-            throw new AccessDeniedException("Access denied");
+        UserDetails userDetails = getUserDetailsEntityById(id);
         updateUserDetailsAttributes(dto, userDetails);
         return mapToDTO(save(userDetails));
     }
 
     private boolean hasAccess(UserDetails userDetails) {
-        UserDetailsImpl userDetailsImpl = getPrincipal();
-        return userDetails.getUser().getId().equals(userDetailsImpl.getId());
-    }
-
-    private UserDetailsImpl getPrincipal() {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (UserDetailsImpl) authentication.getPrincipal();
-    }
-
-    private boolean isNull(Object object) {
-        return object == null;
-    }
-
-    private UserDetails getUserDetailsByIdFromRepo(long id) {
-        return repository.findById(id);
-    }
-
-    private UserDetails getUserDetailsByUserIdFromRepo(long id) {
-        return repository.findByUserId(id);
+        return userDetails.getUser().getId().equals(getPrincipal().getId());
     }
 
     private UserDetails save(UserDetails userDetails) {
@@ -72,11 +46,18 @@ public class UDetailsServiceImpl implements UserDetailsService {
 
     private void updateUserDetailsAttributes(UserDetailsDTO dto, UserDetails userDetails) {
         userDetails.setAge(dto.getAge());
-        userDetails.setBodyWeightUnit(dto.getBodyWeightUnit());
+        if(isNotNull(dto.getBodyWeightUnit()))
+            userDetails.setBodyWeightUnit(dto.getBodyWeightUnit());
         userDetails.setWeight(dto.getWeight());
-        userDetails.setHeightUnit(dto.getHeightUnit());
+        if(isNotNull(dto.getHeightUnit()))
+            userDetails.setHeightUnit(dto.getHeightUnit());
         userDetails.setHeight(dto.getHeight());
-        userDetails.setSex(dto.getSex());
+        if(isNotNull(dto.getSex()))
+            userDetails.setSex(dto.getSex());
+    }
+
+    private boolean isNotNull(Object object) {
+        return object != null;
     }
 
     private UserDetailsDTO mapToDTO(UserDetails userDetails) {

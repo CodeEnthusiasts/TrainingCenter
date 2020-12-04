@@ -61,8 +61,7 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService, Secur
 
     @Override
     public String deleteEnduranceRecord(Long enduranceRecordId) {
-        EnduranceRecord enduranceRecord = getEnduranceRecordEntityById(enduranceRecordId);
-        repository.delete(enduranceRecord);
+        repository.delete(getEnduranceRecordEntityById(enduranceRecordId));
         return "Record deleted successfully. ";
     }
 

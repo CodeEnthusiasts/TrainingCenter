@@ -61,8 +61,7 @@ public class StrengthRecordServiceImpl implements StrengthRecordService, Securit
 
     @Override
     public String deleteStrengthRecord(Long strengthRecordId) {
-        StrengthRecord strengthRecord = getStrengthRecordEntityById(strengthRecordId);
-        repository.delete(strengthRecord);
+        repository.delete(getStrengthRecordEntityById(strengthRecordId));
         return "Record deleted successfully. ";
     }
 

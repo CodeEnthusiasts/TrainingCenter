@@ -57,12 +57,11 @@ public class TrainingPlanServiceImpl implements TrainingPlanService, SecuritySer
     @Transient
     @Override
     public String deleteTrainingPlan(Long id) {
-        TrainingPlan trainingPlan = getTrainingPlanEntityById(id);
-        repository.delete(trainingPlan);
+        repository.delete(getTrainingPlanEntityById(id));
         return "Training plan deleted successfully. ";
     }
 
-    public boolean hasAccess(TrainingPlan trainingPLan) {
+    private boolean hasAccess(TrainingPlan trainingPLan) {
         return trainingPLan.getUser().getId().equals(getPrincipal().getId());
     }
 

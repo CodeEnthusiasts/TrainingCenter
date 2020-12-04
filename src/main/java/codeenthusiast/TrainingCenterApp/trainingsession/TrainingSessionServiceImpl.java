@@ -2,7 +2,6 @@ package codeenthusiast.TrainingCenterApp.trainingsession;
 
 import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanServiceImpl;
 import org.springframework.stereotype.Service;
@@ -12,79 +11,69 @@ import java.util.List;
 @Service
 public class TrainingSessionServiceImpl implements TrainingSessionService, SecurityService {
 
-    private final TrainingSessionRepository trainingSessionRepository;
+    private final TrainingSessionRepository repository;
+
+    private final TrainingSessionMapper mapper;
 
     private final TrainingPlanServiceImpl trainingPlanService;
 
-    private final TrainingSessionMapper trainingSessionMapper;
-
-    public TrainingSessionServiceImpl(TrainingSessionRepository trainingSessionRepository, TrainingPlanServiceImpl trainingPlanService, TrainingSessionMapper trainingSessionMapper) {
-        this.trainingSessionRepository = trainingSessionRepository;
+    public TrainingSessionServiceImpl(TrainingSessionRepository repository,
+                                      TrainingSessionMapper mapper,
+                                      TrainingPlanServiceImpl trainingPlanService) {
+        this.repository = repository;
+        this.mapper = mapper;
         this.trainingPlanService = trainingPlanService;
-        this.trainingSessionMapper = trainingSessionMapper;
     }
 
     @Override
-    public TrainingSession findEntityById(Long trainingPlanId) {
-        TrainingSession trainingSession = trainingSessionRepository.findById(trainingPlanId).orElseThrow(
-                () -> new EntityNotFoundException(trainingPlanId));
+    public TrainingSession getTrainingSessionEntityById(Long trainingPlanId) {
+        TrainingSession trainingSession = repository.findById(trainingPlanId)
+                                                    .orElseThrow(EntityNotFoundException::new);
         authorize(hasAccess(trainingSession));
         return trainingSession;
     }
 
     @Override
-    public TrainingSessionDTO findById(Long id) {
-        TrainingSession trainingSession = findEntityById(id);
-        return trainingSessionMapper.mapToDTO(trainingSession);
+    public TrainingSessionDTO getTrainingSessionById(Long id) {
+        return mapToDTO(getTrainingSessionEntityById(id));
     }
 
     @Override
-    public TrainingSessionDTO save(TrainingSession trainingSession, Long trainingPlanId) {
+    public List<TrainingSessionDTO> getAllTrainingSessionsByTrainingPlanId(Long trainingPlanId) {
         TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
-        trainingSession.setTrainingPlan(trainingPlan);
-
-        TrainingSession newSession = trainingSessionRepository.save(trainingSession);
-        return trainingSessionMapper.mapToDTO(newSession);
+        return mapToDTOs(trainingPlan.getTrainingSessions());
     }
 
     @Override
-    public TrainingSessionDTO save(TrainingSession trainingSession) {
-        TrainingSession savedSession = trainingSessionRepository.save(trainingSession);
-        return trainingSessionMapper.mapToDTO(savedSession);
-    }
-
-    @Override
-    public List<TrainingSessionDTO> getAllByTrainingPlanId(Long trainingPlanId) {
+    public TrainingSessionDTO createTrainingSession(TrainingSessionDTO dto, Long trainingPlanId) {
         TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
-
-        authorize(trainingPlanService.hasAccess(trainingPlan));
-
-        List<TrainingSession> trainingSessionsList = trainingSessionRepository.findAllByTrainingPlanId(trainingPlanId);
-
-        return trainingSessionMapper.mapToDTOs(trainingSessionsList);
-    }
-
-    @Override
-    public TrainingSessionDTO create(TrainingSessionDTO dto, Long trainingPlanId) {
-        TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
-
-        authorize(trainingPlanService.hasAccess(trainingPlan));
-
         TrainingSession trainingSession = new TrainingSession(dto);
-        return save(trainingSession, trainingPlanId);
+        trainingSession.setTrainingPlan(trainingPlan);
+        return mapToDTO(save(trainingSession));
     }
 
     @Override
-    public TrainingSessionDTO update(Long id, TrainingSessionDTO dto) {
-        TrainingSession oldSession = findEntityById(id);
-        authorize(hasAccess(oldSession));
-        TrainingSession updatedSession = updateData(oldSession, dto);
-
-        return save(updatedSession);
+    public TrainingSessionDTO updateTrainingSession(Long id, TrainingSessionDTO dto) {
+        TrainingSession trainingSession = getTrainingSessionEntityById(id);
+        updateData(trainingSession, dto);
+        return mapToDTO(save(trainingSession));
     }
 
     @Override
-    public TrainingSession updateData(TrainingSession oldSession, TrainingSessionDTO dto) {
+    public String deleteTrainingSession(Long id) {
+        repository.delete(getTrainingSessionEntityById(id));
+        return "Training session deleted successfully. ";
+    }
+
+    private boolean hasAccess(TrainingSession trainingSession) {
+        return trainingSession.getTrainingPlan().getUser().getId().equals(getPrincipal().getId());
+    }
+
+    private TrainingSession save(TrainingSession trainingSession) {
+        return repository.save(trainingSession);
+    }
+
+    private void updateData(TrainingSession oldSession, TrainingSessionDTO dto) {
         oldSession.setDate(dto.getDate());
         oldSession.setDayOfWeek(dto.getDayOfWeek());
         oldSession.setDifficulty(dto.getDifficulty());
@@ -92,21 +81,14 @@ public class TrainingSessionServiceImpl implements TrainingSessionService, Secur
         oldSession.setStartTime(dto.getStartTime());
         oldSession.setName(dto.getName());
         oldSession.setNotes(dto.getNotes());
-        return oldSession;
     }
 
-    @Override
-    public void deleteById(Long id) {
-        TrainingSession oldSession = findEntityById(id);
-
-        authorize(hasAccess(oldSession));
-
-        trainingSessionRepository.deleteById(id);
+    private TrainingSessionDTO mapToDTO(TrainingSession trainingSession) {
+        return mapper.mapToDTO(trainingSession);
     }
 
-    public boolean hasAccess(TrainingSession trainingSession) {
-        UserDetailsImpl userDetailsImpl = getPrincipal();
-        return trainingSession.getTrainingPlan().getUser().getId().equals(userDetailsImpl.getId());
+    private List<TrainingSessionDTO> mapToDTOs(List<TrainingSession> list) {
+        return mapper.mapToDTOs(list);
     }
 
 }

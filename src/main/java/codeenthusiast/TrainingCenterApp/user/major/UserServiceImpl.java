@@ -21,17 +21,18 @@ public class UserServiceImpl implements UserService {
         this.imageService = imageService;
     }
 
-    public UserDTO findById(Long id) {
-        User user = userRepository.findById(id).orElseThrow(
+    @Override
+    public User findEntityById(Long id) {
+        return userRepository.findById(id).orElseThrow(
                 () -> new EntityNotFoundException(id));
-        return userMapper.mapToDTO(user);
     }
 
-    public UserDTO save(User user) {
-        User savedUser = userRepository.save(user);
-        return userMapper.mapToDTO(savedUser);
+    @Override
+    public UserDTO findById(Long id) {
+        return mapToDTO(findEntityById(id));
     }
 
+    @Override
     public UserDTO update(Long id, UserDTO dto) {
         User user = findEntityById(id);
         if (dto.getEmail() != null) {
@@ -42,18 +43,15 @@ public class UserServiceImpl implements UserService {
             user.setUsername(dto.getUsername());
         }
 
-        return save(user);
+        return mapToDTO(save(user));
     }
 
-    public User findEntityById(Long id) {
-        return userRepository.findById(id).orElseThrow(
-                () -> new EntityNotFoundException(id));
-    }
-
+    @Override
     public boolean existsByEmailAndPassword(String email, String password) {
         return userRepository.existsByEmailAndPassword(email, password);
     }
 
+    @Override
     public String addImage(Long id, MultipartFile file) {
         User user = findEntityById(id);
         if (!imageService.existsByUserId(id)){
@@ -74,6 +72,14 @@ public class UserServiceImpl implements UserService {
         imageService.deleteImageByUserId(id);
 
         return "Image was deleted successfully";
+    }
+
+    private User save(User user) {
+        return userRepository.save(user);
+    }
+
+    private UserDTO mapToDTO(User user) {
+        return userMapper.mapToDTO(user);
     }
 
 }

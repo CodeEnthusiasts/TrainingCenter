@@ -49,7 +49,7 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService, Sec
     @Override
     public StrengthExerciseDTO save(StrengthExercise strengthExercise, Long trainingSessionId, Long movementId) {
 
-        TrainingSession trainingSession = trainingSessionService.findEntityById(trainingSessionId);
+        TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
         Movement movement = movementService.findEntityById(movementId);
 
         strengthExercise.setMovement(movement);
@@ -68,7 +68,7 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService, Sec
 
     @Override
     public List<StrengthExerciseDTO> getAllByTrainingSessionId(Long trainingSessionId) {
-        trainingSessionService.findEntityById(trainingSessionId);
+        TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
         List<StrengthExercise> strengthExercises = strengthExerciseRepository.findAllByTrainingSessionId(trainingSessionId);
         return strengthExerciseMapper.mapToDTOs(strengthExercises);
     }

@@ -19,29 +19,29 @@ public class TrainingSessionController {
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<TrainingSessionDTO> getById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(trainingSessionService.findById(id));
+        return ResponseEntity.ok(trainingSessionService.getTrainingSessionById(id));
     }
 
-    @GetMapping(value = "training-plan/{id}")
+    @GetMapping(value = "/training-plans/{id}")
     public ResponseEntity<List<TrainingSessionDTO>> getAllByTrainingPlanId(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(trainingSessionService.getAllByTrainingPlanId(id));
+        return ResponseEntity.ok(trainingSessionService.getAllTrainingSessionsByTrainingPlanId(id));
     }
 
-
-    @PostMapping(value = "/training-plan/{training_session_id}")
-    public ResponseEntity<TrainingSessionDTO> create(@RequestBody @Valid TrainingSessionDTO dto
-            , @PathVariable("training_session_id") Long trainingPlanId) {
-        return ResponseEntity.ok(trainingSessionService.create(dto, trainingPlanId));
+    @PostMapping(value = "/training-plans/{training_session_id}")
+    public ResponseEntity<TrainingSessionDTO> create(@RequestBody @Valid TrainingSessionDTO dto,
+                                                     @PathVariable("training_session_id") Long trainingPlanId) {
+        return ResponseEntity.ok(trainingSessionService.createTrainingSession(dto, trainingPlanId));
     }
 
     @PatchMapping(value = "/{id}")
-    public ResponseEntity<TrainingSessionDTO> update(@PathVariable("id") Long id, @RequestBody @Valid TrainingSessionDTO dto) {
-        return ResponseEntity.ok(trainingSessionService.update(id, dto));
+    public ResponseEntity<TrainingSessionDTO> update(@PathVariable("id") Long id,
+                                                     @RequestBody @Valid TrainingSessionDTO dto) {
+        return ResponseEntity.ok(trainingSessionService.updateTrainingSession(id, dto));
     }
 
     @DeleteMapping(value = "/{id}")
-    public void delete(@PathVariable("id") Long id) {
-        trainingSessionService.deleteById(id);
+    public ResponseEntity<String> delete(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(trainingSessionService.deleteTrainingSession(id));
     }
 
 }

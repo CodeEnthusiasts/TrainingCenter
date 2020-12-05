@@ -2,59 +2,40 @@ package codeenthusiast.TrainingCenterApp.record.endurance;
 
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.DistanceUnit;
+import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.Range;
 
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.validation.constraints.NotNull;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
 @Entity
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class EnduranceRecord extends AbstractEntity {
 
-    @NotNull
-    private String exerciseName;
+    private String movementName;
 
-    @NotNull
     @Enumerated(EnumType.STRING)
     private DistanceUnit distanceUnit;
-    @NotNull
-    @Range(min = 0, max = 10000)
-    private int distance;
-    @NotNull
+
+    private double distance;
+
     @Enumerated(EnumType.STRING)
     private TimeUnit timeUnit;
-    @NotNull
-    @Range(min = 0, max = 1000)
-    private int time;
 
-    private LocalDate setDate;
+    private LocalTime duration;
 
-    public EnduranceRecord(EnduranceRecordDTO enduranceRecordDTO) {
-        this.exerciseName = enduranceRecordDTO.getExerciseName();
-        this.distanceUnit = enduranceRecordDTO.getDistanceUnit();
-        this.distance = enduranceRecordDTO.getDistance();
-        this.timeUnit = enduranceRecordDTO.getTimeUnit();
-        this.time = enduranceRecordDTO.getTime();
-        this.setDate = enduranceRecordDTO.getSetDate();
-    }
+    private LocalDate date;
 
-    public EnduranceRecord(String exerciseName, DistanceUnit distanceUnit, int distance,
-                           TimeUnit timeUnit, int time, LocalDate setDate) {
-        this.exerciseName = exerciseName;
-        this.distanceUnit = distanceUnit;
-        this.distance = distance;
-        this.timeUnit = timeUnit;
-        this.time = time;
-        this.setDate = setDate;
-    }
+    @ManyToOne
+    @JoinColumn(name = "personal_records_id")
+    private PersonalRecords personalRecords;
 
 }

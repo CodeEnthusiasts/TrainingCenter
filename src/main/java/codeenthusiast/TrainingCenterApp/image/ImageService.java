@@ -1,12 +1,25 @@
 package codeenthusiast.TrainingCenterApp.image;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
 import org.springframework.web.multipart.MultipartFile;
 
-public interface ImageService extends AbstractService<Image, ImageDTO> {
+public interface ImageService {
 
-     ImageDTO createNewImage(MultipartFile file);
+    String uploadImageOnHosting(MultipartFile file);
 
-     String uploadImageOnHosting(MultipartFile file);
+    void createNewImage(MultipartFile file, Object object);
+
+    boolean existsByUserId(Long userId);
+
+    ImageDTO save(Image dto);
+
+    void replaceImage(Image image, MultipartFile file);
+
+    void deleteImagesByMovementId(Long id);
+
+    void deleteImagesByMuscleId(Long id);
+
+    void deleteImageByUserId(Long id);
+
+
 
 }

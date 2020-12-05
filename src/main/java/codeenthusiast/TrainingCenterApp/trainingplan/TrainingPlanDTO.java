@@ -3,12 +3,16 @@ package codeenthusiast.TrainingCenterApp.trainingplan;
 import codeenthusiast.TrainingCenterApp.abstracts.AbstractDTO;
 import codeenthusiast.TrainingCenterApp.constants.Difficulty;
 import codeenthusiast.TrainingCenterApp.priority.Priority;
+import codeenthusiast.TrainingCenterApp.priority.PriorityDTO;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
+import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSessionDTO;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -18,11 +22,12 @@ import java.util.List;
 @AllArgsConstructor
 public class TrainingPlanDTO extends AbstractDTO {
 
+    @NotNull
     private String name;
-    //change there
-    private List<TrainingSession> trainingSessions;
 
-    private int numberOfPlannedTrainings;
+    private short numberOfPlannedTrainings;
+
+    private short numberOfExecutedTrainings;
 
     private LocalDate startDate;
 
@@ -31,6 +36,11 @@ public class TrainingPlanDTO extends AbstractDTO {
     private String description;
 
     private Difficulty difficulty;
-    //change there
-    private List<Priority> priorities;
+
+    @JsonIgnore
+    private List<PriorityDTO> priorities;
+
+    @JsonIgnore
+    private List<TrainingSessionDTO> trainingSessions;
+
 }

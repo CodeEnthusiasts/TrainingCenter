@@ -11,6 +11,6 @@ class DistanceUnitTest {
     @ParameterizedTest
     @EnumSource(DistanceUnit.class)
     void distanceUnitsShouldEqualsSpecificValues(DistanceUnit distanceUnit) {
-        assertThat("METER, KILOMETER, MILE, FEET").containsSubsequence(distanceUnit.toString());
+        assertThat("METERS, KILOMETERS, MILES, FEET").containsSubsequence(distanceUnit.toString());
     }
 }

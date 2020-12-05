@@ -11,6 +11,6 @@ class HeightUnitTest {
     @ParameterizedTest
     @EnumSource(HeightUnit.class)
     void heightUnitsShouldEqualsSpecificValues(HeightUnit heightUnit) {
-        assertThat("METER, INCH").containsSubsequence(heightUnit.toString());
+        assertThat("METERS, INCH").containsSubsequence(heightUnit.toString());
     }
 }

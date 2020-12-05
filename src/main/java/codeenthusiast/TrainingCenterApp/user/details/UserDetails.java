@@ -1,25 +1,32 @@
 package codeenthusiast.TrainingCenterApp.user.details;
 
+import codeenthusiast.TrainingCenterApp.abstracts.AbstractEntity;
 import codeenthusiast.TrainingCenterApp.constants.BodyWeightUnit;
 import codeenthusiast.TrainingCenterApp.constants.HeightUnit;
 import codeenthusiast.TrainingCenterApp.constants.Sex;
-import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
+import codeenthusiast.TrainingCenterApp.user.major.User;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Embeddable;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
-@Embeddable
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDetails {
+public class UserDetails extends AbstractEntity {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    @JsonIgnore
+    private User user;
 
     @Enumerated(EnumType.STRING)
     private BodyWeightUnit bodyWeightUnit;
@@ -31,11 +38,17 @@ public class UserDetails {
 
     private double height;
 
-    private int age;
+    private short age;
 
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-    @OneToOne
-    private PersonalRecords personalRecords;
+    public UserDetails(BodyWeightUnit bodyWeightUnit, double weight, HeightUnit heightUnit, double height, short age, Sex sex) {
+        this.bodyWeightUnit = bodyWeightUnit;
+        this.weight = weight;
+        this.heightUnit = heightUnit;
+        this.height = height;
+        this.age = age;
+        this.sex = sex;
+    }
 }

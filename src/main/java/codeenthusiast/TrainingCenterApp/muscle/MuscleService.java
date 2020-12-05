@@ -1,12 +1,30 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
-import codeenthusiast.TrainingCenterApp.image.Image;
+import org.springframework.web.multipart.MultipartFile;
 
-public interface MuscleService extends AbstractService<Muscle, MuscleDTO> {
+import java.util.List;
+
+public interface MuscleService {
+
+    Muscle findEntityById(Long id);
+
+    MuscleDTO findById(Long id);
+
+    List<MuscleDTO> findByMovementId(Long id);
 
     boolean existsById(Long id);
 
-    boolean existsByName(String name);
+    void checkExistenceByName(String name);
 
+    MuscleDTO update(Long id, MuscleDTO dto);
+
+    MuscleDTO create(MuscleDTO dto);
+
+    MuscleDTO save(Muscle muscle);
+
+    MuscleDTO addImage(Long id, MultipartFile file);
+
+    MuscleDTO removeAllImages(Long id);
+
+    void deleteById(Long id);
 }

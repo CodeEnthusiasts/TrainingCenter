@@ -13,7 +13,7 @@ import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
 
-@Entity(name = "training_plans")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -21,12 +21,12 @@ public class TrainingPlan extends AbstractEntity {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(mappedBy = "trainingPlan", orphanRemoval = true)
     private List<TrainingSession> trainingSessions;
 
-    private int numberOfExecutedTrainings;
+    private short numberOfExecutedTrainings;
 
-    private int numberOfPlannedTrainings;
+    private short numberOfPlannedTrainings;
 
     private LocalDate startDate;
 
@@ -35,12 +35,13 @@ public class TrainingPlan extends AbstractEntity {
     private String description;
 
     @ManyToOne
+    @JoinColumn(name = "user_id")
     private User user;
 
     @Enumerated(EnumType.STRING)
     private Difficulty difficulty;
 
-    @OneToMany
+    @OneToMany(mappedBy = "trainingPlan")
     private List<Priority> priorities;
 
 

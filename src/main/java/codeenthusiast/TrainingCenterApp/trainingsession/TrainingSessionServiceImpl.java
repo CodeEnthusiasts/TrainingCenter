@@ -1,26 +1,94 @@
 package codeenthusiast.TrainingCenterApp.trainingsession;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
-import codeenthusiast.TrainingCenterApp.mappers.TrainingSessionMapper;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
+import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
+import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
+import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
+import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class TrainingSessionServiceImpl extends AbstractServiceImpl<TrainingSession, TrainingSessionDTO>
-        implements TrainingSessionService {
+public class TrainingSessionServiceImpl implements TrainingSessionService, SecurityService {
 
-    private TrainingSessionRepository trainingSessionRepository;
+    private final TrainingSessionRepository repository;
 
-    private TrainingSessionMapper trainingSessionMapper;
+    private final TrainingSessionMapper mapper;
 
-    public TrainingSessionServiceImpl(AbstractRepository<TrainingSession> repository, AbstractMapper<TrainingSession,
-            TrainingSessionDTO> mapper, TrainingSessionRepository trainingSessionRepository, TrainingSessionMapper trainingSessionMapper) {
-        super(repository, mapper);
-        this.trainingSessionRepository = trainingSessionRepository;
-        this.trainingSessionMapper = trainingSessionMapper;
+    private final TrainingPlanServiceImpl trainingPlanService;
+
+    public TrainingSessionServiceImpl(TrainingSessionRepository repository,
+                                      TrainingSessionMapper mapper,
+                                      TrainingPlanServiceImpl trainingPlanService) {
+        this.repository = repository;
+        this.mapper = mapper;
+        this.trainingPlanService = trainingPlanService;
+    }
+
+    @Override
+    public TrainingSession getTrainingSessionEntityById(Long trainingPlanId) {
+        TrainingSession trainingSession = repository.findById(trainingPlanId)
+                                                    .orElseThrow(EntityNotFoundException::new);
+        authorize(hasAccess(trainingSession));
+        return trainingSession;
+    }
+
+    @Override
+    public TrainingSessionDTO getTrainingSessionById(Long id) {
+        return mapToDTO(getTrainingSessionEntityById(id));
+    }
+
+    @Override
+    public List<TrainingSessionDTO> getAllTrainingSessionsByTrainingPlanId(Long trainingPlanId) {
+        TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
+        return mapToDTOs(trainingPlan.getTrainingSessions());
+    }
+
+    @Override
+    public TrainingSessionDTO createTrainingSession(TrainingSessionDTO dto, Long trainingPlanId) {
+        TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
+        TrainingSession trainingSession = new TrainingSession(dto);
+        trainingSession.setTrainingPlan(trainingPlan);
+        return mapToDTO(save(trainingSession));
+    }
+
+    @Override
+    public TrainingSessionDTO updateTrainingSession(Long id, TrainingSessionDTO dto) {
+        TrainingSession trainingSession = getTrainingSessionEntityById(id);
+        updateData(trainingSession, dto);
+        return mapToDTO(save(trainingSession));
+    }
+
+    @Override
+    public String deleteTrainingSession(Long id) {
+        repository.delete(getTrainingSessionEntityById(id));
+        return "Training session deleted successfully. ";
+    }
+
+    private boolean hasAccess(TrainingSession trainingSession) {
+        return trainingSession.getTrainingPlan().getUser().getId().equals(getPrincipal().getId());
+    }
+
+    private TrainingSession save(TrainingSession trainingSession) {
+        return repository.save(trainingSession);
+    }
+
+    private void updateData(TrainingSession oldSession, TrainingSessionDTO dto) {
+        oldSession.setDate(dto.getDate());
+        oldSession.setDayOfWeek(dto.getDayOfWeek());
+        oldSession.setDifficulty(dto.getDifficulty());
+        oldSession.setEndTime(dto.getEndTime());
+        oldSession.setStartTime(dto.getStartTime());
+        oldSession.setName(dto.getName());
+        oldSession.setNotes(dto.getNotes());
+    }
+
+    private TrainingSessionDTO mapToDTO(TrainingSession trainingSession) {
+        return mapper.mapToDTO(trainingSession);
+    }
+
+    private List<TrainingSessionDTO> mapToDTOs(List<TrainingSession> list) {
+        return mapper.mapToDTOs(list);
     }
 
 }

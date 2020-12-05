@@ -1,36 +1,86 @@
 package codeenthusiast.TrainingCenterApp.priority;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
-import codeenthusiast.TrainingCenterApp.mappers.PriorityMapper;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.security.core.parameters.P;
+import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
+import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
+import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
+import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class PriorityServiceImpl extends AbstractServiceImpl<Priority, PriorityDTO>
-        implements PriorityService{
+public class PriorityServiceImpl implements PriorityService, SecurityService {
 
-    private PriorityRepository priorityRepository;
+    private final PriorityRepository priorityRepository;
 
-    private PriorityMapper priorityMapper;
+    private final TrainingPlanServiceImpl trainingPlanService;
 
-    public PriorityServiceImpl(AbstractRepository<Priority> repository, AbstractMapper<Priority,
-            PriorityDTO> mapper, PriorityRepository priorityRepository, PriorityMapper priorityMapper) {
-        super(repository, mapper);
+    private final PriorityMapper priorityMapper;
+
+
+    public PriorityServiceImpl(PriorityRepository priorityRepository,
+                               TrainingPlanServiceImpl trainingPlanService, PriorityMapper priorityMapper) {
         this.priorityRepository = priorityRepository;
+        this.trainingPlanService = trainingPlanService;
         this.priorityMapper = priorityMapper;
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void init(){
-//        PriorityDTO p1 = new PriorityDTO("Grow chest", "Train chest 3 x per week");
-//        PriorityDTO p2 = new PriorityDTO("Improve work tolerance", "Train with big volume");
-//        PriorityDTO p3 = new PriorityDTO("Heal knee", "Train legs weaker");
-//        save(p1);
-//        save(p2);
-//        save(p3);
-//    }
+    @Override
+    public Priority findEntityById(Long id) {
+        Priority priority = priorityRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(id));
+        authorize(hasAccess(priority));
+        return priority;
+    }
+
+    @Override
+    public PriorityDTO findById(Long id) {
+        Priority priority = findEntityById(id);
+        return priorityMapper.mapToDTO(priority);
+    }
+
+    @Override
+    public List<PriorityDTO> getAllByTrainingPlanId(Long trainingPlanId) {
+        trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
+        List<Priority> priorityList = priorityRepository.findAllByTrainingPlanId(trainingPlanId);
+        return priorityMapper.mapToDTOs(priorityList);
+    }
+
+    @Override
+    public PriorityDTO update(Long id, PriorityDTO dto) {
+        Priority priority = findEntityById(id);
+        updateData(priority, dto);
+        return save(priority);
+    }
+
+    @Override
+    public void updateData(Priority priority, PriorityDTO dto) {
+        priority.setName(dto.getName());
+        priority.setDetails(dto.getDetails());
+    }
+
+    @Override
+    public PriorityDTO create(Long id, PriorityDTO dto) {
+        TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(id);
+        Priority priority = new Priority(dto);
+        priority.setTrainingPlan(trainingPlan);
+        return save(priority);
+    }
+
+    @Override
+    public PriorityDTO save(Priority priority) {
+        Priority savedPriority = priorityRepository.save(priority);
+        return priorityMapper.mapToDTO(savedPriority);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        priorityRepository.deleteById(id);
+    }
+
+    private boolean hasAccess(Priority priority) {
+        return priority.getTrainingPlan().getUser().getId().equals(getPrincipal().getId());
+    }
+
+
 }

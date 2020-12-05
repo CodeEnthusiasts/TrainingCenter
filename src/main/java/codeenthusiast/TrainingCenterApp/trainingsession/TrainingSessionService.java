@@ -1,6 +1,18 @@
 package codeenthusiast.TrainingCenterApp.trainingsession;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
+import java.util.List;
 
-public interface TrainingSessionService extends AbstractService<TrainingSession, TrainingSessionDTO> {
+public interface TrainingSessionService {
+
+    TrainingSession getTrainingSessionEntityById(Long trainingPlanId);
+
+    TrainingSessionDTO getTrainingSessionById(Long id);
+
+    List<TrainingSessionDTO> getAllTrainingSessionsByTrainingPlanId(Long id);
+
+    TrainingSessionDTO createTrainingSession(TrainingSessionDTO dto, Long trainingPlanId);
+
+    TrainingSessionDTO updateTrainingSession(Long id, TrainingSessionDTO dto);
+
+    String deleteTrainingSession(Long id);
 }

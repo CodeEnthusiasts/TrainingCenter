@@ -1,47 +1,109 @@
 package codeenthusiast.TrainingCenterApp.exercise.strengthexercise;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
-import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
-import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
-import codeenthusiast.TrainingCenterApp.exercise.Exercise;
-import codeenthusiast.TrainingCenterApp.mappers.StrengthExerciseMapper;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
+import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
+import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
+import codeenthusiast.TrainingCenterApp.movement.Movement;
+import codeenthusiast.TrainingCenterApp.movement.MovementServiceImpl;
+import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
+import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSessionServiceImpl;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
-public class StrengthExerciseServiceImpl extends AbstractServiceImpl<StrengthExercise, StrengthExerciseDTO>
-        implements StrengthExerciseService {
+public class StrengthExerciseServiceImpl implements StrengthExerciseService, SecurityService {
 
-    private StrengthExerciseRepository strengthExerciseRepository;
+    private final StrengthExerciseRepository strengthExerciseRepository;
 
-    private StrengthExerciseMapper strengthExerciseMapper;
+    private final TrainingSessionServiceImpl trainingSessionService;
 
-    public StrengthExerciseServiceImpl(AbstractRepository<StrengthExercise> repository, AbstractMapper<StrengthExercise,
-            StrengthExerciseDTO> mapper, StrengthExerciseRepository strengthExerciseRepository, StrengthExerciseMapper strengthExerciseMapper) {
-        super(repository, mapper);
+    private final MovementServiceImpl movementService;
+
+    private final StrengthExerciseMapper strengthExerciseMapper;
+
+    public StrengthExerciseServiceImpl(StrengthExerciseRepository strengthExerciseRepository, TrainingSessionServiceImpl trainingSessionService, MovementServiceImpl movementService, StrengthExerciseMapper strengthExerciseMapper) {
         this.strengthExerciseRepository = strengthExerciseRepository;
+        this.trainingSessionService = trainingSessionService;
+        this.movementService = movementService;
         this.strengthExerciseMapper = strengthExerciseMapper;
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
-//     public void init(){
-//        StrengthExercise s1 = new StrengthExercise(null, 3,  RepetitionUnit.MOTION, new int[]{10,10,10}, WeightUnit.KILOGRAMS,
-//                new int[]{100, 100, 100}, null);
-//
-//        StrengthExercise s2 = new StrengthExercise(null, 4,  RepetitionUnit.MOTION, new int[]{8,8,8}, WeightUnit.KILOGRAMS,
-//                new int[]{130, 135, 140, 156}, null);
-//
-//        StrengthExercise s3 = new StrengthExercise(null, 5,  RepetitionUnit.MOTION, new int[]{5,5,5}, WeightUnit.KILOGRAMS,
-//                new int[]{150, 150, 150, 150, 150}, null);
-//        StrengthExerciseDTO m1 = strengthExerciseMapper.mapToDTO(s1);
-//        StrengthExerciseDTO m2 = strengthExerciseMapper.mapToDTO(s2);
-//        StrengthExerciseDTO m3 = strengthExerciseMapper.mapToDTO(s3);
-//        save(m1);
-//        save(m2);
-//        save(m3);
-//    }
+    public StrengthExercise getStrengthExerciseById(long id) {
+        return strengthExerciseRepository.findById(id);
+    }
+
+    @Override
+    public StrengthExercise findEntityById(Long id) {
+        StrengthExercise strengthExercise = strengthExerciseRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(id));
+        authorize(hasAccess(strengthExercise));
+        return strengthExercise;
+    }
+
+    @Override
+    public StrengthExerciseDTO findById(Long id) {
+        StrengthExercise strengthExercise = findEntityById(id);
+        return strengthExerciseMapper.mapToDTO(strengthExercise);
+    }
+
+    @Override
+    public StrengthExerciseDTO save(StrengthExercise strengthExercise, Long trainingSessionId, Long movementId) {
+
+        TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
+        Movement movement = movementService.findEntityById(movementId);
+
+        strengthExercise.setMovement(movement);
+        strengthExercise.setTrainingSession(trainingSession);
+
+        StrengthExercise result = strengthExerciseRepository.save(strengthExercise);
+
+        return strengthExerciseMapper.mapToDTO(result);
+    }
+
+
+    private StrengthExerciseDTO save(StrengthExercise oldExercise) {
+        StrengthExercise strengthExercise = strengthExerciseRepository.save(oldExercise);
+        return strengthExerciseMapper.mapToDTO(strengthExercise);
+    }
+
+    @Override
+    public List<StrengthExerciseDTO> getAllByTrainingSessionId(Long trainingSessionId) {
+        TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
+        List<StrengthExercise> strengthExercises = strengthExerciseRepository.findAllByTrainingSessionId(trainingSessionId);
+        return strengthExerciseMapper.mapToDTOs(strengthExercises);
+    }
+
+    @Override
+    public StrengthExerciseDTO update(Long id, StrengthExerciseDTO dto) {
+        StrengthExercise oldExercise = findEntityById(id);
+        updateData(dto, oldExercise);
+
+        return save(oldExercise);
+    }
+
+    public void updateData(StrengthExerciseDTO dto, StrengthExercise oldExercise) {
+        oldExercise.setRepetitionUnit(dto.getRepetitionUnit());
+        oldExercise.setReps(dto.getReps());
+        oldExercise.setWeight(dto.getWeight());
+        oldExercise.setWeightUnit(dto.getWeightUnit());
+    }
+
+
+    @Override
+    public StrengthExerciseDTO create(StrengthExerciseDTO dto, Long trainingSessionId, Long movementId) {
+        StrengthExercise strengthExercise = new StrengthExercise(dto);
+        return save(strengthExercise, trainingSessionId, movementId);
+    }
+
+
+    @Override
+    public void deleteById(Long id) {
+        findEntityById(id);
+        strengthExerciseRepository.deleteById(id);
+    }
+
+    private boolean hasAccess(StrengthExercise strengthExercise) {
+        return strengthExercise.getTrainingSession().getTrainingPlan().getUser().getId().equals(getPrincipal().getId());
+    }
 
 }

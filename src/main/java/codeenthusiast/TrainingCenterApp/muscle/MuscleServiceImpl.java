@@ -1,48 +1,103 @@
 package codeenthusiast.TrainingCenterApp.muscle;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
-import codeenthusiast.TrainingCenterApp.image.Image;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
-import codeenthusiast.TrainingCenterApp.mappers.MuscleMapper;
-import codeenthusiast.TrainingCenterApp.movement.MovementDTO;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.stereotype.Service;
+import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
+import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
+import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
 
-import java.util.Collections;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.List;
 
 @Service
-public class MuscleServiceImpl extends AbstractServiceImpl<Muscle, MuscleDTO> implements MuscleService {
+public class MuscleServiceImpl implements MuscleService {
 
-    private final MuscleRepository repository;
-    private final MuscleMapper mapper;
+    private final MuscleRepository muscleRepository;
 
+    private final ImageServiceImpl imageService;
 
-    public MuscleServiceImpl(AbstractRepository<Muscle> repository, AbstractMapper<Muscle, MuscleDTO> mapper, MuscleRepository repository1, MuscleMapper mapper1) {
-        super(repository, mapper);
-        this.repository = repository1;
-        this.mapper = mapper1;
+    private final MuscleMapper muscleMapper;
+
+    public MuscleServiceImpl(MuscleRepository muscleRepository, ImageServiceImpl imageService, MuscleMapper muscleMapper) {
+        this.muscleRepository = muscleRepository;
+        this.imageService = imageService;
+        this.muscleMapper = muscleMapper;
+    }
+
+    @Override
+    public MuscleDTO findById(Long id) {
+        Muscle muscle = findEntityById(id);
+        return muscleMapper.mapToDTO(muscle);
+    }
+
+    @Override
+    public Muscle findEntityById(Long id) {
+        return muscleRepository.findById(id).orElseThrow(
+                () -> new EntityNotFoundException(id));
+    }
+
+    @Override
+    public List<MuscleDTO> findByMovementId(Long id) {
+        List<Muscle> muscleList = muscleRepository.findByMovementId(id);
+        return muscleMapper.mapToDTOs(muscleList);
+    }
+
+    @Override
+    public MuscleDTO update(Long id, MuscleDTO dto) {
+        this.existsById(id);
+        dto.setId(id);
+        Muscle updatedMuscle = muscleMapper.mapToEntity(dto);
+        return save(updatedMuscle);
+    }
+
+    @Override
+    public MuscleDTO create(MuscleDTO dto) {
+        checkExistenceByName(dto.getName());
+        Muscle muscle = new Muscle(dto);
+        return save(muscle);
+    }
+
+    @Override
+    public MuscleDTO save(Muscle muscle) {
+        Muscle savedMuscle = muscleRepository.save(muscle);
+        return muscleMapper.mapToDTO(savedMuscle);
+    }
+
+    @Override
+    public void deleteById(Long id) {
+        if (existsById(id)) {
+            muscleRepository.deleteById(id);
+        }
     }
 
     @Override
     public boolean existsById(Long id) {
-        return repository.existsById(id);
+        if (!muscleRepository.existsById(id)) {
+            throw new EntityNotFoundException(id);
+        }
+        return true;
     }
 
     @Override
-    public boolean existsByName(String name) {
-        return repository.existsByName(name);
+    public void checkExistenceByName(String name) {
+
+        if (muscleRepository.existsByName(name)) {
+            throw new EntityAlreadyExistsException(name);
+        }
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void init(){
-//        MuscleDTO muscle = new MuscleDTO("Quadratus", "Biggest human muscle");
-//        MuscleDTO muscle1 = new MuscleDTO("Chest", "Pecs description muscle");
-//        MuscleDTO muscle2 = new MuscleDTO("Erector spinae", "Long human muscle on the back");
-//        save(muscle);
-//        save(muscle1);
-//        save(muscle2);
-//    }
+    @Override
+    public MuscleDTO addImage(Long id, MultipartFile file) {
+        Muscle muscle = findEntityById(id);
+        imageService.createNewImage(file, muscle);
+        return muscleMapper.mapToDTO(muscle);
+    }
+
+    @Override
+    public MuscleDTO removeAllImages(Long id) {
+        imageService.deleteImagesByMuscleId(id);
+        return findById(id);
+
+    }
 
 }

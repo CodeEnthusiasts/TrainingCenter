@@ -1,22 +1,57 @@
 package codeenthusiast.TrainingCenterApp.movement;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractController;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.Valid;
+
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/movements")
-public class MovementController extends AbstractController<Movement, MovementDTO> {
+public class MovementController {
 
-    private MovementServiceImpl movementService;
+    private final MovementServiceImpl movementService;
 
     public MovementController(MovementServiceImpl movementService) {
         this.movementService = movementService;
     }
 
-    @Override
-    public AbstractService<Movement, MovementDTO> getService() {
-        return movementService;
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<MovementDTO> getById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(movementService.findById(id));
     }
+
+    @PostMapping
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MODERATOR')")
+    public ResponseEntity<MovementDTO> create(@RequestBody @Valid MovementDTO dto) {
+        return ResponseEntity.ok(movementService.create(dto));
+    }
+
+    @PatchMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MODERATOR')")
+    public ResponseEntity<MovementDTO> update(@PathVariable("id") Long id, @RequestBody @Valid MovementDTO dto) {
+        return ResponseEntity.ok(movementService.update(id, dto));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MODERATOR')")
+    public void delete(@PathVariable("id") Long id) throws Exception {
+        movementService.deleteById(id);
+    }
+
+    @PostMapping("{id}/image")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MODERATOR')")
+    public ResponseEntity<MovementDTO> addImage(@PathVariable("id") Long id, @RequestParam("file") MultipartFile file) {
+        return ResponseEntity.ok(movementService.addImage(id, file));
+    }
+
+    @DeleteMapping("{id}/image")
+    @PreAuthorize("hasRole('ROLE_ADMIN') or hasRole('ROLE_MODERATOR')")
+    public ResponseEntity<String> removeAllImages(@PathVariable("id") Long id) {
+        movementService.removeAllImages(id);
+        return ResponseEntity.ok("Image was successfully removed.");
+    }
+
 }

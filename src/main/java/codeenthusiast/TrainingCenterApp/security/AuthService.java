@@ -1,9 +1,6 @@
 package codeenthusiast.TrainingCenterApp.security;
 
-import codeenthusiast.TrainingCenterApp.constants.BodyWeightUnit;
 import codeenthusiast.TrainingCenterApp.constants.ERole;
-import codeenthusiast.TrainingCenterApp.constants.HeightUnit;
-import codeenthusiast.TrainingCenterApp.constants.Sex;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.security.jwt.JwtUtils;
@@ -12,13 +9,11 @@ import codeenthusiast.TrainingCenterApp.security.request.SignUpRequest;
 import codeenthusiast.TrainingCenterApp.security.response.JwtResponse;
 import codeenthusiast.TrainingCenterApp.security.response.MessageResponse;
 import codeenthusiast.TrainingCenterApp.security.services.UserDetailsImpl;
-import codeenthusiast.TrainingCenterApp.user.UserRepository;
-import codeenthusiast.TrainingCenterApp.user.major.Role;
-import codeenthusiast.TrainingCenterApp.user.major.RoleRepository;
+import codeenthusiast.TrainingCenterApp.user.major.UserRepository;
+import codeenthusiast.TrainingCenterApp.user.role.Role;
+import codeenthusiast.TrainingCenterApp.user.role.RoleRepository;
 import codeenthusiast.TrainingCenterApp.user.major.User;
 
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -99,6 +94,8 @@ public class AuthService {
         validateRequest(signUpRequest);
 
         User user = createNewUserAccount(signUpRequest);
+        user.getPersonalRecords().setUser(user);
+        user.getUserDetails().setUser(user);
 
         assignUserRole(user);
 
@@ -125,15 +122,12 @@ public class AuthService {
     }
 
     public User createNewUserAccount(SignUpRequest signUpRequest) {
-
-        return new User(signUpRequest.getUsername(),
-                encoder.encode(signUpRequest.getPassword()),
-                signUpRequest.getEmail(),
-                new codeenthusiast.TrainingCenterApp.user.details.UserDetails(
-                        BodyWeightUnit.KILOGRAMS, 0.0, HeightUnit.METER, 0.0, 0, Sex.MALE, null));
+        short s = 0;
+        return new User(signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()),
+                signUpRequest.getEmail());
     }
 
-    // User generator //
+//     User generator //
 //    @EventListener(ApplicationReadyEvent.class)
 //    public void addUser() {
 //        Role role = new Role(ERole.ROLE_USER);

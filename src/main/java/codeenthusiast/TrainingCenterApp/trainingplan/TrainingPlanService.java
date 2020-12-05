@@ -1,17 +1,18 @@
 package codeenthusiast.TrainingCenterApp.trainingplan;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
-
 import java.util.List;
 
-public interface TrainingPlanService  {
+public interface TrainingPlanService {
 
-    TrainingPlanSuperficialDTO findById (Long id);
-    List<TrainingPlanSuperficialDTO> getAll();
+    TrainingPlan getTrainingPlanEntityById(Long id);
 
-    TrainingPlanDTO save (TrainingPlanDTO dto);
-    TrainingPlanDTO update (Long id, TrainingPlanDTO dto);
+    TrainingPlanDTO getTrainingPlanById(Long id);
 
-    void delete (Long id);
+    TrainingPlanDTO createTrainingPlan(Long userId, TrainingPlanDTO dto);
 
+    TrainingPlanDTO updateTrainingPlan(Long id, TrainingPlanDTO dto);
+
+    List<TrainingPlanDTO> getAllTrainingPlansByUserId(Long id);
+
+    String deleteTrainingPlan(Long id);
 }

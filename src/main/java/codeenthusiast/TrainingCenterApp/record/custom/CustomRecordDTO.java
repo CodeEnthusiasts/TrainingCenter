@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 
 @Getter
@@ -14,7 +15,11 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CustomRecordDTO extends AbstractDTO {
 
+    @NotNull
     private String description;
+
     private double value;
-    private LocalDate setDate;
+
+    @NotNull
+    private LocalDate date;
 }

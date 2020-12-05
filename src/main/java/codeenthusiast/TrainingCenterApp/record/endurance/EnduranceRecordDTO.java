@@ -7,7 +7,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
 @Getter
@@ -16,10 +18,22 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class EnduranceRecordDTO extends AbstractDTO {
 
-    private String exerciseName;
+    @NotNull
+    private String movementName;
+
+    @NotNull
     private DistanceUnit distanceUnit;
-    private int distance;
+
+    @NotNull
+    private double distance;
+
+    @NotNull
     private TimeUnit timeUnit;
-    private int time;
-    private LocalDate setDate;
+
+    @NotNull
+    private LocalTime duration;
+
+    @NotNull
+    private LocalDate date;
+
 }

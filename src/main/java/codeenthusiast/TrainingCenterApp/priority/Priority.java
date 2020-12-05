@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@Entity(name = "priorities")
+@Entity
 @Getter
 @Setter
 @NoArgsConstructor
@@ -19,5 +19,14 @@ public class Priority extends AbstractEntity {
     private String name;
 
     private String details;
+
+    @ManyToOne
+    @JoinColumn(name = "training_plan_id")
+    private TrainingPlan trainingPlan;
+
+    Priority(PriorityDTO dto){
+        this.name = dto.getName();
+        this.details = dto.getDetails();
+    }
 
 }

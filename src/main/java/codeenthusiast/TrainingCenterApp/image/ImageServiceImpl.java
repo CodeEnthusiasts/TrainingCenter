@@ -1,30 +1,35 @@
 package codeenthusiast.TrainingCenterApp.image;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractRepository;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractServiceImpl;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractMapper;
-import codeenthusiast.TrainingCenterApp.mappers.ImageMapper;
+import codeenthusiast.TrainingCenterApp.movement.Movement;
+import codeenthusiast.TrainingCenterApp.muscle.Muscle;
+import codeenthusiast.TrainingCenterApp.user.major.User;
+
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-public class ImageServiceImpl extends AbstractServiceImpl<Image, ImageDTO> implements ImageService {
+public class ImageServiceImpl implements ImageService {
 
     private final ImageRepository repository;
-    private final ImageMapper mapper;
+    private final ImageMapper imageMapper;
     private final ImageUploader imageUploader;
 
-    public ImageServiceImpl(AbstractRepository<Image> reposiotory, AbstractMapper<Image, ImageDTO> mapper, ImageRepository repository, ImageMapper mapper1, ImageUploader imageUploader) {
-        super(reposiotory, mapper);
+    public ImageServiceImpl(ImageRepository repository,
+                            ImageMapper imageMapper, ImageUploader imageUploader) {
         this.repository = repository;
-        this.mapper = mapper1;
+        this.imageMapper = imageMapper;
         this.imageUploader = imageUploader;
     }
 
     @Override
-    public ImageDTO createNewImage(MultipartFile file){
-        String fileUrl = uploadImageOnHosting(file);
-        return new ImageDTO(fileUrl);
+    public boolean existsByUserId(Long userId) {
+        return repository.existsByUserId(userId);
+    }
+
+    @Override
+    public ImageDTO save(Image image) {
+        Image savedImaged = repository.save(image);
+        return imageMapper.mapToDTO(savedImaged);
     }
 
     @Override
@@ -32,14 +37,42 @@ public class ImageServiceImpl extends AbstractServiceImpl<Image, ImageDTO> imple
         return imageUploader.uploadImage(file);
     }
 
+    @Override
+    public void createNewImage(MultipartFile file, Object object) {
+        String fileUrl = uploadImageOnHosting(file);
+        Class<?> classType = object.getClass();
+        Image image = null;
+        if (classType.equals(Movement.class)) {
+            image = new Image(fileUrl, (Movement) object);
+        } else if (classType.equals(Muscle.class)) {
+            image = new Image(fileUrl, (Muscle) object);
+        } else if (classType.equals(User.class)) {
+            image = new Image(fileUrl, (User) object);
+        }
+        save(image);
+    }
 
+    @Override
+    public void replaceImage(Image image, MultipartFile file) {
+        String fileUrl = uploadImageOnHosting(file);
+        image.setFileUrl(fileUrl);
+        save(image);
+    }
 
+    @Override
+    public void deleteImagesByMovementId(Long id) {
+        repository.deleteByMovementId(id);
 
+    }
 
+    @Override
+    public void deleteImagesByMuscleId(Long id) {
+        repository.deleteByMuscleId(id);
+    }
 
-
-
-
-
+    @Override
+    public void deleteImageByUserId(Long id) {
+        repository.deleteByUserId(id);
+    }
 
 }

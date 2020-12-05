@@ -1,13 +1,15 @@
 package codeenthusiast.TrainingCenterApp.exercise.strengthexercise;
 
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractController;
-import codeenthusiast.TrainingCenterApp.abstracts.AbstractService;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import java.util.List;
+
+@CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/strength_exercises")
-public class StrengthExerciseController extends AbstractController<StrengthExercise, StrengthExerciseDTO> {
+@RequestMapping("/strength-exercises")
+public class StrengthExerciseController {
 
     private StrengthExerciseServiceImpl strengthExerciseService;
 
@@ -15,10 +17,32 @@ public class StrengthExerciseController extends AbstractController<StrengthExerc
         this.strengthExerciseService = strengthExerciseService;
     }
 
-
-    @Override
-    public AbstractService<StrengthExercise, StrengthExerciseDTO> getService() {
-        return strengthExerciseService;
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<StrengthExerciseDTO> getById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(strengthExerciseService.findById(id));
     }
+
+    @GetMapping(value = "/training-session/{id}")
+    public ResponseEntity<List<StrengthExerciseDTO>> getAllByTrainingPlanId(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(strengthExerciseService.getAllByTrainingSessionId(id));
+    }
+
+
+    @PostMapping(value = "/training-session/{training_session_id}/movement/{movement_id}")
+    public ResponseEntity<StrengthExerciseDTO> create(@RequestBody @Valid StrengthExerciseDTO dto
+            , @PathVariable("training_session_id") Long trainingSessionId, @PathVariable("movement_id") Long movementId) {
+        return ResponseEntity.ok(strengthExerciseService.create(dto, trainingSessionId, movementId));
+    }
+
+    @PatchMapping(value = "/{id}")
+    public ResponseEntity<StrengthExerciseDTO> update(@PathVariable("id") Long id, @RequestBody @Valid StrengthExerciseDTO dto) {
+        return ResponseEntity.ok(strengthExerciseService.update(id, dto));
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable("id") Long id) throws Exception {
+        strengthExerciseService.deleteById(id);
+    }
+
 }
 

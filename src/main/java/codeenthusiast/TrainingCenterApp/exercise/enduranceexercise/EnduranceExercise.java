@@ -3,45 +3,46 @@ package codeenthusiast.TrainingCenterApp.exercise.enduranceexercise;
 
 import codeenthusiast.TrainingCenterApp.constants.DistanceUnit;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
-import codeenthusiast.TrainingCenterApp.movement.Exercisable;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.Duration;
+import java.time.LocalTime;
 import java.util.concurrent.TimeUnit;
 
-@Entity(name = "endurance_exercises")
+@Entity
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class EnduranceExercise extends Exercise {
 
     @Enumerated(EnumType.STRING)
     private DistanceUnit distanceUnit;
 
-    private int[] distance;
-
-    @ManyToOne
-    private TrainingSession trainingSession;
+    private double distance;
 
     @Enumerated(EnumType.STRING)
     private TimeUnit timeUnit;
 
-    private Duration[] time;
+    private LocalTime duration;
 
     @Embedded
     private EnduranceExerciseDetails enduranceExerciseDetails;
 
-    public EnduranceExercise(Exercisable exercisable, int sets, DistanceUnit distanceUnit,
-                             TrainingSession trainingSession, int[] distance, TimeUnit timeUnit,
-                             Duration[] time, EnduranceExerciseDetails enduranceExerciseDetails) {
-        super(exercisable, sets);
-        this.distanceUnit = distanceUnit;
-        this.trainingSession = trainingSession;
-        this.distance = distance;
-        this.timeUnit = timeUnit;
-        this.time = time;
-        this.enduranceExerciseDetails = enduranceExerciseDetails;
+    @ManyToOne
+    @JoinColumn(name = "training_session_id")
+    private TrainingSession trainingSession;
+
+    public EnduranceExercise(EnduranceExerciseDTO dto) {
+        this.distanceUnit = dto.getDistanceUnit();
+        this.distance = dto.getDistance();
+        this.enduranceExerciseDetails = dto.getEnduranceExerciseDetails();
+        this.duration = dto.getDuration();
+        this.timeUnit = dto.getTimeUnit();
     }
 }

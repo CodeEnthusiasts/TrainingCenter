@@ -5,6 +5,7 @@ import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class StrengthRecordServiceImpl implements StrengthRecordService, Securit
     }
 
     @Override
+    @Transactional
     public StrengthRecordDTO createStrengthRecord(Long personalRecordsId, StrengthRecordDTO strengthRecordDTO) {
         PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsByUserId(personalRecordsId);
         StrengthRecord strengthRecord = mapToEntity(strengthRecordDTO);
@@ -41,6 +43,7 @@ public class StrengthRecordServiceImpl implements StrengthRecordService, Securit
     }
 
     @Override
+    @Transactional
     public StrengthRecordDTO updateStrengthRecord(Long strengthRecordId, StrengthRecordDTO strengthRecordDTO) {
         StrengthRecord strengthRecord = getStrengthRecordEntityById(strengthRecordId);
         updateStrengthRecord(strengthRecord, strengthRecordDTO);

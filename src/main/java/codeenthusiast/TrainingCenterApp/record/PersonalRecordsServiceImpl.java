@@ -3,6 +3,7 @@ package codeenthusiast.TrainingCenterApp.record;
 import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class PersonalRecordsServiceImpl implements PersonalRecordsService, SecurityService {

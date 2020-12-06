@@ -5,6 +5,7 @@ import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExerciseServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class StrengthExerciseDetailsServiceImpl implements StrengthExerciseDetailsService, SecurityService {
@@ -36,6 +37,7 @@ public class StrengthExerciseDetailsServiceImpl implements StrengthExerciseDetai
     }
 
     @Override
+    @Transactional
     public StrengthExerciseDetailsDTO create(Long id, StrengthExerciseDetailsDTO strengthExerciseDetailsDTO) {
         StrengthExercise strengthExercise = strengthExerciseService.getStrengthExerciseById(id);
 
@@ -47,6 +49,7 @@ public class StrengthExerciseDetailsServiceImpl implements StrengthExerciseDetai
     }
 
     @Override
+    @Transactional
     public StrengthExerciseDetailsDTO update(Long id, StrengthExerciseDetailsDTO strengthExerciseDetailsDTO) {
         StrengthExerciseDetails strengthExerciseDetails = getEntityById(id);
         updateData(strengthExerciseDetailsDTO, strengthExerciseDetails);
@@ -58,6 +61,7 @@ public class StrengthExerciseDetailsServiceImpl implements StrengthExerciseDetai
         return mapper.mapToDTO(savedDetails);
     }
 
+    @Transactional
     private void updateData(StrengthExerciseDetailsDTO strengthExerciseDetailsDTO, StrengthExerciseDetails strengthExerciseDetails) {
         strengthExerciseDetails.setNote(strengthExerciseDetailsDTO.getNote());
         strengthExerciseDetails.setHoldingDown(strengthExerciseDetailsDTO.getHoldingDown());

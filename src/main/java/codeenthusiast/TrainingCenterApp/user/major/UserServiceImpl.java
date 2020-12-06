@@ -33,6 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDTO update(Long id, UserDTO dto) {
         User user = findEntityById(id);
         if (dto.getEmail() != null) {
@@ -52,6 +53,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public String addImage(Long id, MultipartFile file) {
         User user = findEntityById(id);
         if (!imageService.existsByUserId(id)){

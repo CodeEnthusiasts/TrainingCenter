@@ -3,8 +3,8 @@ package codeenthusiast.TrainingCenterApp.image;
 import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.muscle.Muscle;
 import codeenthusiast.TrainingCenterApp.user.major.User;
-
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -33,11 +33,13 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
+    @Transactional
     public String uploadImageOnHosting(MultipartFile file) {
         return imageUploader.uploadImage(file);
     }
 
     @Override
+    @Transactional
     public void createNewImage(MultipartFile file, Object object) {
         String fileUrl = uploadImageOnHosting(file);
         Class<?> classType = object.getClass();
@@ -53,6 +55,7 @@ public class ImageServiceImpl implements ImageService {
     }
 
     @Override
+    @Transactional
     public void replaceImage(Image image, MultipartFile file) {
         String fileUrl = uploadImageOnHosting(file);
         image.setFileUrl(fileUrl);

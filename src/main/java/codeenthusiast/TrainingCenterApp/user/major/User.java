@@ -26,7 +26,7 @@ public class User extends AbstractEntity {
     @Length(max = 50)
     private String username;
 
-    @Length(max = 40)
+    @Length(max = 84)
     private String password;
 
     @Length(max = 100)

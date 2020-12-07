@@ -17,7 +17,7 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Priority extends AbstractEntity {
 
-    @Length(max = 32)
+    @Length(max = 100)
     private String name;
 
     @Length(max = 500)

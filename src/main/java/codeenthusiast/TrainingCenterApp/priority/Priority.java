@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
@@ -16,8 +17,10 @@ import javax.persistence.*;
 @AllArgsConstructor
 public class Priority extends AbstractEntity {
 
+    @Length(max = 32)
     private String name;
 
+    @Length(max = 500)
     private String details;
 
     @ManyToOne

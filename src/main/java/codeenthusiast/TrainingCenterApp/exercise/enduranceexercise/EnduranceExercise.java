@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.time.Duration;
@@ -22,11 +23,13 @@ import java.util.concurrent.TimeUnit;
 public class EnduranceExercise extends Exercise {
 
     @Enumerated(EnumType.STRING)
+    @Length(max = 32)
     private DistanceUnit distanceUnit;
 
     private double distance;
 
     @Enumerated(EnumType.STRING)
+    @Length(max = 32)
     private TimeUnit timeUnit;
 
     private LocalTime duration;

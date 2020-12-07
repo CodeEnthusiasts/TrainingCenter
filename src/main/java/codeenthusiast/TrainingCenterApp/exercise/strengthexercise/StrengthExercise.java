@@ -10,6 +10,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 
@@ -22,11 +23,13 @@ public class StrengthExercise extends Exercise {
 
 
     @Enumerated(EnumType.STRING)
+    @Length(max = 32)
     private RepetitionUnit repetitionUnit;
 
     private short reps;
 
     @Enumerated(EnumType.STRING)
+    @Length(max = 32)
     private WeightUnit weightUnit;
 
     private double weight;

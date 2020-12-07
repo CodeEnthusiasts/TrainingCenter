@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.OneToMany;
@@ -19,6 +20,7 @@ import java.util.List;
 @NoArgsConstructor
 public class Movement extends AbstractEntity {
 
+    @Length(max = 60)
     private String name;
 
     @OneToMany(mappedBy = "movement")

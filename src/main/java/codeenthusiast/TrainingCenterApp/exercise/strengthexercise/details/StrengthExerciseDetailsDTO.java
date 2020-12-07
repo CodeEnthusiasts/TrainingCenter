@@ -30,6 +30,6 @@ public class StrengthExerciseDetailsDTO extends AbstractDTO {
     private short holdingUp;
 
     @Range(min = 0, max = 10)
-    private int repsInReserve;
+    private short repetitionsInReserve;
 
 }

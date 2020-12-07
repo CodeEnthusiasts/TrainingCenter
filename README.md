@@ -30,7 +30,6 @@ to list exercises with correct technique, and also compete with other members in
 ## Planned features
 * User achievements system -> get achievements for behaviour leading to progress (f.e train 3 x per week, beat old record)
 * Calculate tonnage automatically
-* Create training plan
 * Inform, when tonnage in consecutive months are lower
 * Infrom, when one training plan have too much specified muscle part dominance (f.e to much biceps workouts in one month/plan)
  
@@ -40,7 +39,7 @@ to list exercises with correct technique, and also compete with other members in
 * Spring Boot 2
 * Hibernate
 * JUnit 5, Mockito 2, AssertJ
-* MySQL
+* MySQL, PostgreSQL
 * Cloudinary API
 * REST
 * SonarQube
@@ -60,7 +59,7 @@ to list exercises with correct technique, and also compete with other members in
 1. [Damian Naglak](mailto:damiannaglak1@gmail.com) as [naslakboss](https://github.com/naslakboss) - concept, major backend backend, project management, group formation
 2. [Agnieszka Dzierzkowska](mailto:aga.dzierzkowska21@gmail.com) - ui/ux
 3. [Przemysław Saja](mailto:przemyslawsaja@gmail.com) as [przemyslawsaja](https://github.com/przemyslawsaja) - major frontend contributor, concept
-3. [Paweł Karpiel](mailto:pawel21599@gmail.com) - major backend contributor, project overview advices
+3. [Paweł Karpiel](mailto:pawel21599@gmail.com) as [CcConStanTine](https://github.com/CcConStanTine) - major backend contributor, project overview advices
 4. [Karol Kaczorowski](mailto:KarolKaczorowskiC.dev@gmail.com) as [KarolKaczorowski78](https://github.com/KarolKaczorowski78) - major frontend contributor
-5. [Igor Chmielewski](mailto:igorchmielewski@gmail.com) - advices, abstraction foundation
+5. [Igor Chmielewski](mailto:igorchmielewski@gmail.com) as [7g0r](https://github.com/7g0r) - advices, abstraction foundation
 6. [Kamil Cecherz](mailto:cecherz@outlook.com) as [pangeon](https://github.com/pangeon) - update read.me

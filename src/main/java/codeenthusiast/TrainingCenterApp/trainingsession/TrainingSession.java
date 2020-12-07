@@ -5,6 +5,7 @@ import codeenthusiast.TrainingCenterApp.constants.Difficulty;
 import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExercise;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -26,9 +27,11 @@ public class TrainingSession extends AbstractEntity {
     private String name;
 
     @OneToMany(orphanRemoval = true, mappedBy = "trainingSession")
+    @JsonIgnore
     private List<StrengthExercise> strengthExercises;
 
     @OneToMany(orphanRemoval = true, mappedBy = "trainingSession")
+    @JsonIgnore
     private List<EnduranceExercise> enduranceExercises;
 
     @Enumerated(EnumType.STRING)
@@ -47,7 +50,7 @@ public class TrainingSession extends AbstractEntity {
 
     private String notes;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "training_plan_id")
     private TrainingPlan trainingPlan;
 

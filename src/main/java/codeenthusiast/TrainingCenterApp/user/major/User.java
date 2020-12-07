@@ -38,6 +38,7 @@ public class User extends AbstractEntity {
     private UserDetails userDetails;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
     private List<TrainingPlan> trainingPlans = new ArrayList<>();
 
     @OneToOne(mappedBy = "user", cascade=CascadeType.ALL)

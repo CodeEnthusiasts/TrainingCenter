@@ -94,4 +94,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService, Secur
         return mapper.mapToDTOs(list);
     }
 
+    public TrainingSession getTest(Long id) {
+        return repository.findById(id).get();
+    }
 }

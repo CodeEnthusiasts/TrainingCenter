@@ -5,6 +5,7 @@ import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.exercise.Exercise;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.details.StrengthExerciseDetails;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,9 +32,11 @@ public class StrengthExercise extends Exercise {
     private double weight;
 
     @OneToOne(orphanRemoval = true, mappedBy = "strengthExercise")
+    @JsonIgnore
     private StrengthExerciseDetails strengthExerciseDetails;
 
-    @ManyToOne()
+    @ManyToOne
+    @JoinColumn(name = "training_session_id")
     private TrainingSession trainingSession;
 
     StrengthExercise(StrengthExerciseDTO dto){

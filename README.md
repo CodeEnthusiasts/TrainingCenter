@@ -7,6 +7,7 @@ If the answer is yes, this application is perfect for you.
 
 ## Table of contents
 * General info
+* Exemplary photos
 * Data model
     * UML graph
 * Planned features
@@ -22,6 +23,10 @@ to you -> all to achieve better and faster results. <br> Application allows to m
 You don't have to worry about total tonnage, increase in intensity or muscle overload - algorithm created with guidance of 
 experienced trainers will do it for you. It is also helpful for novice and people who love competing, because app allows 
 to list exercises with correct technique, and also compete with other members in exercises records and other achievements.
+
+## Exemplary photos
+![Views prototype](https://res.cloudinary.com/dr6odau4r/image/upload/v1607329026/views_qjmmgm.png)
+
 
 ## Data model
 * ERD diagram:

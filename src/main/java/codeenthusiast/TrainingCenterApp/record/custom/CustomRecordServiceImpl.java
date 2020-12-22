@@ -5,6 +5,7 @@ import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class CustomRecordServiceImpl implements CustomRecordService, SecuritySer
     }
 
     @Override
+    @Transactional
     public CustomRecordDTO createCustomRecord(Long personalRecordsId, CustomRecordDTO customRecordDTO) {
         PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsEntityById(personalRecordsId);
         CustomRecord customRecord = mapToEntity(customRecordDTO);
@@ -41,6 +43,7 @@ public class CustomRecordServiceImpl implements CustomRecordService, SecuritySer
     }
 
     @Override
+    @Transactional
     public CustomRecordDTO updateCustomRecord(Long customRecordId, CustomRecordDTO customRecordDTO) {
         CustomRecord customRecord = getCustomRecordEntityById(customRecordId);
         updateCustomRecord(customRecord, customRecordDTO);

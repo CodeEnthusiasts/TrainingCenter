@@ -5,6 +5,7 @@ import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class PriorityServiceImpl implements PriorityService, SecurityService {
     }
 
     @Override
+    @Transactional
     public PriorityDTO update(Long id, PriorityDTO dto) {
         Priority priority = findEntityById(id);
         updateData(priority, dto);
@@ -54,12 +56,14 @@ public class PriorityServiceImpl implements PriorityService, SecurityService {
     }
 
     @Override
+    @Transactional
     public void updateData(Priority priority, PriorityDTO dto) {
         priority.setName(dto.getName());
         priority.setDetails(dto.getDetails());
     }
 
     @Override
+    @Transactional
     public PriorityDTO create(Long id, PriorityDTO dto) {
         TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(id);
         Priority priority = new Priority(dto);

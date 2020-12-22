@@ -7,6 +7,7 @@ import codeenthusiast.TrainingCenterApp.movement.MovementServiceImpl;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSessionServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -47,6 +48,7 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService, Sec
     }
 
     @Override
+    @Transactional
     public StrengthExerciseDTO save(StrengthExercise strengthExercise, Long trainingSessionId, Long movementId) {
 
         TrainingSession trainingSession = trainingSessionService.getTrainingSessionEntityById(trainingSessionId);
@@ -74,13 +76,14 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService, Sec
     }
 
     @Override
+    @Transactional
     public StrengthExerciseDTO update(Long id, StrengthExerciseDTO dto) {
         StrengthExercise oldExercise = findEntityById(id);
         updateData(dto, oldExercise);
 
         return save(oldExercise);
     }
-
+    @Transactional
     public void updateData(StrengthExerciseDTO dto, StrengthExercise oldExercise) {
         oldExercise.setRepetitionUnit(dto.getRepetitionUnit());
         oldExercise.setReps(dto.getReps());

@@ -5,6 +5,7 @@ import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -45,6 +46,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService, Secur
     }
 
     @Override
+    @Transactional
     public TrainingSessionDTO createTrainingSession(TrainingSessionDTO dto, Long trainingPlanId) {
         TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
         TrainingSession trainingSession = new TrainingSession(dto);
@@ -53,6 +55,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService, Secur
     }
 
     @Override
+    @Transactional
     public TrainingSessionDTO updateTrainingSession(Long id, TrainingSessionDTO dto) {
         TrainingSession trainingSession = getTrainingSessionEntityById(id);
         updateData(trainingSession, dto);
@@ -91,4 +94,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService, Secur
         return mapper.mapToDTOs(list);
     }
 
+    public TrainingSession getTest(Long id) {
+        return repository.findById(id).get();
+    }
 }

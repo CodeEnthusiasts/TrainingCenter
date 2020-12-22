@@ -7,6 +7,7 @@ import codeenthusiast.TrainingCenterApp.movement.MovementServiceImpl;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSessionServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -44,6 +45,7 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService, S
     }
 
     @Override
+    @Transactional
     public EnduranceExerciseDTO createEnduranceExercise(EnduranceExerciseDTO dto,
                                                         Long trainingSessionId,
                                                         Long movementId) {
@@ -56,6 +58,7 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService, S
     }
 
     @Override
+    @Transactional
     public EnduranceExerciseDTO updateEnduranceExercise(Long enduranceExerciseId,
                                                         EnduranceExerciseDTO dto) {
         EnduranceExercise enduranceExercise = getEnduranceExerciseEntityById(enduranceExerciseId);
@@ -87,6 +90,7 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService, S
         return repository.save(enduranceExercise);
     }
 
+    @Transactional
     private void updateEnduranceExercise(EnduranceExercise enduranceExercise,
                                          EnduranceExerciseDTO enduranceExerciseDTO) {
         enduranceExercise.setDistanceUnit(enduranceExerciseDTO.getDistanceUnit());

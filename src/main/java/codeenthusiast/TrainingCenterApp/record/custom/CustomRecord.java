@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -19,6 +20,7 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class CustomRecord extends AbstractEntity {
 
+    @Length(max = 100)
     private String description;
 
     private double value;

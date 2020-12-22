@@ -3,6 +3,7 @@ package codeenthusiast.TrainingCenterApp.user.details;
  import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class UDetailsServiceImpl implements UserDetailsService, SecurityService {
@@ -30,6 +31,7 @@ public class UDetailsServiceImpl implements UserDetailsService, SecurityService 
     }
 
     @Override
+    @Transactional
     public UserDetailsDTO updateUserDetails(long id, UserDetailsDTO dto) {
         UserDetails userDetails = getUserDetailsEntityById(id);
         updateUserDetailsAttributes(dto, userDetails);

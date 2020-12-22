@@ -64,7 +64,7 @@ public class MovementServiceImpl implements MovementService {
     public MovementDTO update(Long id, MovementDTO dto) {
         Movement movement = findEntityById(id);
         movement.setName(dto.getName());
-        return save(movement);
+        return movementMapper.mapToDTO(movement);
     }
 
     @Override

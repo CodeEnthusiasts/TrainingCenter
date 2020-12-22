@@ -35,7 +35,7 @@ public class UDetailsServiceImpl implements UserDetailsService, SecurityService 
     public UserDetailsDTO updateUserDetails(long id, UserDetailsDTO dto) {
         UserDetails userDetails = getUserDetailsEntityById(id);
         updateUserDetailsAttributes(dto, userDetails);
-        return mapToDTO(save(userDetails));
+        return mapToDTO(userDetails);
     }
 
     private boolean hasAccess(UserDetails userDetails) {

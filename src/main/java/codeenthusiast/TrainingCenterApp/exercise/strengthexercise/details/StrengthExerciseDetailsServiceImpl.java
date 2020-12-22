@@ -53,7 +53,7 @@ public class StrengthExerciseDetailsServiceImpl implements StrengthExerciseDetai
     public StrengthExerciseDetailsDTO update(Long id, StrengthExerciseDetailsDTO strengthExerciseDetailsDTO) {
         StrengthExerciseDetails strengthExerciseDetails = getEntityById(id);
         updateData(strengthExerciseDetailsDTO, strengthExerciseDetails);
-        return save(strengthExerciseDetails);
+        return mapper.mapToDTO(strengthExerciseDetails);
     }
 
     private StrengthExerciseDetailsDTO save(StrengthExerciseDetails strengthExerciseDetails) {
@@ -61,7 +61,6 @@ public class StrengthExerciseDetailsServiceImpl implements StrengthExerciseDetai
         return mapper.mapToDTO(savedDetails);
     }
 
-    @Transactional
     private void updateData(StrengthExerciseDetailsDTO strengthExerciseDetailsDTO, StrengthExerciseDetails strengthExerciseDetails) {
         strengthExerciseDetails.setNote(strengthExerciseDetailsDTO.getNote());
         strengthExerciseDetails.setHoldingDown(strengthExerciseDetailsDTO.getHoldingDown());

@@ -47,7 +47,7 @@ public class CustomRecordServiceImpl implements CustomRecordService, SecuritySer
     public CustomRecordDTO updateCustomRecord(Long customRecordId, CustomRecordDTO customRecordDTO) {
         CustomRecord customRecord = getCustomRecordEntityById(customRecordId);
         updateCustomRecord(customRecord, customRecordDTO);
-        return mapToDTO(save(customRecord));
+        return mapToDTO(customRecord);
     }
 
     @Override

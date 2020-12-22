@@ -3,7 +3,6 @@ package codeenthusiast.TrainingCenterApp.muscle;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -49,7 +48,7 @@ public class MuscleServiceImpl implements MuscleService {
         this.existsById(id);
         dto.setId(id);
         Muscle updatedMuscle = muscleMapper.mapToEntity(dto);
-        return save(updatedMuscle);
+        return muscleMapper.mapToDTO(updatedMuscle);
     }
 
     @Override

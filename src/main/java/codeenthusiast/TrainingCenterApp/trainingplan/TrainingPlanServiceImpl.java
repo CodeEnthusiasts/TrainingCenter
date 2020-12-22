@@ -49,7 +49,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService, SecuritySer
     public TrainingPlanDTO updateTrainingPlan(Long trainingPlanId, TrainingPlanDTO trainingPlanDTO) {
         TrainingPlan trainingPlan = getTrainingPlanEntityById(trainingPlanId);
         updateTrainingPlan(trainingPlan, trainingPlanDTO);
-        return mapToDTO(save(trainingPlan));
+        return mapToDTO(trainingPlan);
     }
 
     @Override

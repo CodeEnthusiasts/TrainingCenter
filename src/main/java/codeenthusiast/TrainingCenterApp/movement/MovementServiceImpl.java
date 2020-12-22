@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-@Transactional
 public class MovementServiceImpl implements MovementService {
 
     private final MovementRepository movementRepository;

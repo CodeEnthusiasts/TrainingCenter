@@ -83,8 +83,8 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService, Sec
 
         return save(oldExercise);
     }
-    @Transactional
-    public void updateData(StrengthExerciseDTO dto, StrengthExercise oldExercise) {
+
+    private void updateData(StrengthExerciseDTO dto, StrengthExercise oldExercise) {
         oldExercise.setRepetitionUnit(dto.getRepetitionUnit());
         oldExercise.setReps(dto.getReps());
         oldExercise.setWeight(dto.getWeight());

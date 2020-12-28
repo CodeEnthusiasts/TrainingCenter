@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
-@Transactional
 public class MovementServiceImpl implements MovementService {
 
     private final MovementRepository movementRepository;
@@ -65,7 +64,7 @@ public class MovementServiceImpl implements MovementService {
     public MovementDTO update(Long id, MovementDTO dto) {
         Movement movement = findEntityById(id);
         movement.setName(dto.getName());
-        return save(movement);
+        return movementMapper.mapToDTO(movement);
     }
 
     @Override

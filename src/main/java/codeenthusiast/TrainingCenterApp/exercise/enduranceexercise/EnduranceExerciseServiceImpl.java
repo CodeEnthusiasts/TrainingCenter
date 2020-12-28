@@ -63,7 +63,7 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService, S
                                                         EnduranceExerciseDTO dto) {
         EnduranceExercise enduranceExercise = getEnduranceExerciseEntityById(enduranceExerciseId);
         updateEnduranceExercise(enduranceExercise, dto);
-        return mapToDTO(save(enduranceExercise));
+        return mapToDTO(enduranceExercise);
     }
 
     @Override
@@ -90,7 +90,6 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService, S
         return repository.save(enduranceExercise);
     }
 
-    @Transactional
     private void updateEnduranceExercise(EnduranceExercise enduranceExercise,
                                          EnduranceExerciseDTO enduranceExerciseDTO) {
         enduranceExercise.setDistanceUnit(enduranceExerciseDTO.getDistanceUnit());

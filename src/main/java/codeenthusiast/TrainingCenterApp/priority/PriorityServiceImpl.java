@@ -52,11 +52,10 @@ public class PriorityServiceImpl implements PriorityService, SecurityService {
     public PriorityDTO update(Long id, PriorityDTO dto) {
         Priority priority = findEntityById(id);
         updateData(priority, dto);
-        return save(priority);
+        return priorityMapper.mapToDTO(priority);
     }
 
     @Override
-    @Transactional
     public void updateData(Priority priority, PriorityDTO dto) {
         priority.setName(dto.getName());
         priority.setDetails(dto.getDetails());

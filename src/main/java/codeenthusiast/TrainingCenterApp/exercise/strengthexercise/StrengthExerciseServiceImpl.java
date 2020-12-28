@@ -81,10 +81,10 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService, Sec
         StrengthExercise oldExercise = findEntityById(id);
         updateData(dto, oldExercise);
 
-        return save(oldExercise);
+        return strengthExerciseMapper.mapToDTO(oldExercise);
     }
-    @Transactional
-    public void updateData(StrengthExerciseDTO dto, StrengthExercise oldExercise) {
+
+    private void updateData(StrengthExerciseDTO dto, StrengthExercise oldExercise) {
         oldExercise.setRepetitionUnit(dto.getRepetitionUnit());
         oldExercise.setReps(dto.getReps());
         oldExercise.setWeight(dto.getWeight());

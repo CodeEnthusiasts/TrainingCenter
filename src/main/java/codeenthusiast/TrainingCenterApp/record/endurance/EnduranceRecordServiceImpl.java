@@ -47,7 +47,7 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService, Secur
     public EnduranceRecordDTO updateEnduranceRecord(Long enduranceRecordId, EnduranceRecordDTO enduranceRecordDTO) {
         EnduranceRecord enduranceRecord = getEnduranceRecordEntityById(enduranceRecordId);
         updateEnduranceRecord(enduranceRecord, enduranceRecordDTO);
-        return mapToDTO(save(enduranceRecord));
+        return mapToDTO(enduranceRecord);
     }
 
     @Override

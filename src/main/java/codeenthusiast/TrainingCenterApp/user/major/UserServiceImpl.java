@@ -44,7 +44,7 @@ public class UserServiceImpl implements UserService {
             user.setUsername(dto.getUsername());
         }
 
-        return mapToDTO(save(user));
+        return mapToDTO(user);
     }
 
     @Override

@@ -45,7 +45,7 @@ public class KeyTechniqueElementServiceImpl implements KeyTechniqueElementServic
     public KeyTechniqueElementDTO update(Long id, KeyTechniqueElementDTO dto) {
         KeyTechniqueElement keyTechniqueElement = findEntityById(id);
         keyTechniqueElement.setContent(dto.getContent());
-        return save(keyTechniqueElement);
+        return keyTechniqueElementMapper.mapToDTO(keyTechniqueElement);
     }
 
     @Override

@@ -59,7 +59,6 @@ public class ImageServiceImpl implements ImageService {
     public void replaceImage(Image image, MultipartFile file) {
         String fileUrl = uploadImageOnHosting(file);
         image.setFileUrl(fileUrl);
-        save(image);
     }
 
     @Override

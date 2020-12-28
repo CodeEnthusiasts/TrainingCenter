@@ -59,7 +59,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService, Secur
     public TrainingSessionDTO updateTrainingSession(Long id, TrainingSessionDTO dto) {
         TrainingSession trainingSession = getTrainingSessionEntityById(id);
         updateData(trainingSession, dto);
-        return mapToDTO(save(trainingSession));
+        return mapToDTO(trainingSession);
     }
 
     @Override

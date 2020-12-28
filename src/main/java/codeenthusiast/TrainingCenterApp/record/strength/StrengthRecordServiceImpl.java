@@ -47,7 +47,7 @@ public class StrengthRecordServiceImpl implements StrengthRecordService, Securit
     public StrengthRecordDTO updateStrengthRecord(Long strengthRecordId, StrengthRecordDTO strengthRecordDTO) {
         StrengthRecord strengthRecord = getStrengthRecordEntityById(strengthRecordId);
         updateStrengthRecord(strengthRecord, strengthRecordDTO);
-        return mapToDTO(save(strengthRecord));
+        return mapToDTO(strengthRecord);
     }
 
     @Override

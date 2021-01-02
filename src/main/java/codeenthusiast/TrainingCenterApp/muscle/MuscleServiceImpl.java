@@ -3,8 +3,8 @@ package codeenthusiast.TrainingCenterApp.muscle;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
-
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
@@ -43,14 +43,16 @@ public class MuscleServiceImpl implements MuscleService {
     }
 
     @Override
+    @Transactional
     public MuscleDTO update(Long id, MuscleDTO dto) {
         this.existsById(id);
         dto.setId(id);
         Muscle updatedMuscle = muscleMapper.mapToEntity(dto);
-        return save(updatedMuscle);
+        return muscleMapper.mapToDTO(updatedMuscle);
     }
 
     @Override
+    @Transactional
     public MuscleDTO create(MuscleDTO dto) {
         checkExistenceByName(dto.getName());
         Muscle muscle = new Muscle(dto);
@@ -87,6 +89,7 @@ public class MuscleServiceImpl implements MuscleService {
     }
 
     @Override
+    @Transactional
     public MuscleDTO addImage(Long id, MultipartFile file) {
         Muscle muscle = findEntityById(id);
         imageService.createNewImage(file, muscle);
@@ -94,6 +97,7 @@ public class MuscleServiceImpl implements MuscleService {
     }
 
     @Override
+    @Transactional
     public MuscleDTO removeAllImages(Long id) {
         imageService.deleteImagesByMuscleId(id);
         return findById(id);

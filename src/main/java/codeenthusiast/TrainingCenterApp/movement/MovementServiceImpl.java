@@ -5,6 +5,7 @@ import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
@@ -51,6 +52,7 @@ public class MovementServiceImpl implements MovementService {
     }
 
     @Override
+    @Transactional
     public MovementDTO create(MovementDTO dto) {
         checkExistenceByName(dto.getName());
         Movement movement = movementMapper.mapToEntity(dto);
@@ -58,10 +60,11 @@ public class MovementServiceImpl implements MovementService {
     }
 
     @Override
+    @Transactional
     public MovementDTO update(Long id, MovementDTO dto) {
         Movement movement = findEntityById(id);
         movement.setName(dto.getName());
-        return save(movement);
+        return movementMapper.mapToDTO(movement);
     }
 
     @Override
@@ -78,6 +81,7 @@ public class MovementServiceImpl implements MovementService {
     }
 
     @Override
+    @Transactional
     public MovementDTO addImage(Long id, MultipartFile file) {
         Movement movement = findEntityById(id);
         imageService.createNewImage(file, movement);
@@ -85,10 +89,10 @@ public class MovementServiceImpl implements MovementService {
     }
 
     @Override
+    @Transactional
     public MovementDTO removeAllImages(Long id) {
         imageService.deleteImagesByMovementId(id);
         return findById(id);
-
     }
 
 

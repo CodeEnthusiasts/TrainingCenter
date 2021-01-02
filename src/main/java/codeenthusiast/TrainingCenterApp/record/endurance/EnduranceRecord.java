@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -20,14 +21,17 @@ import java.util.concurrent.TimeUnit;
 @AllArgsConstructor
 public class EnduranceRecord extends AbstractEntity {
 
+    @Length(max = 50)
     private String movementName;
 
     @Enumerated(EnumType.STRING)
+    @Length(max = 32)
     private DistanceUnit distanceUnit;
 
     private double distance;
 
     @Enumerated(EnumType.STRING)
+    @Length(max = 32)
     private TimeUnit timeUnit;
 
     private LocalTime duration;

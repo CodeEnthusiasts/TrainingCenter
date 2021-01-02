@@ -22,6 +22,11 @@ public class TrainingSessionController {
         return ResponseEntity.ok(trainingSessionService.getTrainingSessionById(id));
     }
 
+    @GetMapping(value = "/test/{id}")
+    public ResponseEntity<TrainingSession> getTestById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(trainingSessionService.getTest(id));
+    }
+
     @GetMapping(value = "/training-plans/{id}")
     public ResponseEntity<List<TrainingSessionDTO>> getAllByTrainingPlanId(@PathVariable("id") Long id) {
         return ResponseEntity.ok(trainingSessionService.getAllTrainingSessionsByTrainingPlanId(id));

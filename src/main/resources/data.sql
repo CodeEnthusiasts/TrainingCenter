@@ -108,7 +108,7 @@ INSERT INTO strength_exercise(id, repetition_unit, reps, weight,  weight_unit, m
         (13, 'MOTION', 3, 75,  'KILOGRAMS', 3, 5), (14, 'MOTION', 4, 70,  'KILOGRAMS', 3, 5), (15, 'MOTION', 5, 65,  'KILOGRAMS', 4, 5);
 
 -- STRENGTH EXERCISE DETAILS
-INSERT INTO strength_exercise_details(id, lowering, holding_down, raising, holding_up, note, reps_in_reserve, strength_exercise_id)
+INSERT INTO strength_exercise_details(id, lowering, holding_down, raising, holding_up, note, repetitions_in_reserve, strength_exercise_id)
 VALUES  (1, 2, 0, 1, 1, 'Example note 1', 3, 1), (2, 2, 0, 1, 1, 'Example note 2', 3, 2), (3, 2, 0, 1, 1, 'Example note ', 3, 3),
         (4, 2, 0, 1, 1, 'Example note 1', 3, 4), (5, 2, 0, 1, 1, 'Example note 2', 3, 5), (6, 2, 0, 1, 1, 'Example note ', 3, 6),
         (7, 2, 0, 1, 1, 'Example note 1', 3, 7), (8, 2, 0, 1, 1, 'Example note 2', 3, 8), (9, 2, 0, 1, 1, 'Example note ', 3, 9),

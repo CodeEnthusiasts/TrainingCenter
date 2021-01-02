@@ -5,10 +5,12 @@ import codeenthusiast.TrainingCenterApp.constants.Difficulty;
 import codeenthusiast.TrainingCenterApp.exercise.enduranceexercise.EnduranceExercise;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 
 import javax.persistence.*;
 import java.time.DayOfWeek;
@@ -23,15 +25,19 @@ import java.util.List;
 @AllArgsConstructor
 public class TrainingSession extends AbstractEntity {
 
+    @Length(max = 50)
     private String name;
 
     @OneToMany(orphanRemoval = true, mappedBy = "trainingSession")
+    @JsonIgnore
     private List<StrengthExercise> strengthExercises;
 
     @OneToMany(orphanRemoval = true, mappedBy = "trainingSession")
+    @JsonIgnore
     private List<EnduranceExercise> enduranceExercises;
 
     @Enumerated(EnumType.STRING)
+    @Length(max = 32)
     private DayOfWeek dayOfWeek;
 
     private LocalDate date;
@@ -43,11 +49,12 @@ public class TrainingSession extends AbstractEntity {
     private LocalTime trainingDuration;
 
     @Enumerated(EnumType.STRING)
+    @Length(max = 32)
     private Difficulty difficulty;
 
     private String notes;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "training_plan_id")
     private TrainingPlan trainingPlan;
 

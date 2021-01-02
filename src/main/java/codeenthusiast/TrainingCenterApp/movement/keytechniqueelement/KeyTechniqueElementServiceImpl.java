@@ -4,6 +4,7 @@ import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.movement.MovementService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,13 +41,15 @@ public class KeyTechniqueElementServiceImpl implements KeyTechniqueElementServic
     }
 
     @Override
+    @Transactional
     public KeyTechniqueElementDTO update(Long id, KeyTechniqueElementDTO dto) {
         KeyTechniqueElement keyTechniqueElement = findEntityById(id);
         keyTechniqueElement.setContent(dto.getContent());
-        return save(keyTechniqueElement);
+        return keyTechniqueElementMapper.mapToDTO(keyTechniqueElement);
     }
 
     @Override
+    @Transactional
     public KeyTechniqueElementDTO create(Long id, KeyTechniqueElementDTO dto) {
        KeyTechniqueElement kte = new KeyTechniqueElement(dto);
        Movement movement = movementService.findEntityById(id);

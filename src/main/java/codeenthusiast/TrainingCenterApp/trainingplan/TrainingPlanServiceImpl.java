@@ -3,6 +3,7 @@ package codeenthusiast.TrainingCenterApp.trainingplan;
 import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.user.major.UserServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Transient;
@@ -36,6 +37,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService, SecuritySer
     }
 
     @Override
+    @Transactional
     public TrainingPlanDTO createTrainingPlan(Long userId, TrainingPlanDTO trainingPlanDTO) {
         TrainingPlan trainingPlan = mapper.mapToEntity(trainingPlanDTO);
         trainingPlan.setUser(userService.findEntityById(userId));
@@ -43,10 +45,11 @@ public class TrainingPlanServiceImpl implements TrainingPlanService, SecuritySer
     }
 
     @Override
+    @Transactional
     public TrainingPlanDTO updateTrainingPlan(Long trainingPlanId, TrainingPlanDTO trainingPlanDTO) {
         TrainingPlan trainingPlan = getTrainingPlanEntityById(trainingPlanId);
         updateTrainingPlan(trainingPlan, trainingPlanDTO);
-        return mapToDTO(save(trainingPlan));
+        return mapToDTO(trainingPlan);
     }
 
     @Override

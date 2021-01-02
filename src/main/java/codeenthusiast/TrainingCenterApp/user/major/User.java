@@ -10,6 +10,8 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
+
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -21,10 +23,13 @@ import java.util.List;
 @NoArgsConstructor
 public class User extends AbstractEntity {
 
+    @Length(max = 50)
     private String username;
 
+    @Length(max = 84)
     private String password;
 
+    @Length(max = 100)
     private String email;
 
     @ManyToMany
@@ -38,6 +43,7 @@ public class User extends AbstractEntity {
     private UserDetails userDetails;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "user")
+    @JsonIgnore
     private List<TrainingPlan> trainingPlans = new ArrayList<>();
 
     @OneToOne(mappedBy = "user", cascade=CascadeType.ALL)

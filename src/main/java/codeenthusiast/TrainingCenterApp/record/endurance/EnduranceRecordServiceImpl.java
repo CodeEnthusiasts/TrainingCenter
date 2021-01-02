@@ -5,6 +5,7 @@ import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -33,6 +34,7 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService, Secur
     }
 
     @Override
+    @Transactional
     public EnduranceRecordDTO createEnduranceRecord(Long personalRecordsId, EnduranceRecordDTO enduranceRecordDTO) {
         PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsEntityById(personalRecordsId);
         EnduranceRecord enduranceRecord = mapToEntity(enduranceRecordDTO);
@@ -41,10 +43,11 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService, Secur
     }
 
     @Override
+    @Transactional
     public EnduranceRecordDTO updateEnduranceRecord(Long enduranceRecordId, EnduranceRecordDTO enduranceRecordDTO) {
         EnduranceRecord enduranceRecord = getEnduranceRecordEntityById(enduranceRecordId);
         updateEnduranceRecord(enduranceRecord, enduranceRecordDTO);
-        return mapToDTO(save(enduranceRecord));
+        return mapToDTO(enduranceRecord);
     }
 
     @Override

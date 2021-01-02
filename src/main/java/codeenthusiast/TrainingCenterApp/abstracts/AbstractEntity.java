@@ -12,13 +12,9 @@ import javax.persistence.MappedSuperclass;
 @Getter
 @Setter
 @MappedSuperclass
-public abstract class AbstractEntity implements Persistable<Long> {
+public abstract class AbstractEntity  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Override
-    public boolean isNew() {
-        return id == null;
-    }
 }

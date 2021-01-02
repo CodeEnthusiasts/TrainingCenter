@@ -22,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +50,7 @@ public class AuthService {
         this.roleRepository = roleRepository;
         this.encoder = encoder;
     }
+
 
     public JwtResponse authenticateUser(LoginRequest loginRequest) {
 
@@ -89,6 +91,7 @@ public class AuthService {
                 .collect(Collectors.toList());
     }
 
+    @Transactional
     public MessageResponse registerUser(SignUpRequest signUpRequest) {
 
         validateRequest(signUpRequest);
@@ -121,18 +124,13 @@ public class AuthService {
         }
     }
 
+    @Transactional
     public User createNewUserAccount(SignUpRequest signUpRequest) {
         short s = 0;
         return new User(signUpRequest.getUsername(), encoder.encode(signUpRequest.getPassword()),
                 signUpRequest.getEmail());
     }
 
-//     User generator //
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void addUser() {
-//        Role role = new Role(ERole.ROLE_USER);
-//        roleRepository.save(role);
-//    }
 
     public void assignUserRole(User user) {
         List<Role> defaultRoles = new ArrayList<>();

@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.AllArgsConstructor;
 import lombok.Setter;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.Range;
 
 import javax.persistence.*;
@@ -21,14 +22,17 @@ import java.time.LocalDate;
 @AllArgsConstructor
 public class StrengthRecord extends AbstractEntity {
 
+    @Length(max = 50)
     private String movementName;
 
     @Enumerated(EnumType.STRING)
+    @Length(max = 32)
     private WeightUnit weightUnit;
 
     private double weight;
 
     @Enumerated(EnumType.STRING)
+    @Length(max = 32)
     private RepetitionUnit repetitionUnit;
 
     private short reps;

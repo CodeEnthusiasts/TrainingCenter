@@ -65,7 +65,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService, SecuritySer
     }
 
     private boolean hasAccess(TrainingPlan trainingPLan) {
-        return trainingPLan.getUser().getId().equals(getPrincipal().getId());
+        return trainingPLan.getUser().getId().equals(getPrincipalId());
     }
 
     private TrainingPlan save(TrainingPlan trainingPlan) {

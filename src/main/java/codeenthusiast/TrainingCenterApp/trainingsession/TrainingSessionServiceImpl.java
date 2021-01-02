@@ -1,7 +1,10 @@
 package codeenthusiast.TrainingCenterApp.trainingsession;
 
 import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
+import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
+import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
+import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanServiceImpl;
 import org.springframework.stereotype.Service;
@@ -29,7 +32,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService, Secur
     @Override
     public TrainingSession getTrainingSessionEntityById(Long trainingPlanId) {
         TrainingSession trainingSession = repository.findById(trainingPlanId)
-                                                    .orElseThrow(EntityNotFoundException::new);
+                .orElseThrow(EntityNotFoundException::new);
         authorize(hasAccess(trainingSession));
         return trainingSession;
     }
@@ -69,7 +72,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService, Secur
     }
 
     private boolean hasAccess(TrainingSession trainingSession) {
-        return trainingSession.getTrainingPlan().getUser().getId().equals(getPrincipal().getId());
+        return trainingSession.getTrainingPlan().getUser().getId().equals(getPrincipalId());
     }
 
     private TrainingSession save(TrainingSession trainingSession) {
@@ -96,5 +99,34 @@ public class TrainingSessionServiceImpl implements TrainingSessionService, Secur
 
     public TrainingSession getTest(Long id) {
         return repository.findById(id).get();
+    }
+
+    public short calculateTonnage(Long id) {
+        TrainingSession trainingSession = getTrainingSessionEntityById(id);
+        short tonnage = 0;
+
+        for (StrengthExercise exercise : trainingSession.getStrengthExercises()) {
+
+            if(exercise.getRepetitionUnit() == RepetitionUnit.TIME){
+                continue;
+            }
+            if (exercise.getWeightUnit() == WeightUnit.BODYWEIGHT) {
+                calculateForBodyWeight(exercise);
+            }
+
+            tonnage += exercise.getReps() * exercise.getWeight();
+        }
+        return tonnage;
+    }
+
+    public void calculateForBodyWeight(StrengthExercise strengthExercise) {
+        if (strengthExercise.getWeightUnit() == WeightUnit.BODYWEIGHT) {
+            double userWeight = strengthExercise.getTrainingSession().getTrainingPlan().getUser().getUserDetails().getWeight();
+            if (userWeight == 0) {
+                throw new IllegalArgumentException(" You must add your weight if you want to calculate tonnage from body weight exercises");
+            } else {
+                strengthExercise.setWeight(userWeight);
+            }
+        }
     }
 }

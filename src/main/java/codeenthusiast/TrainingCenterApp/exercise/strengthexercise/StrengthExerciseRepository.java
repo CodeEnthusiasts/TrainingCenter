@@ -10,6 +10,4 @@ public interface StrengthExerciseRepository extends AbstractRepository<StrengthE
 
     List<StrengthExercise> findAllByTrainingSessionId(Long id);
 
-    StrengthExercise findById(long id);
-
 }

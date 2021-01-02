@@ -69,7 +69,7 @@ public class StrengthRecordServiceImpl implements StrengthRecordService, Securit
     }
 
     private boolean hasAccess(StrengthRecord strengthRecord) {
-        return strengthRecord.getPersonalRecords().getUser().getId().equals(getPrincipal().getId());
+        return strengthRecord.getPersonalRecords().getUser().getId().equals(getPrincipalId());
     }
 
     private StrengthRecord save(StrengthRecord strengthRecord) {

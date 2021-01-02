@@ -39,7 +39,7 @@ public class UDetailsServiceImpl implements UserDetailsService, SecurityService 
     }
 
     private boolean hasAccess(UserDetails userDetails) {
-        return userDetails.getUser().getId().equals(getPrincipal().getId());
+        return userDetails.getUser().getId().equals(getPrincipalId());
     }
 
     private UserDetails save(UserDetails userDetails) {

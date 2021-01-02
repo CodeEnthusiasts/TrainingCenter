@@ -69,7 +69,7 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService, Secur
     }
 
     private boolean hasAccess(EnduranceRecord enduranceRecord) {
-        return enduranceRecord.getPersonalRecords().getUser().getId().equals(getPrincipal().getId());
+        return enduranceRecord.getPersonalRecords().getUser().getId().equals(getPrincipalId());
     }
 
     private EnduranceRecord save(EnduranceRecord enduranceRecord) {

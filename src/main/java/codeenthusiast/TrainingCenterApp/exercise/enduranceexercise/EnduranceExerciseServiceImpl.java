@@ -83,7 +83,7 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService, S
                                 .getTrainingPlan()
                                 .getUser()
                                 .getId()
-                                .equals(getPrincipal().getId());
+                                .equals(getPrincipalId());
     }
 
     private EnduranceExercise save(EnduranceExercise enduranceExercise) {

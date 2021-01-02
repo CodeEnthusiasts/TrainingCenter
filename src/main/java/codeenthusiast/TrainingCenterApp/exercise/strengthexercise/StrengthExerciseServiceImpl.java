@@ -1,6 +1,7 @@
 package codeenthusiast.TrainingCenterApp.exercise.strengthexercise;
 
 import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
+import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.movement.MovementServiceImpl;
@@ -27,10 +28,6 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService, Sec
         this.trainingSessionService = trainingSessionService;
         this.movementService = movementService;
         this.strengthExerciseMapper = strengthExerciseMapper;
-    }
-
-    public StrengthExercise getStrengthExerciseById(long id) {
-        return strengthExerciseRepository.findById(id);
     }
 
     @Override
@@ -106,7 +103,39 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService, Sec
     }
 
     private boolean hasAccess(StrengthExercise strengthExercise) {
-        return strengthExercise.getTrainingSession().getTrainingPlan().getUser().getId().equals(getPrincipal().getId());
+        return strengthExercise.getTrainingSession().getTrainingPlan().getUser().getId().equals(getPrincipalId());
     }
+
+
+    public short calculateTonnage(Long id) {
+        StrengthExercise strengthExercise = findEntityById(id);
+
+        validateTonnageData(strengthExercise);
+
+        calculateForBodyWeight(strengthExercise);
+
+        return (short) (strengthExercise.getReps() * strengthExercise.getWeight());
+    }
+
+    public void validateTonnageData(StrengthExercise strengthExercise) {
+        if(strengthExercise.getWeight() == 0){
+            throw new IllegalArgumentException(" Weight cannot equals to 0");
+        }
+        if(strengthExercise.getReps() == 0){
+            throw new IllegalArgumentException(" Number of reps cannot equals to 0");
+        }
+    }
+
+    public void calculateForBodyWeight(StrengthExercise strengthExercise) {
+        if(strengthExercise.getWeightUnit() == WeightUnit.BODYWEIGHT){
+            double userWeight = strengthExercise.getTrainingSession().getTrainingPlan().getUser().getUserDetails().getWeight();
+            if(userWeight == 0){
+                throw new IllegalArgumentException(" You must add your weight if you want to calculate tonnage from body weight exercises");
+            } else {
+                strengthExercise.setWeight(userWeight);
+            }
+        }
+    }
+
 
 }

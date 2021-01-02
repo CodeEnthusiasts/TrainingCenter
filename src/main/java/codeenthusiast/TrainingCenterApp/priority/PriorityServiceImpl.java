@@ -82,7 +82,7 @@ public class PriorityServiceImpl implements PriorityService, SecurityService {
     }
 
     private boolean hasAccess(Priority priority) {
-        return priority.getTrainingPlan().getUser().getId().equals(getPrincipal().getId());
+        return priority.getTrainingPlan().getUser().getId().equals(getPrincipalId());
     }
 
 

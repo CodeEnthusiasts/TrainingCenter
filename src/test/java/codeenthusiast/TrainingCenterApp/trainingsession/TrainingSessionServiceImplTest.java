@@ -3,13 +3,9 @@ package codeenthusiast.TrainingCenterApp.trainingsession;
 import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
 import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExerciseMapper;
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExerciseRepository;
-import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExerciseServiceImpl;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.details.StrengthExerciseDetails;
 import codeenthusiast.TrainingCenterApp.movement.MovementServiceImpl;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
-import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanMapper;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanServiceImpl;
 import codeenthusiast.TrainingCenterApp.user.major.User;
 import org.junit.jupiter.api.BeforeEach;
@@ -92,7 +88,6 @@ class TrainingSessionServiceImplTest {
     public void shouldCalculateTonnageIfStrengthExercisesAreCorrect(){
         //given
         given(trainingSessionRepository.findById(1L)).willReturn(Optional.of(trainingSession));
-        given(trainingSessionRepository.findAllStrengthExecisesBySessionId(1L)).willReturn(strengthExercises);
         double result = 0;
         for(StrengthExercise element : strengthExercises){
             result += (element.getReps() * element.getWeight());
@@ -108,8 +103,8 @@ class TrainingSessionServiceImplTest {
     @WithMockUser(value = "test_user")
     public void shouldReturnZeroIfTrainingSessionDoesNotHaveAnyStrengthExercise(){
         //given
-        given(trainingSessionRepository.findAllStrengthExecisesBySessionId(1L)).willReturn(Collections.emptyList());
-
+        given(trainingSessionRepository.findById(1L)).willReturn(Optional.of(trainingSession));
+        trainingSession.setStrengthExercises(Collections.emptyList());
         //when
         short tonnage = trainingSessionService.calculateTonnage(1L);
 

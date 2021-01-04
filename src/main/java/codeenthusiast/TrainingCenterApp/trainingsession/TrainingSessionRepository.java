@@ -11,5 +11,4 @@ public interface TrainingSessionRepository extends AbstractRepository<TrainingSe
 
     List<TrainingSession> findAllByTrainingPlanId(Long id);
 
-    List<StrengthExercise> findAllStrengthExecisesBySessionId(Long sessionId);
 }

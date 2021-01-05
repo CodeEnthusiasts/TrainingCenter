@@ -25,7 +25,7 @@ public class EnduranceRecordDTO extends AbstractDTO {
     private DistanceUnit distanceUnit;
 
     @NotNull
-    private double distance;
+    private Double distance;
 
     @NotNull
     private TimeUnit timeUnit;

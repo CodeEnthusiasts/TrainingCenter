@@ -32,7 +32,7 @@ public class StrengthExercise extends Exercise {
     @Length(max = 32)
     private WeightUnit weightUnit;
 
-    private double weight;
+    private Double weight;
 
     @OneToOne(orphanRemoval = true, mappedBy = "strengthExercise")
     @JsonIgnore

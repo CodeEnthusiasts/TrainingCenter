@@ -4,7 +4,6 @@ import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
 import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
-import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import codeenthusiast.TrainingCenterApp.user.major.UserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Transient;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -58,7 +56,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService, SecuritySer
     public TrainingPlanDTO updateTrainingPlan(Long trainingPlanId, TrainingPlanDTO trainingPlanDTO) {
         TrainingPlan trainingPlan = getTrainingPlanEntityById(trainingPlanId);
         updateTrainingPlan(trainingPlan, trainingPlanDTO);
-        log.info("Training plan of ID {} was updated", id);
+        log.info("Training plan of ID {} was updated", trainingPlanId);
         return mapToDTO(trainingPlan);
     }
 

@@ -1,6 +1,5 @@
 package codeenthusiast.TrainingCenterApp.trainingplan;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +8,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RestController
+@RestController("/api")
 public class TrainingPlanController {
 
     private final TrainingPlanService trainingPlanService;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController
+@RestController(value = "/api")
 public class UserDetailsController {
 
     private final UDetailsServiceImpl userDetailsService;

@@ -9,7 +9,7 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/movements")
+@RequestMapping("/api/movements")
 public class MovementController {
 
     private final MovementServiceImpl movementService;

@@ -24,7 +24,7 @@ public class StrengthExerciseDTO extends AbstractDTO {
 
     private WeightUnit weightUnit;
 
-    @Size(min = 0, max = 300)
+    @Size(max = 300)
     private double weight;
 
 }

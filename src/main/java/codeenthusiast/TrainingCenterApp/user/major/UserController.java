@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 @PreAuthorize("authentication.principal.id == #userId")
 public class UserController {
 

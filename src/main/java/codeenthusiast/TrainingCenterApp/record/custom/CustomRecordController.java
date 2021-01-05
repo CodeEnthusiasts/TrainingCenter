@@ -1,13 +1,12 @@
 package codeenthusiast.TrainingCenterApp.record.custom;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
-@RestController
+@RestController(value = "/api")
 public class CustomRecordController {
 
     private final CustomRecordServiceImpl customRecordService;
@@ -23,7 +22,7 @@ public class CustomRecordController {
 
     @GetMapping(value = "/personal-records/{personal_records_id}/custom-records/three")
     public ResponseEntity<List<CustomRecordDTO>> getThreeLatestCustomRecords(@PathVariable("personal_records_id")
-                                                                                           Long id) {
+                                                                                     Long id) {
         return ResponseEntity.ok(customRecordService.getThreeLatestCustomRecordsByPersonalRecordsId(id));
     }
 

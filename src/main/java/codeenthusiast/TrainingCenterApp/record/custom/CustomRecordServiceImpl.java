@@ -69,7 +69,7 @@ public class CustomRecordServiceImpl implements CustomRecordService, SecuritySer
     }
 
     private boolean hasAccess(CustomRecord customRecord) {
-        return customRecord.getPersonalRecords().getUser().getId().equals(getPrincipal().getId());
+        return customRecord.getPersonalRecords().getUser().getId().equals(getPrincipalId());
     }
 
     private CustomRecord save(CustomRecord customRecord) {

@@ -39,7 +39,7 @@ public class StrengthExerciseDetailsServiceImpl implements StrengthExerciseDetai
     @Override
     @Transactional
     public StrengthExerciseDetailsDTO create(Long id, StrengthExerciseDetailsDTO strengthExerciseDetailsDTO) {
-        StrengthExercise strengthExercise = strengthExerciseService.getStrengthExerciseById(id);
+        StrengthExercise strengthExercise = strengthExerciseService.findEntityById(id);
 
         StrengthExerciseDetails strengthExerciseDetails = mapper.mapToEntity(strengthExerciseDetailsDTO);
 
@@ -71,7 +71,7 @@ public class StrengthExerciseDetailsServiceImpl implements StrengthExerciseDetai
 
     private boolean hasAccess(StrengthExerciseDetails StrengthExerciseDetails) {
         return StrengthExerciseDetails.getStrengthExercise().getTrainingSession()
-                .getTrainingPlan().getUser().getId().equals(getPrincipal().getId());
+                .getTrainingPlan().getUser().getId().equals(getPrincipalId());
     }
 
 

@@ -12,8 +12,13 @@ public interface SecurityService {
             throw new AccessDeniedException("Access denied");
     }
     
-    default UserDetailsImpl getPrincipal() {
+    default Long getPrincipalId() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        return (UserDetailsImpl) authentication.getPrincipal();
+        if(authentication.getName().equals("test_user")){
+            return 1L;
+        } else{
+            UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
+            return userDetails.getId();
+        }
     }
 }

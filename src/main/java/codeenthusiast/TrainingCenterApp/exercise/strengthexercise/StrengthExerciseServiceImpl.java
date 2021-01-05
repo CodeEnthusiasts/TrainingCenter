@@ -7,12 +7,14 @@ import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.movement.MovementServiceImpl;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSessionServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class StrengthExerciseServiceImpl implements StrengthExerciseService, SecurityService {
 
     private final StrengthExerciseRepository strengthExerciseRepository;
@@ -55,7 +57,7 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService, Sec
         strengthExercise.setTrainingSession(trainingSession);
 
         StrengthExercise result = strengthExerciseRepository.save(strengthExercise);
-
+        log.info("New exercises was added");
         return strengthExerciseMapper.mapToDTO(result);
     }
 
@@ -78,6 +80,7 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService, Sec
         StrengthExercise oldExercise = findEntityById(id);
         updateData(dto, oldExercise);
 
+        log.info("Exercises was updated");
         return strengthExerciseMapper.mapToDTO(oldExercise);
     }
 
@@ -99,6 +102,7 @@ public class StrengthExerciseServiceImpl implements StrengthExerciseService, Sec
     @Override
     public void deleteById(Long id) {
         findEntityById(id);
+        log.info("Exercise was deleted");
         strengthExerciseRepository.deleteById(id);
     }
 

@@ -1,6 +1,5 @@
 package codeenthusiast.TrainingCenterApp.user.major;
 
-import codeenthusiast.TrainingCenterApp.image.ImageDTO;
 import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -29,11 +28,9 @@ public class UserController {
         return ResponseEntity.ok(userService.findById(userId));
     }
 
-    // this endpoint need to be fixed - make detached endpoints
-    // for updating user's username, email, password and details
     @PatchMapping(value = "/{user_id}")
     public ResponseEntity<UserDTO> update(@PathVariable("user_id") Long userId,
-                                 @RequestBody @Valid UserDTO dto) {
+                                          @RequestBody @Valid UserDTO dto) {
         return ResponseEntity.ok(userService.update(userId, dto));
     }
 

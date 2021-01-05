@@ -4,12 +4,14 @@ import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class EnduranceRecordServiceImpl implements EnduranceRecordService, SecurityService {
 
     private final EnduranceRecordRepository repository;
@@ -39,6 +41,8 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService, Secur
         PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsEntityById(personalRecordsId);
         EnduranceRecord enduranceRecord = mapToEntity(enduranceRecordDTO);
         enduranceRecord.setPersonalRecords(personalRecords);
+        log.info("New record  {} has been added ", enduranceRecordDTO.getMovementName());
+
         return mapToDTO(save(enduranceRecord));
     }
 
@@ -65,6 +69,7 @@ public class EnduranceRecordServiceImpl implements EnduranceRecordService, Secur
     @Override
     public String deleteEnduranceRecord(Long enduranceRecordId) {
         repository.delete(getEnduranceRecordEntityById(enduranceRecordId));
+        log.info("Record has been deleted");
         return "Record deleted successfully. ";
     }
 

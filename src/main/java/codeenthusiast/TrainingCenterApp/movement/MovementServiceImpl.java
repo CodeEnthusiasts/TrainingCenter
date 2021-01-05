@@ -4,11 +4,13 @@ import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@Slf4j
 public class MovementServiceImpl implements MovementService {
 
     private final MovementRepository movementRepository;
@@ -56,6 +58,7 @@ public class MovementServiceImpl implements MovementService {
     public MovementDTO create(MovementDTO dto) {
         checkExistenceByName(dto.getName());
         Movement movement = movementMapper.mapToEntity(dto);
+        log.info("Movement {} was created", dto.getName());
         return save(movement);
     }
 
@@ -64,6 +67,7 @@ public class MovementServiceImpl implements MovementService {
     public MovementDTO update(Long id, MovementDTO dto) {
         Movement movement = findEntityById(id);
         movement.setName(dto.getName());
+        log.info("Movement {} was updated", dto.getName());
         return movementMapper.mapToDTO(movement);
     }
 
@@ -77,6 +81,7 @@ public class MovementServiceImpl implements MovementService {
     @Override
     public void deleteById(Long id) {
         isExistsById(id);
+        log.info("Movement was deleted");
         movementRepository.deleteById(id);
     }
 
@@ -85,6 +90,7 @@ public class MovementServiceImpl implements MovementService {
     public MovementDTO addImage(Long id, MultipartFile file) {
         Movement movement = findEntityById(id);
         imageService.createNewImage(file, movement);
+        log.info("Image for movement was added");
         return movementMapper.mapToDTO(movement);
     }
 
@@ -92,6 +98,7 @@ public class MovementServiceImpl implements MovementService {
     @Transactional
     public MovementDTO removeAllImages(Long id) {
         imageService.deleteImagesByMovementId(id);
+        log.info("All images for movement were deleted");
         return findById(id);
     }
 

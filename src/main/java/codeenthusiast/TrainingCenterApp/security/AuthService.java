@@ -14,6 +14,7 @@ import codeenthusiast.TrainingCenterApp.user.role.Role;
 import codeenthusiast.TrainingCenterApp.user.role.RoleRepository;
 import codeenthusiast.TrainingCenterApp.user.major.User;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -29,6 +30,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class AuthService {
 
     private final AuthenticationManager authenticationManager;
@@ -63,6 +65,9 @@ public class AuthService {
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
         List<String> roles = createNamesOfRoles(userDetails);
+
+        log.info("User {} has been logged", loginRequest.getUsername());
+
 
         return new JwtResponse(jwt,
                 userDetails.getId(),
@@ -103,6 +108,8 @@ public class AuthService {
         assignUserRole(user);
 
         userRepository.save(user);
+
+        log.info("User {} has been singed up", signUpRequest.getUsername());
 
         return new MessageResponse("User registered successfully!");
     }

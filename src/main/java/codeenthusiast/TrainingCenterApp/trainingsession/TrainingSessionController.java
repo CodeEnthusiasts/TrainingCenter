@@ -9,6 +9,7 @@ import java.util.List;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/training-sessions")
+
 public class TrainingSessionController {
 
     private final TrainingSessionServiceImpl trainingSessionService;

@@ -22,7 +22,7 @@ public class EnduranceRecordController {
 
     @GetMapping(value = "/personal-records/{personal_records_id}/endurance-records/three")
     public ResponseEntity<List<EnduranceRecordDTO>> getThreeLatestEnduranceRecords(@PathVariable("personal_records_id")
-                                                                                         Long id) {
+                                                                                           Long id) {
         return ResponseEntity.ok(enduranceRecordService.getThreeLatestEnduranceRecordsByPersonalRecordsId(id));
     }
 

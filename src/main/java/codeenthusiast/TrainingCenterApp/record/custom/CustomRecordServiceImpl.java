@@ -4,12 +4,14 @@ import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class CustomRecordServiceImpl implements CustomRecordService, SecurityService {
 
     private final CustomRecordRepository repository;
@@ -39,6 +41,7 @@ public class CustomRecordServiceImpl implements CustomRecordService, SecuritySer
         PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsEntityById(personalRecordsId);
         CustomRecord customRecord = mapToEntity(customRecordDTO);
         customRecord.setPersonalRecords(personalRecords);
+        log.info("New custom record:  {} \n has been added ", customRecordDTO.getDescription());
         return mapToDTO(save(customRecord));
     }
 
@@ -65,6 +68,7 @@ public class CustomRecordServiceImpl implements CustomRecordService, SecuritySer
     @Override
     public String deleteCustomRecord(Long customRecordId) {
         repository.delete(getCustomRecordEntityById(customRecordId));
+        log.info("Record has been deleted");
         return "Record deleted successfully. ";
     }
 

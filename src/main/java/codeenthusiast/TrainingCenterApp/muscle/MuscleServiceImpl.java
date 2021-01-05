@@ -3,6 +3,7 @@ package codeenthusiast.TrainingCenterApp.muscle;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityAlreadyExistsException;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
@@ -10,6 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.List;
 
 @Service
+@Slf4j
 public class MuscleServiceImpl implements MuscleService {
 
     private final MuscleRepository muscleRepository;
@@ -48,6 +50,7 @@ public class MuscleServiceImpl implements MuscleService {
         this.existsById(id);
         dto.setId(id);
         Muscle updatedMuscle = muscleMapper.mapToEntity(dto);
+        log.info("Muscle was updated");
         return muscleMapper.mapToDTO(updatedMuscle);
     }
 
@@ -56,6 +59,7 @@ public class MuscleServiceImpl implements MuscleService {
     public MuscleDTO create(MuscleDTO dto) {
         checkExistenceByName(dto.getName());
         Muscle muscle = new Muscle(dto);
+        log.info("Muscle {} was created", dto.getName());
         return save(muscle);
     }
 
@@ -68,6 +72,7 @@ public class MuscleServiceImpl implements MuscleService {
     @Override
     public void deleteById(Long id) {
         if (existsById(id)) {
+            log.info("Muscle was deleted");
             muscleRepository.deleteById(id);
         }
     }
@@ -93,6 +98,7 @@ public class MuscleServiceImpl implements MuscleService {
     public MuscleDTO addImage(Long id, MultipartFile file) {
         Muscle muscle = findEntityById(id);
         imageService.createNewImage(file, muscle);
+        log.info("Image for muscle was added");
         return muscleMapper.mapToDTO(muscle);
     }
 
@@ -100,6 +106,7 @@ public class MuscleServiceImpl implements MuscleService {
     @Transactional
     public MuscleDTO removeAllImages(Long id) {
         imageService.deleteImagesByMuscleId(id);
+        log.info("Image for muscle was deleted");
         return findById(id);
 
     }

@@ -10,8 +10,6 @@ import java.util.List;
 @Repository
 public interface StrengthRecordRepository extends AbstractRepository<StrengthRecord> {
 
-    void deleteById(Long id);
-
     List<StrengthRecord> findAllByPersonalRecordsId(Long id);
 
     @Query(nativeQuery = true, value = "SELECT * FROM strength_record WHERE personal_records_id = ? " +

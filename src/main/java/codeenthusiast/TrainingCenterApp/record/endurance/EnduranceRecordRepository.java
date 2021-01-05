@@ -9,8 +9,6 @@ import java.util.List;
 @Repository
 public interface EnduranceRecordRepository extends AbstractRepository<EnduranceRecord> {
 
-    void deleteById(Long id);
-
     List<EnduranceRecord> findAllByPersonalRecordsId(Long id);
 
     @Query(nativeQuery = true, value = "SELECT * FROM endurance_record WHERE personal_records_id = ? " +

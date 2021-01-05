@@ -8,7 +8,5 @@ import java.util.List;
 @Repository
 public interface EnduranceExerciseRepository extends AbstractRepository<EnduranceExercise> {
 
-    EnduranceExercise findById(long id);
-
     List<EnduranceExercise> findAllByTrainingSessionId(Long id);
 }

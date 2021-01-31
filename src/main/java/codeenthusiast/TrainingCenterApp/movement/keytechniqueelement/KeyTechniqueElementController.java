@@ -8,7 +8,7 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/key-technique-elements")
+@RequestMapping("/api/key-technique-elements")
 public class KeyTechniqueElementController {
 
     private final KeyTechniqueElementServiceImpl keyTechniqueElementService;

@@ -28,7 +28,7 @@ public class EnduranceRecord extends AbstractEntity {
     @Length(max = 32)
     private DistanceUnit distanceUnit;
 
-    private double distance;
+    private Double distance;
 
     @Enumerated(EnumType.STRING)
     @Length(max = 32)

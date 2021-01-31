@@ -106,7 +106,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService, SecuritySer
 
         short sum = 0;
         double userWeight = 0;
-        for(StrengthExercise exercise : exercises){
+        for (StrengthExercise exercise : exercises) {
 
             userWeight = checkBodyWeightUnit(userWeight, exercise);
 
@@ -123,15 +123,15 @@ public class TrainingPlanServiceImpl implements TrainingPlanService, SecuritySer
 
     public short calculateVolumeForSingleExercise(StrengthExercise exercise) {
         short value = 0;
-        if(!exercise.getRepetitionUnit().equals(RepetitionUnit.TIME)){
-             value = (short) (exercise.getReps() * exercise.getWeight());
+        if (!exercise.getRepetitionUnit().equals(RepetitionUnit.TIME)) {
+            value = (short) (exercise.getReps() * exercise.getWeight());
         }
         return value;
     }
 
     public double checkBodyWeightUnit(double userWeight, StrengthExercise exercise) {
-        if(exercise.getWeightUnit().equals(WeightUnit.BODYWEIGHT)){
-            if(userWeight != 0){
+        if (exercise.getWeightUnit().equals(WeightUnit.BODYWEIGHT)) {
+            if (userWeight != 0) {
                 exercise.setWeight(userWeight + exercise.getWeight());
             } else {
                 userWeight = calculateAndSetWeightFromUserData(exercise);
@@ -143,7 +143,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService, SecuritySer
     public double calculateAndSetWeightFromUserData(StrengthExercise exercise) {
         double userWeight;
         double weight = exercise.getTrainingSession().getTrainingPlan().getUser().getUserDetails().getWeight();
-        if(weight == 0){
+        if (weight == 0) {
             throw new IllegalArgumentException("Set user weight first before using BodyWeight load");
         }
         userWeight = weight;

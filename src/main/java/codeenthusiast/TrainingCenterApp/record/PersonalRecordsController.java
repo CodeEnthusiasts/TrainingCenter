@@ -18,7 +18,7 @@ public class PersonalRecordsController {
     }
 
     @PreAuthorize("authentication.principal.id == #userId")
-    @GetMapping(value = "/users/{user_id}/personal-records")
+    @GetMapping(value = "/api/users/{user_id}/personal-records")
     public ResponseEntity<PersonalRecords> getPersonalRecordsByUserId(@PathVariable("user_id") Long userId) {
         return ResponseEntity.ok(service.getPersonalRecordsByUserId(userId));
     }

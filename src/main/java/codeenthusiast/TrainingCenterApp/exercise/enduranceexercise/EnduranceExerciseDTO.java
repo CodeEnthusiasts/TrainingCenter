@@ -19,7 +19,7 @@ public class EnduranceExerciseDTO extends AbstractDTO {
 
     private DistanceUnit distanceUnit;
 
-    private double distance;
+    private Double distance;
 
     private TimeUnit timeUnit;
 

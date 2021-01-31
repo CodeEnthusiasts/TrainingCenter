@@ -10,7 +10,7 @@ import javax.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
-@RequestMapping("/muscles")
+@RequestMapping("/api/muscles")
 public class MuscleController {
 
     private MuscleServiceImpl muscleServiceImpl;

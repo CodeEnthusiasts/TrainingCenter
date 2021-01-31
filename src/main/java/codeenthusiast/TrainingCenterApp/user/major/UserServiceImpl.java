@@ -3,11 +3,13 @@ package codeenthusiast.TrainingCenterApp.user.major;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.image.Image;
 import codeenthusiast.TrainingCenterApp.image.ImageServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 @Service
+@Slf4j
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
@@ -44,6 +46,7 @@ public class UserServiceImpl implements UserService {
             user.setUsername(dto.getUsername());
         }
 
+        log.info("Update user data of ID {}", id);
         return mapToDTO(user);
     }
 
@@ -62,6 +65,7 @@ public class UserServiceImpl implements UserService {
             Image image = user.getImage();
             imageService.replaceImage(image, file);
         }
+        log.info("Added image to user of ID {}", id);
 
         return "Image was successfully added";
     }
@@ -72,6 +76,8 @@ public class UserServiceImpl implements UserService {
         User user = findEntityById(id);
         user.setImage(null);
         imageService.deleteImageByUserId(id);
+
+        log.info("Removed image to user of ID {}", id);
 
         return "Image was deleted successfully";
     }

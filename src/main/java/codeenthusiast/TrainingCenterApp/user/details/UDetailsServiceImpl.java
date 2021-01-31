@@ -2,10 +2,12 @@ package codeenthusiast.TrainingCenterApp.user.details;
 
  import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
-import org.springframework.stereotype.Service;
+ import lombok.extern.slf4j.Slf4j;
+ import org.springframework.stereotype.Service;
  import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Slf4j
 public class UDetailsServiceImpl implements UserDetailsService, SecurityService {
 
     private final UserDetailsRepository repository;
@@ -35,6 +37,8 @@ public class UDetailsServiceImpl implements UserDetailsService, SecurityService 
     public UserDetailsDTO updateUserDetails(long id, UserDetailsDTO dto) {
         UserDetails userDetails = getUserDetailsEntityById(id);
         updateUserDetailsAttributes(dto, userDetails);
+
+        log.info("Update user details of ID {}", id);
         return mapToDTO(userDetails);
     }
 

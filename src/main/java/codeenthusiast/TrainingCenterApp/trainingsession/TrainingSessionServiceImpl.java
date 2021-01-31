@@ -7,12 +7,14 @@ import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlan;
 import codeenthusiast.TrainingCenterApp.trainingplan.TrainingPlanServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class TrainingSessionServiceImpl implements TrainingSessionService, SecurityService {
 
     private final TrainingSessionRepository repository;
@@ -54,6 +56,7 @@ public class TrainingSessionServiceImpl implements TrainingSessionService, Secur
         TrainingPlan trainingPlan = trainingPlanService.getTrainingPlanEntityById(trainingPlanId);
         TrainingSession trainingSession = new TrainingSession(dto);
         trainingSession.setTrainingPlan(trainingPlan);
+        log.info("Create new training session for training plan of ID {}", trainingPlanId);
         return mapToDTO(save(trainingSession));
     }
 
@@ -62,12 +65,14 @@ public class TrainingSessionServiceImpl implements TrainingSessionService, Secur
     public TrainingSessionDTO updateTrainingSession(Long id, TrainingSessionDTO dto) {
         TrainingSession trainingSession = getTrainingSessionEntityById(id);
         updateData(trainingSession, dto);
+        log.info("Update training session of ID {}", id);
         return mapToDTO(trainingSession);
     }
 
     @Override
     public String deleteTrainingSession(Long id) {
         repository.delete(getTrainingSessionEntityById(id));
+        log.info("Update training session of ID {}", id);
         return "Training session deleted successfully. ";
     }
 

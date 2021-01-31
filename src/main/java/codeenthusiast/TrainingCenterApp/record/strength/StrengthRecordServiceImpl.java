@@ -4,12 +4,14 @@ import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.exceptions.EntityNotFoundException;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecords;
 import codeenthusiast.TrainingCenterApp.record.PersonalRecordsServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class StrengthRecordServiceImpl implements StrengthRecordService, SecurityService {
 
     private final StrengthRecordRepository repository;
@@ -39,6 +41,7 @@ public class StrengthRecordServiceImpl implements StrengthRecordService, Securit
         PersonalRecords personalRecords = personalRecordsService.getPersonalRecordsByUserId(personalRecordsId);
         StrengthRecord strengthRecord = mapToEntity(strengthRecordDTO);
         strengthRecord.setPersonalRecords(personalRecords);
+        log.info("New record  {} has been added ", strengthRecordDTO.getMovementName());
         return mapToDTO(save(strengthRecord));
     }
 
@@ -65,6 +68,7 @@ public class StrengthRecordServiceImpl implements StrengthRecordService, Securit
     @Override
     public String deleteStrengthRecord(Long strengthRecordId) {
         repository.delete(getStrengthRecordEntityById(strengthRecordId));
+        log.info("Record has been deleted ");
         return "Record deleted successfully. ";
     }
 

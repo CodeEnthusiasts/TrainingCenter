@@ -9,8 +9,6 @@ import java.util.List;
 @Repository
 public interface CustomRecordRepository extends JpaRepository<CustomRecord, Long> {
 
-    void deleteById(Long id);
-
     List<CustomRecord> findAllByPersonalRecordsId(Long id);
 
     @Query(nativeQuery = true, value = "SELECT * FROM custom_record WHERE personal_records_id = ? " +

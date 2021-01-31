@@ -6,12 +6,14 @@ import codeenthusiast.TrainingCenterApp.movement.Movement;
 import codeenthusiast.TrainingCenterApp.movement.MovementServiceImpl;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSessionServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 @Service
+@Slf4j
 public class EnduranceExerciseServiceImpl implements EnduranceExerciseService, SecurityService {
 
     private final EnduranceExerciseRepository repository;
@@ -54,6 +56,7 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService, S
         EnduranceExercise enduranceExercise = mapToEntity(dto);
         enduranceExercise.setMovement(movement);
         enduranceExercise.setTrainingSession(trainingSession);
+        log.info("New exercise was added");
         return mapToDTO(save(enduranceExercise));
     }
 
@@ -63,6 +66,7 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService, S
                                                         EnduranceExerciseDTO dto) {
         EnduranceExercise enduranceExercise = getEnduranceExerciseEntityById(enduranceExerciseId);
         updateEnduranceExercise(enduranceExercise, dto);
+        log.info("Exercise was updated");
         return mapToDTO(enduranceExercise);
     }
 
@@ -75,6 +79,7 @@ public class EnduranceExerciseServiceImpl implements EnduranceExerciseService, S
     @Override
     public String deleteEnduranceExercise(Long enduranceExerciseId) {
         repository.delete(getEnduranceExerciseEntityById(enduranceExerciseId));
+        log.info("Exercise was deleted");
         return "Exercise deleted successfully. ";
     }
 

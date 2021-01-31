@@ -4,18 +4,18 @@ import codeenthusiast.TrainingCenterApp.abstracts.SecurityService;
 import codeenthusiast.TrainingCenterApp.constants.RepetitionUnit;
 import codeenthusiast.TrainingCenterApp.constants.WeightUnit;
 import codeenthusiast.TrainingCenterApp.exercise.strengthexercise.StrengthExercise;
-import codeenthusiast.TrainingCenterApp.trainingsession.TrainingSession;
 import codeenthusiast.TrainingCenterApp.user.major.UserServiceImpl;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityNotFoundException;
 import javax.persistence.Transient;
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class TrainingPlanServiceImpl implements TrainingPlanService, SecurityService {
 
     private final TrainingPlanRepository repository;
@@ -47,6 +47,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService, SecuritySer
     public TrainingPlanDTO createTrainingPlan(Long userId, TrainingPlanDTO trainingPlanDTO) {
         TrainingPlan trainingPlan = mapper.mapToEntity(trainingPlanDTO);
         trainingPlan.setUser(userService.findEntityById(userId));
+        log.info("New training plan for user of ID {} was created", userId);
         return mapToDTO(save(trainingPlan));
     }
 
@@ -55,6 +56,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService, SecuritySer
     public TrainingPlanDTO updateTrainingPlan(Long trainingPlanId, TrainingPlanDTO trainingPlanDTO) {
         TrainingPlan trainingPlan = getTrainingPlanEntityById(trainingPlanId);
         updateTrainingPlan(trainingPlan, trainingPlanDTO);
+        log.info("Training plan of ID {} was updated", trainingPlanId);
         return mapToDTO(trainingPlan);
     }
 
@@ -67,6 +69,7 @@ public class TrainingPlanServiceImpl implements TrainingPlanService, SecuritySer
     @Override
     public String deleteTrainingPlan(Long id) {
         repository.delete(getTrainingPlanEntityById(id));
+        log.info("Training plan of ID {} was deleted", id);
         return "Training plan deleted successfully. ";
     }
 

@@ -10,6 +10,4 @@ public interface TrainingPlanRepository extends AbstractRepository<TrainingPlan>
 
     List<TrainingPlan> findAllByUserId(Long id);
 
-    void deleteById(Long id);
-
 }

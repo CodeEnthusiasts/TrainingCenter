@@ -8,8 +8,6 @@ import java.util.Optional;
 @Repository
 public interface UserRepository extends AbstractRepository<User> {
 
-    boolean existsByUsernameAndPassword(String username, String password);
-
     boolean existsByEmailAndPassword(String email, String password);
 
     boolean existsByEmail(String email);

@@ -30,13 +30,11 @@ public class UserDetails extends AbstractEntity {
     private User user;
 
     @Enumerated(EnumType.STRING)
-    @Length(max = 32)
     private BodyWeightUnit bodyWeightUnit;
 
     private double weight;
 
     @Enumerated(EnumType.STRING)
-    @Length(max = 32)
     private HeightUnit heightUnit;
 
     private double height;
@@ -44,7 +42,6 @@ public class UserDetails extends AbstractEntity {
     private short age;
 
     @Enumerated(EnumType.STRING)
-    @Length(max = 32)
     private Sex sex;
 
     public UserDetails(BodyWeightUnit bodyWeightUnit, double weight, HeightUnit heightUnit, double height, short age, Sex sex) {
